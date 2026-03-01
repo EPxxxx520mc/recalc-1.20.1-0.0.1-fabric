@@ -2,6 +2,8 @@
 
 import net.fabricmc.api.ModInitializer;
 import com.rimeveil.recalc.Item.Moditem;
+import com.rimeveil.recalc.Item.Moditemgroup;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,8 @@ public class Recalc implements ModInitializer {
 
 		// Runs our example mod item registry.
 		Moditem.regitems();
+		Moditemgroup.regitemtogroup();
+		
 		LOGGER.info("Hello Fabric world!");
 	}
 }

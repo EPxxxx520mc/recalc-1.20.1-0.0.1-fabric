@@ -1,3 +1,4 @@
 {
-    "item.recalc.test.example_item": "测试示例物品"
+    "item.recalc.test.example_item": "测试示例物品",
+    "itemGroup.recalc": "Recalc"
 }
