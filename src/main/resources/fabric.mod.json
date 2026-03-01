@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "recalc",
+	"version": "${version}",
+	"name": "Recalc",
+	"description": "Reconstruction + Calculation to change the behavior of the game",
+	"authors": [
+		"Rimeveil"
+	],
+	"contact": {
+		"homepage": "https://space.bilibili.com/511883730?spm_id_from=333.337.0.0",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/recalc/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.rimeveil.recalc.Recalc"
+		],
+		"fabric-datagen": [
+			"com.rimeveil.recalc.RecalcDataGenerator"
+		],
+		"client": [
+			"com.rimeveil.recalc.RecalcClient"
+		]
+	},
+	"mixins": [
+		"recalc.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
