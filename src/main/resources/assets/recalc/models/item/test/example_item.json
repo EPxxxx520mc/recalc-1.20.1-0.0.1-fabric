@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "recalc:test/example_item"
+        "layer0": "recalc:item/test/example_item"
     }
 }
