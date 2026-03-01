@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "recalc:block/example_block3"
+      "model": "recalc:block/test/example_block3"
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "recalc:block/example_block3"
+    "all": "recalc:block/test/example_block3"
   }
 }
