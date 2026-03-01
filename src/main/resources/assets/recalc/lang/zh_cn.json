@@ -1,4 +1,7 @@
 {
     "item.recalc.test.example_item": "测试示例物品",
-    "itemGroup.recalc": "Recalc"
+    "itemGroup.recalc": "Recalc",
+    "block.recalc.test.example_block": "测试示例方块",
+    "block.recalc.test.example_block2": "测试示例方块 2",
+    "block.recalc.test.example_block3": "测试示例方块 3"
 }

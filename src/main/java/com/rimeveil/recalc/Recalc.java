@@ -3,7 +3,7 @@
 import net.fabricmc.api.ModInitializer;
 import com.rimeveil.recalc.Item.Moditem;
 import com.rimeveil.recalc.Item.Moditemgroup;
-
+import com.rimeveil.recalc.block.Modblock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,16 +15,23 @@ public class Recalc implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+	// 加载Mod（入口initialize）
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-
 		// Runs our example mod item registry.
-		Moditem.regitems();
-		Moditemgroup.regitemtogroup();
+
+
+
+		Moditem.regitems();//加载物品
+		LOGGER.debug("load items");//控制台输出load items
+		Moditemgroup.regitemtogroup();//加载物品组
+		LOGGER.debug("load item groups");//控制台输出load item groups
+		Modblock.regblocks();//加载方块
+		LOGGER.debug("load blocks");//控制台输出load blocks
 		
-		LOGGER.info("Hello Fabric world!");
+		LOGGER.info("Hello recalc!");//控制台输出Hello recalc!
 	}
 }
