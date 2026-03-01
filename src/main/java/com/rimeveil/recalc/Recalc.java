@@ -15,7 +15,7 @@ public class Recalc implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	// 加载Mod（入口initialize）
+	// 入口
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -26,11 +26,11 @@ public class Recalc implements ModInitializer {
 
 
 		Moditem.regitems();//加载物品
-		LOGGER.debug("load items");//控制台输出load items
+		LOGGER.info("load items");//控制台输出load items
 		Moditemgroup.regitemtogroup();//加载物品组
-		LOGGER.debug("load item groups");//控制台输出load item groups
+		LOGGER.info("load item groups");//控制台输出load item groups
 		Modblock.regblocks();//加载方块
-		LOGGER.debug("load blocks");//控制台输出load blocks
+		LOGGER.info("load blocks");//控制台输出load blocks
 		
 		LOGGER.info("Hello recalc!");//控制台输出Hello recalc!
 	}
