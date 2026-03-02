@@ -4,5 +4,6 @@
     "block.recalc.test.example_block": "测试示例方块",
     "block.recalc.test.example_block2": "测试示例方块 2",
     "block.recalc.test.example_block3": "测试示例方块 3",
-    "block.recalc.test.example_block4": "测试示例方块 4"
+    "block.recalc.test.example_block4": "测试示例方块 4",
+    "item.recalc.test.example_item2": "测试示例物品 2"
 }
