@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 500,
+  "group": "example_block2",
+  "ingredient": {
+    "item": "recalc:test/example_block2"
+  },
+  "result": "recalc:test/example_item"
+}

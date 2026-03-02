@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "example_block",
+  "key": {
+    "#": {
+      "item": "recalc:test/example_item"
+    }
+  },
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "result": {
+    "item": "recalc:test/example_block"
+  },
+  "show_notification": true
+}

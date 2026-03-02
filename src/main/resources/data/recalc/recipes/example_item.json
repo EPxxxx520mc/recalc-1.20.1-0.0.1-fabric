@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "example_item",
+  "ingredients": [
+    {
+      "item": "recalc:test/example_block"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "recalc:test/example_item"
+  }
+}
