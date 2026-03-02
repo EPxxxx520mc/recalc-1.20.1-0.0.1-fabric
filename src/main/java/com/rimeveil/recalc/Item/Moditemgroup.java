@@ -28,6 +28,8 @@ public class Moditemgroup {
                 entries.add(Modblock.EXAMPLE_BLOCK);
                 entries.add(Modblock.EXAMPLE_BLOCK2);
                 entries.add(Modblock.EXAMPLE_BLOCK3);
+                entries.add(Modblock.EXAMPLE_BLOCK4);
+                
             }).build()
    );
    
