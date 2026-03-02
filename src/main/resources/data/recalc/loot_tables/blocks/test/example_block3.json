@@ -14,7 +14,7 @@
           "name": "recalc:test/example_block3"
         }
       ],
-      "rolls": 40
+      "rolls": 1.0
     }
   ],
   "random_sequence": "recalc:blocks/test/example_block3"

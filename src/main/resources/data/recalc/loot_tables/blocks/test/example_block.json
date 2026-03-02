@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "recalc:test/example_block2"
+          "name": "recalc:test/example_block"
         }
       ],
-      "rolls": 40
+      "rolls": 40.0
     }
   ],
-  "random_sequence": "recalc:blocks/test/example_block2"
+  "random_sequence": "recalc:blocks/test/example_block"
 }

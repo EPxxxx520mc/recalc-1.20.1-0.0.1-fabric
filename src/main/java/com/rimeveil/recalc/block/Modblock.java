@@ -15,9 +15,9 @@ public class Modblock {
     // 方块ID为test/example_block
     // 方块名称为block.recalc.test.example_block
     public static final Block EXAMPLE_BLOCK = register("test/example_block", new Block(AbstractBlock.Settings.copy(Blocks.STONE)));
-    public static final Block EXAMPLE_BLOCK2 = register("test/example_block2", new Block(AbstractBlock.Settings.create().strength(0.1F, 0.1F)));
-    public static final Block EXAMPLE_BLOCK3 = register("test/example_block3", new Block(AbstractBlock.Settings.create().strength(3.0F, 3.0F)));
-    public static final Block EXAMPLE_BLOCK4 = register("test/example_block4", new Block(AbstractBlock.Settings.create().strength(0.5F, 0.5F)));
+    public static final Block EXAMPLE_BLOCK2 = register("test/example_block2", new Block(AbstractBlock.Settings.create().strength(0.1F, 0.1F).requiresTool()));
+    public static final Block EXAMPLE_BLOCK3 = register("test/example_block3", new Block(AbstractBlock.Settings.create().strength(3.0F, 3.0F).requiresTool()));
+    public static final Block EXAMPLE_BLOCK4 = register("test/example_block4", new Block(AbstractBlock.Settings.create().strength(0.5F, 0.5F).requiresTool()));
     
 
 
@@ -35,5 +35,6 @@ public class Modblock {
 
     // 辅助加载方块物品
     public static void regblocks() {
+
     }
 }
