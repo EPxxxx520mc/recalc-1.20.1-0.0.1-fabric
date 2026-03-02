@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "recalc:test/example_block",
+    "recalc:test/example_block2",
+    "recalc:test/example_block3",
+    "recalc:test/example_block4",
+    "recalc:test/example_block5"
+  ]
+}
