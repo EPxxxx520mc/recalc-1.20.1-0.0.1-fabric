@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "recalc:test/example_item"
+    },
+    "?": {
+      "item": "recalc:test/example_item2"
+    }
+  },
+  "pattern": [
+    "###",
+    "???",
+    "###"
+  ],
+  "result": {
+    "item": "minecraft:sugar"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 5.0,
+  "ingredient": {
+    "item": "recalc:test/example_item2"
+  },
+  "result": "minecraft:sugar"
+}

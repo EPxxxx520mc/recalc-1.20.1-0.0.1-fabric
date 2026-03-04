@@ -2,9 +2,8 @@ package com.rimeveil.recalc.datagen;
 
 import com.rimeveil.recalc.Item.Moditem;
 import com.rimeveil.recalc.block.Modblock;
-
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 
 public class ModEnZhlangProvider extends FabricLanguageProvider{
     public ModEnZhlangProvider(FabricDataOutput dataOutput) {
