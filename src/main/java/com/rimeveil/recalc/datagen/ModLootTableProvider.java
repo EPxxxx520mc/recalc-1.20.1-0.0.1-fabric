@@ -21,15 +21,24 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider{
     }
     @Override
     public void generate() {
+        // 普通方块掉落其自身
         addDrop(Modblock.EXAMPLE_BLOCK);
         addDrop(Modblock.EXAMPLE_BLOCK2);
         addDrop(Modblock.EXAMPLE_BLOCK3);
         addDrop(Modblock.EXAMPLE_BLOCK4);
+        
+        // 特殊矿石掉落逻辑：掉落 EXAMPLE_ITEM2，数量 2-5 个，受时运影响
         addDrop(Modblock.EXAMPLE_BLOCK5, RecalccopperOreDrops(Modblock.EXAMPLE_BLOCK5, Moditem.EXAMPLE_ITEM2, 2, 5));
     }
 
-//        addDrop(Modblock.EXAMPLE_BLOCK5 ,oreDrop(Modblock.EXAMPLE_BLOCK5, Moditem.EXAMPLE_ITEM2));
-
+    /**
+     * 自定义矿石掉落逻辑
+     * @param drop 挖掘的方块
+     * @param item 掉落的物品
+     * @param min 最小数量
+     * @param max 最大数量
+     * @return 战利品表构建器
+     */
     public LootTable.Builder RecalccopperOreDrops(Block drop, Item item, int min, int max) {
 		return dropsWithSilkTouch(
 			drop,

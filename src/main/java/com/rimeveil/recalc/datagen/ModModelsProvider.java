@@ -14,6 +14,7 @@ public class ModModelsProvider extends FabricModelProvider{
     }
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelProvider) {
+        // 注册方块模型（默认为立方体，所有面相同贴图）
         blockStateModelProvider.registerSimpleCubeAll(Modblock.EXAMPLE_BLOCK);
         blockStateModelProvider.registerSimpleCubeAll(Modblock.EXAMPLE_BLOCK2);
         blockStateModelProvider.registerSimpleCubeAll(Modblock.EXAMPLE_BLOCK3);
@@ -23,6 +24,7 @@ public class ModModelsProvider extends FabricModelProvider{
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        // 注册手持物品模型
         itemModelGenerator.register(Moditem.EXAMPLE_ITEM, Models.GENERATED);
         itemModelGenerator.register(Moditem.EXAMPLE_ITEM2, Models.GENERATED);
     }

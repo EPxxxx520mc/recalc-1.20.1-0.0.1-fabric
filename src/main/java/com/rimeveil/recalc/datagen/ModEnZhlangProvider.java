@@ -11,13 +11,18 @@ public class ModEnZhlangProvider extends FabricLanguageProvider{
     }
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
+        // 物品翻译
         translationBuilder.add(Moditem.EXAMPLE_ITEM, "示例物品");
         translationBuilder.add(Moditem.EXAMPLE_ITEM2, "示例物品 2");    
+        
+        // 方块翻译
         translationBuilder.add(Modblock.EXAMPLE_BLOCK, "示例方块");
         translationBuilder.add(Modblock.EXAMPLE_BLOCK2, "示例方块 2");
         translationBuilder.add(Modblock.EXAMPLE_BLOCK3, "示例方块 3");
         translationBuilder.add(Modblock.EXAMPLE_BLOCK4, "示例方块 4");
         translationBuilder.add(Modblock.EXAMPLE_BLOCK5, "示例方块 5");
+        
+        // 物品组/其他翻译
         translationBuilder.add("itemGroup.recalc", "Recalc");
     }
 }

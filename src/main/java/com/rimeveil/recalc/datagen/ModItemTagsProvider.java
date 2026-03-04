@@ -12,6 +12,7 @@ public class ModItemTagsProvider extends FabricTagProvider.ItemTagProvider{
     }
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        
+        // 在此处添加物品标签 (Item Tags)
+        // 例如：getOrCreateTagBuilder(ItemTags.BEACON_PAYMENT_ITEMS).add(Moditem.EXAMPLE_ITEM);
     }
 }

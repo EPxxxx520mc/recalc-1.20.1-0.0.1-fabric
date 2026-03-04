@@ -11,13 +11,18 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
     }
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
+        // Item Translations
         translationBuilder.add(Moditem.EXAMPLE_ITEM, "Example Item");
         translationBuilder.add(Moditem.EXAMPLE_ITEM2, "Example Item 2");
+        
+        // Block Translations
         translationBuilder.add(Modblock.EXAMPLE_BLOCK, "Example Block");
         translationBuilder.add(Modblock.EXAMPLE_BLOCK2, "Example Block 2");
         translationBuilder.add(Modblock.EXAMPLE_BLOCK3, "Example Block 3");
         translationBuilder.add(Modblock.EXAMPLE_BLOCK4, "Example Block 4");
         translationBuilder.add(Modblock.EXAMPLE_BLOCK5, "Example Block 5");
+        
+        // Item Group / Other Translations
         translationBuilder.add("itemGroup.recalc", "Recalc");
     }
 }
