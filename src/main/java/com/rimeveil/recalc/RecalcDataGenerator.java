@@ -14,5 +14,6 @@ public class RecalcDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModItemTagsProvider::new);
 		pack.addProvider(ModLootTableProvider::new);
 		pack.addProvider(ModModelsProvider::new);
+		pack.addProvider(ModRecipesProvider::new);
 	}
 }
