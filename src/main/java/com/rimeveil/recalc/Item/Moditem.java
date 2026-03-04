@@ -24,6 +24,9 @@ public class Moditem {
     // 玉米
     // 物品ID为corn
     public static final Item CORN = regitem("corn", new Item(new Item.Settings().food(ModFoodComponents.CORN)));
+    // 超级煤炭
+    // 物品ID为super_coal
+    public static final Item SUPER_COAL = regitem("super_coal", new Item(new Item.Settings()));
 
 
 

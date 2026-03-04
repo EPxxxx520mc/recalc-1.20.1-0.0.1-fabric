@@ -16,6 +16,7 @@ public class ModEnZhlangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.EXAMPLE_ITEM2, "精制糖锭");    
         translationBuilder.add(Moditem.SUPER_SUGAR, "超级糖");
         translationBuilder.add(Moditem.CORN, "玉米");
+        translationBuilder.add(Moditem.SUPER_COAL, "超级煤炭");
         
         // 方块翻译
         translationBuilder.add(Modblock.EXAMPLE_BLOCK, "糖结晶块");

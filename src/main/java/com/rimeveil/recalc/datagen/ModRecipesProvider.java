@@ -73,5 +73,12 @@ public class ModRecipesProvider extends FabricRecipeProvider {
         200, Moditem.EXAMPLE_ITEM,Moditem.CORN, 5F);
         offerFoodCookingRecipe(exporter, "smoking", RecipeSerializer.SMOKING, 
         200, Moditem.EXAMPLE_ITEM,Moditem.CORN, 5F);
+
+        // SUPER_COAL 配方 (3个 EXAMPLE_ITEM2 摆成一行)
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Moditem.SUPER_COAL, 1)
+            .pattern("###")
+            .input('#', Moditem.EXAMPLE_ITEM2)
+            .criterion(hasItem(Moditem.EXAMPLE_ITEM2), conditionsFromItem(Moditem.EXAMPLE_ITEM2))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_coal"));
     }
 }

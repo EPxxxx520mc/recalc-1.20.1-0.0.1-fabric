@@ -16,6 +16,7 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.EXAMPLE_ITEM2, "Refined Sugar Ingot");
         translationBuilder.add(Moditem.SUPER_SUGAR, "Super Sugar");
         translationBuilder.add(Moditem.CORN, "Corn");
+        translationBuilder.add(Moditem.SUPER_COAL, "Super Coal");
         
         // Block Translations
         translationBuilder.add(Modblock.EXAMPLE_BLOCK, "Sugar Crystal Block");
