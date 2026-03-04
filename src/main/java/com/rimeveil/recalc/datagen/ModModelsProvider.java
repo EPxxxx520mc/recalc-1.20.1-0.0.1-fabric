@@ -27,5 +27,7 @@ public class ModModelsProvider extends FabricModelProvider{
         // 注册手持物品模型
         itemModelGenerator.register(Moditem.EXAMPLE_ITEM, Models.GENERATED);
         itemModelGenerator.register(Moditem.EXAMPLE_ITEM2, Models.GENERATED);
+        itemModelGenerator.register(Moditem.SUPER_SUGAR, Models.GENERATED);
+        itemModelGenerator.register(Moditem.CORN, Models.GENERATED);
     }
 }

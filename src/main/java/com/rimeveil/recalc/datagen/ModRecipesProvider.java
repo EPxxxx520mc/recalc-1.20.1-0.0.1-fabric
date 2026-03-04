@@ -57,5 +57,21 @@ public class ModRecipesProvider extends FabricRecipeProvider {
         // 营火烹饪配方
         offerFoodCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, 
         200, Moditem.EXAMPLE_ITEM2, Items.SUGAR, 5F);
+
+        // SUPER_SUGAR 配方
+        offerFoodCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, 
+        200, Items.SUGAR, Moditem.SUPER_SUGAR, 5F);
+        offerFoodCookingRecipe(exporter, "smelting", RecipeSerializer.SMELTING, 
+        200, Items.SUGAR, Moditem.SUPER_SUGAR, 5F);
+        offerFoodCookingRecipe(exporter, "smoking", RecipeSerializer.SMOKING, 
+        200, Items.SUGAR, Moditem.SUPER_SUGAR, 5F);
+
+        // CORN 配方
+        offerFoodCookingRecipe(exporter, "smelting", RecipeSerializer.SMELTING, 
+        200, Moditem.EXAMPLE_ITEM,Moditem.CORN, 5F);
+        offerFoodCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, 
+        200, Moditem.EXAMPLE_ITEM,Moditem.CORN, 5F);
+        offerFoodCookingRecipe(exporter, "smoking", RecipeSerializer.SMOKING, 
+        200, Moditem.EXAMPLE_ITEM,Moditem.CORN, 5F);
     }
 }

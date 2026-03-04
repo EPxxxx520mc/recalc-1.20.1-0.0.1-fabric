@@ -31,6 +31,8 @@ public class Moditemgroup {
                 entries.add(Modblock.EXAMPLE_BLOCK4);
                 entries.add(Moditem.EXAMPLE_ITEM2);
                 entries.add(Modblock.EXAMPLE_BLOCK5);
+                entries.add(Moditem.SUPER_SUGAR);
+                entries.add(Moditem.CORN);
             }).build()
    );
    

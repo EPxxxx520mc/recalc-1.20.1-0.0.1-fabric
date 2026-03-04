@@ -17,6 +17,14 @@ public class Moditem {
     // 物品名称为item.recalc.test.example_item2
     public static final Item EXAMPLE_ITEM2 = regitem("test/example_item2", new Item(new Item.Settings()));
 
+    // 超级糖
+    // 物品ID为super_sugar
+    public static final Item SUPER_SUGAR = regitem("super_sugar", new Item(new Item.Settings().food(ModFoodComponents.SUPER_SUGAR)));
+
+    // 玉米
+    // 物品ID为corn
+    public static final Item CORN = regitem("corn", new Item(new Item.Settings().food(ModFoodComponents.CORN)));
+
 
 
 
