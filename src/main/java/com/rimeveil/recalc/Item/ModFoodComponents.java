@@ -1,12 +1,13 @@
 package com.rimeveil.recalc.Item;
 
-import net.minecraft.item.FoodComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.FoodComponent;
 
 public class ModFoodComponents {
     public static final FoodComponent CORN = new FoodComponent.Builder().hunger(2).saturationModifier(0.3F).build();
     public static final FoodComponent SUPER_SUGAR = new FoodComponent.Builder().hunger(10).saturationModifier(1F)
+        .alwaysEdible()
         .statusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 200), 1.0F)
         .statusEffect(new StatusEffectInstance(StatusEffects.SPEED, 200), 1.0F)
         .statusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 200), 2.0F)
