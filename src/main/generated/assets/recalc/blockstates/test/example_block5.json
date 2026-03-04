@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "recalc:block/test/example_block5"
+    }
+  }
+}

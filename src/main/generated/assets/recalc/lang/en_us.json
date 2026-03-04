@@ -1,0 +1,10 @@
+{
+  "block.recalc.test.example_block": "Example Block",
+  "block.recalc.test.example_block2": "Example Block 2",
+  "block.recalc.test.example_block3": "Example Block 3",
+  "block.recalc.test.example_block4": "Example Block 4",
+  "block.recalc.test.example_block5": "Example Block 5",
+  "item.recalc.test.example_item": "Example Item",
+  "item.recalc.test.example_item2": "Example Item 2",
+  "itemGroup.recalc": "Recalc"
+}

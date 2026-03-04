@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.data.client.ItemModelGenerator;
 import com.rimeveil.recalc.block.Modblock;
 import net.minecraft.data.client.BlockStateModelGenerator;
+import com.rimeveil.recalc.Item.Moditem;
+import net.minecraft.data.client.Models;
 
 public class ModModelsProvider extends FabricModelProvider{
     public ModModelsProvider(FabricDataOutput Output) {
@@ -21,5 +23,7 @@ public class ModModelsProvider extends FabricModelProvider{
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        itemModelGenerator.register(Moditem.EXAMPLE_ITEM, Models.GENERATED);
+        itemModelGenerator.register(Moditem.EXAMPLE_ITEM2, Models.GENERATED);
     }
 }
