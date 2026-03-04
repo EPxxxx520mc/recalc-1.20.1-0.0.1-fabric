@@ -1,10 +1,10 @@
 {
-  "block.recalc.test.example_block": "Example Block",
-  "block.recalc.test.example_block2": "Example Block 2",
-  "block.recalc.test.example_block3": "Example Block 3",
-  "block.recalc.test.example_block4": "Example Block 4",
-  "block.recalc.test.example_block5": "Example Block 5",
-  "item.recalc.test.example_item": "Example Item",
-  "item.recalc.test.example_item2": "Example Item 2",
+  "block.recalc.test.example_block": "Sugar Crystal Block",
+  "block.recalc.test.example_block2": "Refined Sugar Block",
+  "block.recalc.test.example_block3": "Sugar Ore",
+  "block.recalc.test.example_block4": "Compressed Sugar Block",
+  "block.recalc.test.example_block5": "Polished Sugar Block",
+  "item.recalc.test.example_item": "Sugar Crystal",
+  "item.recalc.test.example_item2": "Refined Sugar Ingot",
   "itemGroup.recalc": "Recalc"
 }

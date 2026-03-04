@@ -12,15 +12,15 @@ public class ModEnZhlangProvider extends FabricLanguageProvider{
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
         // 物品翻译
-        translationBuilder.add(Moditem.EXAMPLE_ITEM, "示例物品");
-        translationBuilder.add(Moditem.EXAMPLE_ITEM2, "示例物品 2");    
+        translationBuilder.add(Moditem.EXAMPLE_ITEM, "糖结晶");
+        translationBuilder.add(Moditem.EXAMPLE_ITEM2, "精制糖锭");    
         
         // 方块翻译
-        translationBuilder.add(Modblock.EXAMPLE_BLOCK, "示例方块");
-        translationBuilder.add(Modblock.EXAMPLE_BLOCK2, "示例方块 2");
-        translationBuilder.add(Modblock.EXAMPLE_BLOCK3, "示例方块 3");
-        translationBuilder.add(Modblock.EXAMPLE_BLOCK4, "示例方块 4");
-        translationBuilder.add(Modblock.EXAMPLE_BLOCK5, "示例方块 5");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK, "糖结晶块");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK2, "精制糖块");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK3, "糖矿石");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK4, "压缩糖块");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK5, "磨制糖块");
         
         // 物品组/其他翻译
         translationBuilder.add("itemGroup.recalc", "Recalc");

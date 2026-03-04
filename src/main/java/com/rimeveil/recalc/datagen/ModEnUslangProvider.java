@@ -12,15 +12,15 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
         // Item Translations
-        translationBuilder.add(Moditem.EXAMPLE_ITEM, "Example Item");
-        translationBuilder.add(Moditem.EXAMPLE_ITEM2, "Example Item 2");
+        translationBuilder.add(Moditem.EXAMPLE_ITEM, "Sugar Crystal");
+        translationBuilder.add(Moditem.EXAMPLE_ITEM2, "Refined Sugar Ingot");
         
         // Block Translations
-        translationBuilder.add(Modblock.EXAMPLE_BLOCK, "Example Block");
-        translationBuilder.add(Modblock.EXAMPLE_BLOCK2, "Example Block 2");
-        translationBuilder.add(Modblock.EXAMPLE_BLOCK3, "Example Block 3");
-        translationBuilder.add(Modblock.EXAMPLE_BLOCK4, "Example Block 4");
-        translationBuilder.add(Modblock.EXAMPLE_BLOCK5, "Example Block 5");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK, "Sugar Crystal Block");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK2, "Refined Sugar Block");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK3, "Sugar Ore");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK4, "Compressed Sugar Block");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK5, "Polished Sugar Block");
         
         // Item Group / Other Translations
         translationBuilder.add("itemGroup.recalc", "Recalc");
