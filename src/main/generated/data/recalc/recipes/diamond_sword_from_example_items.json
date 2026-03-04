@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "recalc:example_item"
+    },
+    {
+      "item": "recalc:test/example_item2"
+    }
+  ],
+  "result": {
+    "item": "minecraft:diamond_sword"
+  }
+}

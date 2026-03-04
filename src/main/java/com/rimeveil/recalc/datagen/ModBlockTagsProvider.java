@@ -1,6 +1,8 @@
 package com.rimeveil.recalc.datagen;
 
 import com.rimeveil.recalc.block.Modblock;
+import com.rimeveil.recalc.tag.ModBlockTags;
+
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.registry.RegistryWrapper;
@@ -32,5 +34,19 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
             
         // 如果需要铁镐级别，请使用 BlockTags.NEEDS_IRON_TOOL
         // 如果需要钻石镐级别，请使用 BlockTags.NEEDS_DIAMOND_TOOL
+
+        getOrCreateTagBuilder(ModBlockTags.EXAMPLE_BLOCK)
+            .add(Modblock.EXAMPLE_BLOCK)
+            .add(Modblock.EXAMPLE_BLOCK2)
+            .add(Modblock.EXAMPLE_BLOCK3)
+            .add(Modblock.EXAMPLE_BLOCK4)
+            .add(Modblock.EXAMPLE_BLOCK5)
+            .forceAddTag(BlockTags.DIAMOND_ORES)
+            .forceAddTag(BlockTags.IRON_ORES)
+            .forceAddTag(BlockTags.COAL_ORES)
+            .forceAddTag(BlockTags.GOLD_ORES)
+            .forceAddTag(BlockTags.REDSTONE_ORES)
+            .forceAddTag(BlockTags.LAPIS_ORES)
+            .forceAddTag(BlockTags.EMERALD_ORES);
     }
 }

@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "recalc:test/example_block",
+    "recalc:test/example_block2",
+    "recalc:test/example_block3",
+    "recalc:test/example_block4",
+    "recalc:test/example_block5",
+    "#minecraft:diamond_ores",
+    "#minecraft:iron_ores",
+    "#minecraft:coal_ores",
+    "#minecraft:gold_ores",
+    "#minecraft:redstone_ores",
+    "#minecraft:lapis_ores",
+    "#minecraft:emerald_ores"
+  ]
+}

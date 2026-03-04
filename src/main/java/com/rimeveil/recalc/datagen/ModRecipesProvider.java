@@ -2,11 +2,14 @@ package com.rimeveil.recalc.datagen;
 
 import com.rimeveil.recalc.Item.Moditem;
 import com.rimeveil.recalc.block.Modblock;
+import com.rimeveil.recalc.tag.ModItemTags;
 import com.rimeveil.recalc.Recalc;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.Identifier;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
@@ -42,6 +45,13 @@ public class ModRecipesProvider extends FabricRecipeProvider {
             .input(Moditem.EXAMPLE_ITEM2)
             .criterion(hasItem(Moditem.EXAMPLE_ITEM2), conditionsFromItem(Moditem.EXAMPLE_ITEM2))
             .offerTo(exporter, new Identifier(Recalc.MOD_ID, "example_block4_shapeless"));
+
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.DIAMOND_SWORD, 1)
+            .input(ModItemTags.EXAMPLE_ITEM)
+            .input(Moditem.EXAMPLE_ITEM2)
+            .criterion(hasItem(Moditem.EXAMPLE_ITEM), conditionsFromItem(Moditem.EXAMPLE_ITEM))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "diamond_sword_from_example_items"));
+        
             
         // 有序合成配方 (关心材料摆放位置)
         ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, Items.SUGAR, 1)

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "recalc:test/example_item",
+    "recalc:test/example_item2",
+    "recalc:super_coal",
+    "recalc:super_sugar"
+  ]
+}
