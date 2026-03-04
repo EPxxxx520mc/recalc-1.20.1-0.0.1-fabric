@@ -18,12 +18,14 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
             .add(Modblock.EXAMPLE_BLOCK)
             .add(Modblock.EXAMPLE_BLOCK2)
             .add(Modblock.EXAMPLE_BLOCK3)
-            .add(Modblock.EXAMPLE_BLOCK4);
+            .add(Modblock.EXAMPLE_BLOCK4)
+            .add(Modblock.EXAMPLE_BLOCK5);
 
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
             .add(Modblock.EXAMPLE_BLOCK)
             .add(Modblock.EXAMPLE_BLOCK2)
             .add(Modblock.EXAMPLE_BLOCK3)
-            .add(Modblock.EXAMPLE_BLOCK4);
+            .add(Modblock.EXAMPLE_BLOCK4)
+            .add(Modblock.EXAMPLE_BLOCK5);
     }
 }

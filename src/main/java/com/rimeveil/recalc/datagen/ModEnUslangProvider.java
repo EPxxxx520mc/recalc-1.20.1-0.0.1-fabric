@@ -17,6 +17,7 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
         translationBuilder.add(Modblock.EXAMPLE_BLOCK2, "Example Block 2");
         translationBuilder.add(Modblock.EXAMPLE_BLOCK3, "Example Block 3");
         translationBuilder.add(Modblock.EXAMPLE_BLOCK4, "Example Block 4");
+        translationBuilder.add(Modblock.EXAMPLE_BLOCK5, "Example Block 5");
         translationBuilder.add("itemGroup.recalc", "Recalc");
     }
 }
