@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "recalc:test/example_item2"
+    }
+  },
+  "pattern": [
+    "###"
+  ],
+  "result": {
+    "item": "recalc:super_coal"
+  },
+  "show_notification": true
+}

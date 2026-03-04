@@ -1,9 +1,10 @@
-// 1.20.1	2026-03-04T14:01:03.1608819	Recalc/Model Definitions
+// 1.20.1	2026-03-04T16:35:40.0948186	Recalc/Model Definitions
 0b906b7976011b508ce9967be55803339d4403dd assets\recalc\models\item\corn.json
 6d3a7c465788344e3e56270e685f2cff33c744c8 assets\recalc\models\block\test\example_block4.json
 3d3dfee73a371a05ff41db96c13ff252304fceb0 assets\recalc\blockstates\test\example_block.json
 8db1fd5fd4c0ea7bdcf7a22f27259a3927762365 assets\recalc\models\item\super_sugar.json
 7dfcd7eba653f8a64fb0e2e022c88fdaed3678fe assets\recalc\models\block\test\example_block3.json
+bbf2fa9651d9f823baa9dd5ac87226c894f264a8 assets\recalc\models\item\super_coal.json
 cdaee59430a5f0eb9eadfec095eb12a8435b4231 assets\recalc\blockstates\test\example_block5.json
 d08b9437724060fac8b5ca169acfa2ebbc68c682 assets\recalc\blockstates\test\example_block3.json
 88154453dd5916dfd7a9ee5b280f4fdbda1e2ad7 assets\recalc\models\item\test\example_block2.json
