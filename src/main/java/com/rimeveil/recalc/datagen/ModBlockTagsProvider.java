@@ -64,5 +64,16 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
             .add(Modblock.SUPER_SUAR_ORE)
             .add(Modblock.SUPER_SUGAR_BLOCK);
+
+        getOrCreateTagBuilder(BlockTags.WALLS)
+            .add(Modblock.SUPER_SUGAR_WALL);
+        getOrCreateTagBuilder(BlockTags.STAIRS)
+            .add(Modblock.SUPER_SUGAR_STAIRS);
+        getOrCreateTagBuilder(BlockTags.FENCES)
+            .add(Modblock.SUPER_SUGAR_FENCE);
+        getOrCreateTagBuilder(BlockTags.FENCE_GATES)
+            .add(Modblock.SUPER_SUGAR_FENCE_GATE);
+        getOrCreateTagBuilder(BlockTags.WOODEN_FENCES)
+            .add(Modblock.SUPER_SUGAR_FENCE);
     }
 }
