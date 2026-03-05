@@ -1,6 +1,17 @@
-// 1.20.1	2026-03-04T20:19:03.3476111	Recalc/Block Loot Tables
-365f62e1be7ccbb5b078f6a8f2ce5731b0b836d4 data\recalc\loot_tables\blocks\test\example_block2.json
-e5022174bc2ea1c34edaaf67e01624219b23d288 data\recalc\loot_tables\blocks\test\example_block5.json
+// 1.20.1	2026-03-05T19:19:50.0545304	Recalc/Block Loot Tables
+f2b59f8f9500d4cdbdf0da0abc1998131b4b0812 data\recalc\loot_tables\blocks\super_sugar_trapdoor.json
+2fc1287ec276077761e87a564c68e433d5a76600 data\recalc\loot_tables\blocks\super_sugar_fence_gate.json
 735fd78715b082f0968c273a6cca26f634af960c data\recalc\loot_tables\blocks\test\example_block4.json
+26d163cc0c24ddd3408ef3c2f3a77650107fafae data\recalc\loot_tables\blocks\super_sugar_stairs.json
+d9b878ec107b0b0fb9123cb45e05525b7c255276 data\recalc\loot_tables\blocks\super_sugar_ore.json
+365f62e1be7ccbb5b078f6a8f2ce5731b0b836d4 data\recalc\loot_tables\blocks\test\example_block2.json
+e9494caece59f3c9d0fc04974db614dbb26b3a19 data\recalc\loot_tables\blocks\super_sugar_slab.json
+4d2b56a676270a1ff941a3daa19aa8ecc9d9a166 data\recalc\loot_tables\blocks\super_sugar_button.json
+b2b3843e6d0a34d64c9d9b6518a90f3ca8e6d74f data\recalc\loot_tables\blocks\super_sugar_pressure_plate.json
+e5022174bc2ea1c34edaaf67e01624219b23d288 data\recalc\loot_tables\blocks\test\example_block5.json
+f8a983bb0a128ba3a9d77c9654a35656beddf166 data\recalc\loot_tables\blocks\super_sugar_wall.json
+313973d540b84fd5b45d2362ffad18d03c88a0c2 data\recalc\loot_tables\blocks\super_sugar_block.json
+5e357be2302c72c5d553e98654c690b36e3dcc1b data\recalc\loot_tables\blocks\super_sugar_door.json
+1b79623c7adfe9eccc771224c39bcf7b14b9e711 data\recalc\loot_tables\blocks\super_sugar_fence.json
 8942f93f5a6a4a5de2eb61fe1557c15a4871e44d data\recalc\loot_tables\blocks\test\example_block.json
 1d63a4260ed1ceb27297e740ac7492501a6641fb data\recalc\loot_tables\blocks\test\example_block3.json

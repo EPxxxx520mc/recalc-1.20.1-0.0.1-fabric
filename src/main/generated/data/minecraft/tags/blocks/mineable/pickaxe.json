@@ -5,6 +5,15 @@
     "recalc:test/example_block2",
     "recalc:test/example_block3",
     "recalc:test/example_block4",
-    "recalc:test/example_block5"
+    "recalc:test/example_block5",
+    "recalc:super_sugar_ore",
+    "recalc:super_sugar_block",
+    "recalc:super_sugar_stairs",
+    "recalc:super_sugar_slab",
+    "recalc:super_sugar_button",
+    "recalc:super_sugar_pressure_plate",
+    "recalc:super_sugar_fence",
+    "recalc:super_sugar_fence_gate",
+    "recalc:super_sugar_wall"
   ]
 }

@@ -1,4 +1,4 @@
-// 1.20.1	2026-03-04T20:19:03.346615	Recalc/Tags for minecraft:block
-648ace75524a1edcdfba11b4cee1635010dc1f22 data\minecraft\tags\blocks\needs_stone_tool.json
+// 1.20.1	2026-03-05T19:19:50.0540162	Recalc/Tags for minecraft:block
 f7f8a80f6b1a39334bb64fb233f50c8e18c6eb93 data\recalc\tags\blocks\example_block.json
-648ace75524a1edcdfba11b4cee1635010dc1f22 data\minecraft\tags\blocks\mineable\pickaxe.json
+189d5bdf261aff78da260458cd4d9c4fc4d83da3 data\minecraft\tags\blocks\needs_stone_tool.json
+ca774e8c3b992c92fe84ba6c43e6890cbf99855e data\minecraft\tags\blocks\mineable\pickaxe.json

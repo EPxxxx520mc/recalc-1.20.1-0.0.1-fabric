@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "recalc:block/super_sugar_slab"
+    },
+    "type=double": {
+      "model": "recalc:block/super_sugar_block"
+    },
+    "type=top": {
+      "model": "recalc:block/super_sugar_slab_top"
+    }
+  }
+}

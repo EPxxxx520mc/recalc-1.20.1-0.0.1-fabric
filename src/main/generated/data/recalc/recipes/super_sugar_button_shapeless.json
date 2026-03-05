@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "recalc:super_sugar_block"
+    }
+  ],
+  "result": {
+    "item": "recalc:super_sugar_button"
+  }
+}

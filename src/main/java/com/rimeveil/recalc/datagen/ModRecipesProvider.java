@@ -44,6 +44,11 @@ public class ModRecipesProvider extends FabricRecipeProvider {
             .criterion(hasItem(Moditem.EXAMPLE_ITEM2), conditionsFromItem(Moditem.EXAMPLE_ITEM2))
             .offerTo(exporter, new Identifier(Recalc.MOD_ID, "example_block4_shapeless"));
 
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Modblock.SUPER_SUGAR_BUTTON, 1)
+            .input(Modblock.SUPER_SUGAR_BLOCK)
+            .criterion(hasItem(Modblock.SUPER_SUGAR_BLOCK), conditionsFromItem(Modblock.SUPER_SUGAR_BLOCK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_button_shapeless"));
+
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.DIAMOND_SWORD, 1)
             .input(ModItemTags.EXAMPLE_ITEM)
             .input(Moditem.EXAMPLE_ITEM2)
@@ -62,6 +67,67 @@ public class ModRecipesProvider extends FabricRecipeProvider {
             .criterion(hasItem(Moditem.EXAMPLE_ITEM2), conditionsFromItem(Moditem.EXAMPLE_ITEM2))
             .offerTo(exporter, new Identifier(Recalc.MOD_ID, "example_item_to_sugar"));
 
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Modblock.SUPER_SUGAR_STAIRS, 4)
+            .pattern("#  ")
+            .pattern("## ")
+            .pattern("###")
+            .input('#', Modblock.SUPER_SUGAR_BLOCK)
+            .criterion(hasItem(Modblock.SUPER_SUGAR_BLOCK), conditionsFromItem(Modblock.SUPER_SUGAR_BLOCK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_stairs_from_block"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Modblock.SUPER_SUGAR_SLAB, 6)
+            .pattern("###")
+            .input('#', Modblock.SUPER_SUGAR_BLOCK)
+            .criterion(hasItem(Modblock.SUPER_SUGAR_BLOCK), conditionsFromItem(Modblock.SUPER_SUGAR_BLOCK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_slab_from_block"));
+            
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Modblock.SUPER_SUGAR_PRESSURE_PLATE, 1)
+            .pattern("##")
+            .input('#', Modblock.SUPER_SUGAR_BLOCK)
+            .criterion(hasItem(Modblock.SUPER_SUGAR_BLOCK), conditionsFromItem(Modblock.SUPER_SUGAR_BLOCK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_pressure_plate_from_block"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Modblock.SUPER_SUGAR_FENCE, 2)
+            .pattern("#?#")
+            .pattern("#?#")
+            .input('#', Modblock.SUPER_SUGAR_BLOCK)
+            .input('?', Items.STICK)
+            .criterion(hasItem(Modblock.SUPER_SUGAR_BLOCK), conditionsFromItem(Modblock.SUPER_SUGAR_BLOCK))
+            .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_fence_from_block"));
+            
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Modblock.SUPER_SUGAR_FENCE_GATE, 1)
+            .pattern("?#?")
+            .pattern("?#?")
+            .input('#', Modblock.SUPER_SUGAR_BLOCK)
+            .input('?', Items.STICK)
+            .criterion(hasItem(Modblock.SUPER_SUGAR_BLOCK), conditionsFromItem(Modblock.SUPER_SUGAR_BLOCK))
+            .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_fence_gate_from_block"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Modblock.SUPER_SUGAR_WALL, 2)
+            .pattern("###")
+            .pattern("###")
+            .input('#', Modblock.SUPER_SUGAR_BLOCK)
+            .criterion(hasItem(Modblock.SUPER_SUGAR_BLOCK), conditionsFromItem(Modblock.SUPER_SUGAR_BLOCK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_wall_from_block"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Modblock.SUPER_SUGAR_DOOR, 2)
+            .pattern("##")
+            .pattern("##")
+            .pattern("##")
+            .input('#', Modblock.SUPER_SUGAR_BLOCK)
+            .criterion(hasItem(Modblock.SUPER_SUGAR_BLOCK), conditionsFromItem(Modblock.SUPER_SUGAR_BLOCK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_door_from_block"));
+            
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Modblock.SUPER_SUGAR_TRAPDOOR, 2)
+            .pattern("##")
+            .pattern("##")
+            .input('#', Modblock.SUPER_SUGAR_BLOCK)
+            .criterion(hasItem(Modblock.SUPER_SUGAR_BLOCK), conditionsFromItem(Modblock.SUPER_SUGAR_BLOCK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_trapdoor_from_block"));
+            
+            
         // 营火烹饪配方
         offerFoodCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, 
         200, Moditem.EXAMPLE_ITEM2, Items.SUGAR, 5F);

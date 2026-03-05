@@ -31,9 +31,22 @@ public class Moditemgroup {
                 entries.add(Modblock.EXAMPLE_BLOCK4);
                 entries.add(Moditem.EXAMPLE_ITEM2);
                 entries.add(Modblock.EXAMPLE_BLOCK5);
+
+
                 entries.add(Moditem.SUPER_SUGAR);
                 entries.add(Moditem.CORN);
                 entries.add(Moditem.SUPER_COAL);
+                entries.add(Modblock.SUPER_SUAR_ORE);
+                entries.add(Modblock.SUPER_SUGAR_BLOCK);
+                entries.add(Modblock.SUPER_SUGAR_STAIRS);
+                entries.add(Modblock.SUPER_SUGAR_SLAB);
+                entries.add(Modblock.SUPER_SUGAR_BUTTON);
+                entries.add(Modblock.SUPER_SUGAR_PRESSURE_PLATE);
+                entries.add(Modblock.SUPER_SUGAR_FENCE);
+                entries.add(Modblock.SUPER_SUGAR_FENCE_GATE);
+                entries.add(Modblock.SUPER_SUGAR_WALL);
+                entries.add(Modblock.SUPER_SUGAR_DOOR);
+                entries.add(Modblock.SUPER_SUGAR_TRAPDOOR);
             }).build()
    );
    

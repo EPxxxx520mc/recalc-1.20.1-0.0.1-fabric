@@ -29,6 +29,19 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider{
         
         // 特殊矿石掉落逻辑：掉落 EXAMPLE_ITEM2，数量 2-5 个，受时运影响
         addDrop(Modblock.EXAMPLE_BLOCK5, RecalccopperOreDrops(Modblock.EXAMPLE_BLOCK5, Moditem.EXAMPLE_ITEM2, 2, 5));
+        
+        // 超级糖系列方块掉落表
+        addDrop(Modblock.SUPER_SUAR_ORE, RecalccopperOreDrops(Modblock.SUPER_SUAR_ORE, Moditem.SUPER_SUGAR, 2, 4));
+        addDrop(Modblock.SUPER_SUGAR_BLOCK);
+        addDrop(Modblock.SUPER_SUGAR_STAIRS);
+        addDrop(Modblock.SUPER_SUGAR_SLAB, slabDrops(Modblock.SUPER_SUGAR_SLAB));
+        addDrop(Modblock.SUPER_SUGAR_BUTTON);
+        addDrop(Modblock.SUPER_SUGAR_PRESSURE_PLATE);
+        addDrop(Modblock.SUPER_SUGAR_FENCE);
+        addDrop(Modblock.SUPER_SUGAR_FENCE_GATE);
+        addDrop(Modblock.SUPER_SUGAR_WALL);
+        addDrop(Modblock.SUPER_SUGAR_DOOR, doorDrops(Modblock.SUPER_SUGAR_DOOR));
+        addDrop(Modblock.SUPER_SUGAR_TRAPDOOR);
     }
 
     /**

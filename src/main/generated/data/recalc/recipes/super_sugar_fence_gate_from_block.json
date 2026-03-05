@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "recalc:super_sugar_block"
+    },
+    "?": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "?#?",
+    "?#?"
+  ],
+  "result": {
+    "item": "recalc:super_sugar_fence_gate"
+  },
+  "show_notification": true
+}

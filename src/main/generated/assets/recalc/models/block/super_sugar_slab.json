@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "recalc:block/super_sugar_block",
+    "side": "recalc:block/super_sugar_block",
+    "top": "recalc:block/super_sugar_block"
+  }
+}
