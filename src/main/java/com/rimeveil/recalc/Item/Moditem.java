@@ -2,6 +2,7 @@ package com.rimeveil.recalc.Item;
 
 import com.rimeveil.recalc.Recalc;
 
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -32,7 +33,7 @@ public class Moditem {
 
 
 
-
+    
 
     /**
      * 注册物品
@@ -46,5 +47,6 @@ public class Moditem {
 
     // 辅助加载物品
     public static void regitems() {
+        FuelRegistry.INSTANCE.add(Moditem.SUPER_COAL, 1600);
     }
 }

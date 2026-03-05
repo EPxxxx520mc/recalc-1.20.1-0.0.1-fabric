@@ -6,7 +6,6 @@ import com.rimeveil.recalc.Item.Moditemgroup;
 import com.rimeveil.recalc.block.Modblock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import net.fabricmc.fabric.api.registry.FuelRegistry;
 
 public class Recalc implements ModInitializer {
 	public static final String MOD_ID = "recalc";
@@ -32,7 +31,7 @@ public class Recalc implements ModInitializer {
 		LOGGER.info("load item groups");//控制台输出load item groups
 		Modblock.regblocks();//加载方块
 		LOGGER.info("load blocks");//控制台输出load blocks
-		FuelRegistry.INSTANCE.add(Moditem.SUPER_COAL, 1600);
+
 		LOGGER.info("Hello recalc!");//控制台输出Hello recalc!
 	}
 }
