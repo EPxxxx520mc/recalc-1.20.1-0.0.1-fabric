@@ -59,6 +59,19 @@ java {
 	targetCompatibility = JavaVersion.VERSION_17
 }
 
+sourceSets {
+	main {
+		resources {
+			exclude '.cache/**'
+		}
+	}
+	test {
+		java {
+			srcDir 'src/test/java'
+		}
+	}
+}
+
 jar {
 	inputs.property "archivesName", project.base.archivesName
 
