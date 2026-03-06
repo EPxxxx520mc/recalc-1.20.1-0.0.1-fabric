@@ -1,4 +1,4 @@
-// 1.20.1	2026-03-05T19:51:27.3348472	Recalc/Model Definitions
+// 1.20.1	2026-03-06T16:29:29.0851704	Recalc/Model Definitions
 6d3a7c465788344e3e56270e685f2cff33c744c8 assets\recalc\models\block\test\example_block4.json
 c7816dcfa0223ee8c24da02888bc264aa7fffacd assets\recalc\blockstates\super_sugar_stairs.json
 54e1a000b60741ecbd2a5749b9d29042043d96c2 assets\recalc\models\item\super_sugar_stairs.json
@@ -12,8 +12,8 @@ a5d8fa3eab95fe0e03e19f151687bbad8de96315 assets\recalc\models\block\super_sugar_
 8cd6e864c214f401f0d46779171c9b61d667ea7b assets\recalc\models\block\test\example_block.json
 c9aa197cd55e625f05c4706c350968f525892139 assets\recalc\models\block\super_sugar_stairs_outer.json
 df11ae36fd4a85317974842132ab3c082501a636 assets\recalc\blockstates\test\example_block2.json
-7c9b87867bc480821578773ca2ee6a8e5c1aca36 assets\recalc\models\item\test\example_block3.json
 a547637c22ba77617a912fbc5e61022f4a0cfd95 assets\recalc\models\block\super_sugar_fence_side.json
+7c9b87867bc480821578773ca2ee6a8e5c1aca36 assets\recalc\models\item\test\example_block3.json
 a34569b60a5aeb71ea34ff6c76ff213d93189f6c assets\recalc\blockstates\super_sugar_trapdoor.json
 b968f3fb3ef97e8143594ad5ec56a6fe6872832e assets\recalc\models\block\super_sugar_door_bottom_left_open.json
 e5638dcbaecde65b53d4db9bc4f3466ed3bc5b53 assets\recalc\blockstates\super_sugar_button.json
@@ -33,14 +33,14 @@ df1ac8a8a9d67aaf88fc2f7d781fd1636dd9a31f assets\recalc\models\block\super_sugar_
 d0c140d8f6103e63d72501cddcb69610c323605c assets\recalc\models\block\test\example_block2.json
 e9a3ab8066a48a3e71a4f0f3911261dcc8497ff8 assets\recalc\models\item\super_sugar_button.json
 2b18cd2df4af079fdf6862ecb420ad1a5e506a51 assets\recalc\models\block\super_sugar_pressure_plate_down.json
-111a6b4ba4e1205e82fef125bc1b16737597e123 assets\recalc\models\block\super_sugar_wall_side.json
 f3011f76d0aac10d1d7476325615abe37417c047 assets\recalc\models\block\super_sugar_wall_side_tall.json
+111a6b4ba4e1205e82fef125bc1b16737597e123 assets\recalc\models\block\super_sugar_wall_side.json
 af45de0f41faf373309b023a41a2452876aad46d assets\recalc\models\item\test\example_item.json
 cfc27d2f8a59414dec14b51da990585ec9e99818 assets\recalc\blockstates\super_sugar_pressure_plate.json
 c6d02a4d4f0537b54a1a2e9c3769d927c9eacbe9 assets\recalc\models\item\super_sugar_fence.json
 579bd25c4f5370689753dafdd912e078165346b3 assets\recalc\blockstates\super_sugar_fence.json
-0503ba84516658f65e1a95cb2653a14b1dd0fafa assets\recalc\blockstates\super_sugar_door.json
 7c49f91c290e684e0a34d06652eb9dfc7a6e3699 assets\recalc\blockstates\test\example_block4.json
+0503ba84516658f65e1a95cb2653a14b1dd0fafa assets\recalc\blockstates\super_sugar_door.json
 4a92e0cebd6b90568926fc0313e7fd80c14bdf6f assets\recalc\models\block\super_sugar_fence_post.json
 d965b60be17dabcf5e1fae38b53c7a41667a1695 assets\recalc\models\item\super_sugar_slab.json
 941f193e5df0928293c6c28048c20875bdf2cc84 assets\recalc\models\block\super_sugar_block.json
@@ -71,7 +71,7 @@ f174cdd001812343268b2830acfaccfc56f0dc4b assets\recalc\models\block\super_sugar_
 46fcb92a6a4a8a689e07c9331641ecf7c98deea6 assets\recalc\blockstates\super_sugar_wall.json
 af6543eb68c0fb9ca2c5edad71e06e1eb4c73777 assets\recalc\models\item\test\example_block4.json
 39f5c0e691cf3f59b6395fa4eed6ed4d1df82360 assets\recalc\models\item\super_sugar_door.json
-1586435414d8cbb939120a3b937f00d8d3f5e4b8 assets\recalc\models\item\test\example_block.json
 c770934ff8742085a4a3b08420050dc50991a1a2 assets\recalc\models\block\super_sugar_stairs_inner.json
+1586435414d8cbb939120a3b937f00d8d3f5e4b8 assets\recalc\models\item\test\example_block.json
 d483c837d3f27cf0bc33dcdca0f6d7b81e3a34a0 assets\recalc\models\block\super_sugar_door_top_left_open.json
 0ea46d7de2ea0ee62c3f01f50a1bd7c7b2a2f774 assets\recalc\models\block\super_sugar_trapdoor_bottom.json
