@@ -1,4 +1,4 @@
-// 1.20.1	2026-03-07T14:51:39.9063977	Recalc/Model Definitions
+// 1.20.1	2026-03-07T14:54:05.3194524	Recalc/Model Definitions
 c7816dcfa0223ee8c24da02888bc264aa7fffacd assets\recalc\blockstates\super_sugar_stairs.json
 424f25db8517d60e0ade2f101beb84442ca55fad assets\recalc\models\item\super_sugar_helmet_redstone_trim.json
 54e1a000b60741ecbd2a5749b9d29042043d96c2 assets\recalc\models\item\super_sugar_stairs.json
@@ -85,8 +85,8 @@ df1ac8a8a9d67aaf88fc2f7d781fd1636dd9a31f assets\recalc\models\block\super_sugar_
 74bdce87358422371f2fe00e42d92de877a2f4aa assets\recalc\blockstates\super_sugar_block.json
 d0c140d8f6103e63d72501cddcb69610c323605c assets\recalc\models\block\test\example_block2.json
 e9a3ab8066a48a3e71a4f0f3911261dcc8497ff8 assets\recalc\models\item\super_sugar_button.json
-111a6b4ba4e1205e82fef125bc1b16737597e123 assets\recalc\models\block\super_sugar_wall_side.json
 f681b464906c964584456736f8bb59db6bc7a08d assets\recalc\models\item\super_sugar_chestplate_redstone_trim.json
+111a6b4ba4e1205e82fef125bc1b16737597e123 assets\recalc\models\block\super_sugar_wall_side.json
 af45de0f41faf373309b023a41a2452876aad46d assets\recalc\models\item\test\example_item.json
 74e8b6e8a5d1a669c66325ac1da497dafd6aaee0 assets\recalc\models\item\super_sugar_boots.json
 cfc27d2f8a59414dec14b51da990585ec9e99818 assets\recalc\blockstates\super_sugar_pressure_plate.json
