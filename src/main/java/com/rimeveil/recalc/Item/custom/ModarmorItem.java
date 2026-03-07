@@ -1,20 +1,17 @@
 package com.rimeveil.recalc.Item.custom;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
-import net.fabricmc.loader.impl.discovery.DomainObject.Mod;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import com.rimeveil.recalc.Item.ModArmorMaterials;
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 public class ModarmorItem extends ArmorItem{
@@ -44,19 +41,45 @@ public class ModarmorItem extends ArmorItem{
     private void evaluateArmorEffect(PlayerEntity player) {
         for (Map.Entry<ArmorMaterial, List<StatusEffectInstance>> entry : MAP.entrySet()) {
             ArmorMaterial material = entry.getKey();
-            List<StatusEffectInstance> effect = entry.getValue();1    
+            List<StatusEffectInstance> effects = entry.getValue();  
         
-            if (hasCorrectMaterialArmorOn(material,player)) {
-                for (StatusEffectInstance instance : effect) {
-                    StatusEffect effect1 = effect.getEffectType();
+            if (hasCorrectMaterialArmorOn(material, player)) {
+                for (StatusEffectInstance effect : effects) {
+                    StatusEffect effects1 = effect.getEffectType();
+                    if (!player.hasStatusEffect(effects1)) {
+                        player.addStatusEffect(effect);
+                    }
                     }
                 }
             }
         }
+    private boolean hasCorrectMaterialArmorOn(ArmorMaterial material, PlayerEntity player) {
+        for (ItemStack stack: player.getInventory().armor) {
+            if (stack.getItem() instanceof ArmorItem) {
+                    return false;
+           }
+        }
+
+        ArmorItem helmet = (ArmorItem) player.getInventory().getArmorStack(3).getItem();
+        ArmorItem chestplate = (ArmorItem) player.getInventory().getArmorStack(2).getItem();
+        ArmorItem leggings = (ArmorItem) player.getInventory().getArmorStack(1).getItem();
+        ArmorItem boots = (ArmorItem) player.getInventory().getArmorStack(0).getItem();
+
+        return helmet.getMaterial() == material 
+            && chestplate.getMaterial() == material 
+            && leggings.getMaterial() == material 
+            && boots.getMaterial() == material;
     }
 
     private boolean hasFullSuitableArmor(PlayerEntity player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hasFullSuitableArmor'");
+        ItemStack helmet = player.getInventory().getArmorStack(3);
+        ItemStack chestplate = player.getInventory().getArmorStack(2);  
+        ItemStack leggings = player.getInventory().getArmorStack(1);
+        ItemStack boots = player.getInventory().getArmorStack(0);
+
+        return !helmet.isEmpty() 
+            && !chestplate.isEmpty()
+            && !leggings.isEmpty() 
+            && !boots.isEmpty();
     }
 }
