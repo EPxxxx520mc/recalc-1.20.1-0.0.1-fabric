@@ -157,9 +157,9 @@ public class ModRecipesProvider extends FabricRecipeProvider {
 
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_SWORD, 1)
-            .pattern("a#a")
-            .pattern("a#a")
-            .pattern("a?a")
+            .pattern(" # ")
+            .pattern(" # ")
+            .pattern(" ? ")
             .input('#', Moditem.SUPER_SUGAR)
             .input('?', Items.STICK)
             .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
@@ -167,9 +167,9 @@ public class ModRecipesProvider extends FabricRecipeProvider {
             .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_sword"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_AXE, 1)
-            .pattern("$##")
-            .pattern("$?#")
-            .pattern("$?$")
+            .pattern(" ##")
+            .pattern(" ?#")
+            .pattern(" ? ")
             .input('#', Moditem.SUPER_SUGAR)
             .input('?', Items.STICK)
             .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
@@ -177,9 +177,9 @@ public class ModRecipesProvider extends FabricRecipeProvider {
             .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_axe"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_SHOVEL, 1)
-            .pattern("$#$")
-            .pattern("$?$")
-            .pattern("$?$")
+            .pattern(" # ")
+            .pattern(" ? ")
+            .pattern(" ? ")
             .input('#', Moditem.SUPER_SUGAR)
             .input('?', Items.STICK)
             .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
@@ -188,8 +188,8 @@ public class ModRecipesProvider extends FabricRecipeProvider {
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_PICKAXE, 1)
             .pattern("###")
-            .pattern("$?$")
-            .pattern("$?$")
+            .pattern(" ? ")
+            .pattern(" ? ")
             .input('#', Moditem.SUPER_SUGAR)
             .input('?', Items.STICK)
             .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
@@ -197,9 +197,9 @@ public class ModRecipesProvider extends FabricRecipeProvider {
             .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_pickaxe"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_HOE, 1)
-            .pattern("##$")
-            .pattern("?$?")
-            .pattern("?$?")
+            .pattern("## ")
+            .pattern(" ? ")
+            .pattern(" ? ")
             .input('#', Moditem.SUPER_SUGAR)
             .input('?', Items.STICK)
             .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))

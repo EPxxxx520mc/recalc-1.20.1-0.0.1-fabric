@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "recalc:item/super_sugar_pickaxe"
+  }
+}
