@@ -33,7 +33,6 @@ public class ModModelsProvider extends FabricModelProvider{
         
         // 超级糖系列方块模型
         blockStateModelProvider.registerSimpleCubeAll(Modblock.SUPER_SUGAR_ORE);
-        blockStateModelProvider.registerSimpleCubeAll(Modblock.SUPER_SUGAR_BLOCK);
     }
 
     @Override
@@ -55,7 +54,5 @@ public class ModModelsProvider extends FabricModelProvider{
         itemModelGenerator.registerArmor((ArmorItem) Moditem.SUPER_SUGAR_LEGGINGS);
         itemModelGenerator.registerArmor((ArmorItem) Moditem.SUPER_SUGAR_BOOTS);
 
-        // 方块物品模型
-        itemModelGenerator.register(Modblock.SUPER_SUGAR_DOOR.asItem(), Models.GENERATED);
     }
 }

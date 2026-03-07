@@ -5,13 +5,16 @@
     "#": {
       "item": "recalc:super_sugar"
     },
+    "%": {
+      "item": "minecraft:amethyst_shard"
+    },
     "?": {
-      "item": "minecraft:stick"
+      "item": "minecraft:bamboo"
     }
   },
   "pattern": [
-    " # ",
-    " # ",
+    " % ",
+    "#%#",
     " ? "
   ],
   "result": {
