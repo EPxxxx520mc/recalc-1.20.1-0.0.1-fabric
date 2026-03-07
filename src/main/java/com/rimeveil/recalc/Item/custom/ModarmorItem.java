@@ -19,8 +19,8 @@ public class ModarmorItem extends ArmorItem{
         (new ImmutableMap.Builder<ArmorMaterial, List<StatusEffectInstance>>()
             .put(ModArmorMaterials.SUPER_SUGAR,
                 Arrays.asList(
-                    new StatusEffectInstance(StatusEffects.SPEED, 20 * 60, 1,false,false,true),
-                    new StatusEffectInstance(StatusEffects.JUMP_BOOST, 20 * 60, 1,false,false,true)
+                    new StatusEffectInstance(StatusEffects.SPEED, 1, 1,false,false,true),
+                    new StatusEffectInstance(StatusEffects.JUMP_BOOST, 1, 1,false,false,true)
             ))
             .build());
     public ModarmorItem(ArmorMaterial material, Type type, Settings settings) {
