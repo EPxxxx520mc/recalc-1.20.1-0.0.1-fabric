@@ -10,7 +10,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.render.item.ItemRenderer;
 
 
 
