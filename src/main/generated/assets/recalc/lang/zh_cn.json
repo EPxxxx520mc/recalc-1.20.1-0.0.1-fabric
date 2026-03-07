@@ -16,7 +16,7 @@
   "block.recalc.test.example_block4": "示例方块4",
   "block.recalc.test.example_block5": "示例方块5",
   "item.recalc.corn": "玉米",
-  "item.recalc.pickaxe_axe.tooltip": "按下Shift查看更多信息",
+  "item.recalc.pickaxe_axe.tooltip": "按下§1§l§oShift§r§r§r查看更多信息",
   "item.recalc.pickaxe_axe.tooltip.shift": "这个物品可以作为镐子以及斧子同时使用",
   "item.recalc.super_coal": "超级煤炭",
   "item.recalc.super_sugar": "超级糖",
