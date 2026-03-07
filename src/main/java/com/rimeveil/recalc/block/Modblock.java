@@ -51,9 +51,9 @@ public class Modblock {
     public static final Block SUPER_SUGAR_WALL = register("super_sugar_wall", 
         new WallBlock(AbstractBlock.Settings.copy(SUPER_SUGAR_BLOCK)));
     public static final Block SUPER_SUGAR_DOOR = register("super_sugar_door", 
-        new DoorBlock(AbstractBlock.Settings.copy(SUPER_SUGAR_BLOCK), BlockSetType.IRON));
+        new DoorBlock(AbstractBlock.Settings.copy(SUPER_SUGAR_BLOCK), BlockSetType.OAK));
     public static final Block SUPER_SUGAR_TRAPDOOR = register("super_sugar_trapdoor", 
-        new TrapdoorBlock(AbstractBlock.Settings.copy(SUPER_SUGAR_BLOCK), BlockSetType.STONE));
+        new TrapdoorBlock(AbstractBlock.Settings.copy(SUPER_SUGAR_BLOCK), BlockSetType.OAK));
     
     
     public static Block register(String id, Block block) {
