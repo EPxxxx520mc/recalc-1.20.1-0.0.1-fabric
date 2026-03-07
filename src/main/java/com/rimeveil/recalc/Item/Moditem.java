@@ -12,6 +12,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ShovelItem;
+import com.rimeveil.recalc.Item.custom.PickaxeAxeItem;
 public class Moditem {
     // 示例物品
     // 物品ID为test/example_item
@@ -30,18 +31,19 @@ public class Moditem {
     public static final Item CORN = regitem("corn", new Item(new Item.Settings().food(ModFoodComponents.CORN)));
     // 超级煤炭
     // 物品ID为super_coal
-    public static final Item SUPER_COAL = regitem("super_coal", new Item(new Item.Settings()));
+    public static final Item SUPER_COAL = regitem("super_coal", new Item(new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_SWORD = regitem("super_sugar_sword", new SwordItem(ModToolMaterials.SUPER_SUGAR, 
-        7, -2.0F, new Item.Settings()));
+        7, -2.0F, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_PICKAXE = regitem("super_sugar_pickaxe", new PickaxeItem(ModToolMaterials.SUPER_SUGAR, 
-        0, -2.4F, new Item.Settings()));
+        0, -2.4F, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_AXE = regitem("super_sugar_axe", new AxeItem(ModToolMaterials.SUPER_SUGAR, 
-        8.5F, -3.5F, new Item.Settings()));
+        8.5F, -3.5F, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_SHOVEL = regitem("super_sugar_shovel", new ShovelItem(ModToolMaterials.SUPER_SUGAR, 
-        0, -2.4F, new Item.Settings()));
+        0, -2.4F, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_HOE = regitem("super_sugar_hoe", new HoeItem(ModToolMaterials.SUPER_SUGAR, 
-        0, -2.4F, new Item.Settings()));
-
+        0, -2.4F, new Item.Settings().fireproof()));
+    public static final Item SUPER_SUGAR_PICKAXE_AXE = regitem("super_sugar_pickaxe_axe", new PickaxeAxeItem(ModToolMaterials.SUPER_SUGAR, 
+        8.5F, -3.5F, new Item.Settings().fireproof()));
 
 
     

@@ -49,6 +49,12 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
             .forceAddTag(BlockTags.LAPIS_ORES)
             .forceAddTag(BlockTags.EMERALD_ORES);
         
+        // 设置可用镐斧挖掘的方块
+        getOrCreateTagBuilder(ModBlockTags.PICKAXE_AXE)
+            .forceAddTag(ModBlockTags.EXAMPLE_BLOCK)
+            .forceAddTag(BlockTags.PICKAXE_MINEABLE)
+            .forceAddTag(BlockTags.AXE_MINEABLE);
+
         // 超级糖系列方块标签
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
             .add(Modblock.SUPER_SUAR_ORE)
@@ -63,7 +69,14 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
         
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
             .add(Modblock.SUPER_SUAR_ORE)
-            .add(Modblock.SUPER_SUGAR_BLOCK);
+            .add(Modblock.SUPER_SUGAR_BLOCK)
+            .add(Modblock.SUPER_SUGAR_STAIRS)
+            .add(Modblock.SUPER_SUGAR_SLAB)
+            .add(Modblock.SUPER_SUGAR_BUTTON)
+            .add(Modblock.SUPER_SUGAR_PRESSURE_PLATE)
+            .add(Modblock.SUPER_SUGAR_FENCE)
+            .add(Modblock.SUPER_SUGAR_FENCE_GATE)
+            .add(Modblock.SUPER_SUGAR_WALL);;
 
         getOrCreateTagBuilder(BlockTags.WALLS)
             .add(Modblock.SUPER_SUGAR_WALL);

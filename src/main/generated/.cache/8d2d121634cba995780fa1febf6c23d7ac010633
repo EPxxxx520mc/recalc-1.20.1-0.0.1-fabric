@@ -1,9 +1,10 @@
-// 1.20.1	2026-03-07T12:42:02.2978201	Recalc/Tags for minecraft:block
-189d5bdf261aff78da260458cd4d9c4fc4d83da3 data\minecraft\tags\blocks\needs_stone_tool.json
+// 1.20.1	2026-03-07T13:14:08.9794823	Recalc/Tags for minecraft:block
 f7f8a80f6b1a39334bb64fb233f50c8e18c6eb93 data\recalc\tags\blocks\example_block.json
 7cdf14d82933f1262605c0b40d32424d8cfc351d data\minecraft\tags\blocks\walls.json
 f01613abd2cf6a63a01d0b499eca0be43447aa01 data\minecraft\tags\blocks\stairs.json
+ca774e8c3b992c92fe84ba6c43e6890cbf99855e data\minecraft\tags\blocks\needs_stone_tool.json
 a227b1ca7d709d3d97963eb647dc6417cb494774 data\minecraft\tags\blocks\fences.json
 002d12ab850e67a7b7522ff21e9d3f76f143127f data\minecraft\tags\blocks\fence_gates.json
 ca774e8c3b992c92fe84ba6c43e6890cbf99855e data\minecraft\tags\blocks\mineable\pickaxe.json
+5d55063de4a41fbd152ef64b7167c1b58177728c data\recalc\tags\blocks\pickaxe_axe.json
 a227b1ca7d709d3d97963eb647dc6417cb494774 data\minecraft\tags\blocks\wooden_fences.json

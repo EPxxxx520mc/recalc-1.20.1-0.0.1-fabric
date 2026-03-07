@@ -205,5 +205,15 @@ public class ModRecipesProvider extends FabricRecipeProvider {
             .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
             .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
             .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_hoe"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_PICKAXE_AXE, 1)
+            .pattern("###")
+            .pattern(" ?#")
+            .pattern(" ? ")
+            .input('#', Moditem.SUPER_SUGAR)
+            .input('?', Items.STICK)
+            .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
+            .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_pickaxe_axe"));
     }
 }

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "recalc:super_sugar"
+    },
+    "?": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "###",
+    " ?#",
+    " ? "
+  ],
+  "result": {
+    "item": "recalc:super_sugar_pickaxe_axe"
+  },
+  "show_notification": true
+}

@@ -52,6 +52,7 @@ public class Moditemgroup {
                 entries.add(Moditem.SUPER_SUGAR_AXE);
                 entries.add(Moditem.SUPER_SUGAR_SHOVEL);
                 entries.add(Moditem.SUPER_SUGAR_HOE);
+                entries.add(Moditem.SUPER_SUGAR_PICKAXE_AXE);
             }).build()
    );
    

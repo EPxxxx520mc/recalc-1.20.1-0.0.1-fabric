@@ -42,6 +42,7 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.SUPER_SUGAR_AXE, "Super Sugar Axe");
         translationBuilder.add(Moditem.SUPER_SUGAR_SHOVEL, "Super Sugar Shovel");
         translationBuilder.add(Moditem.SUPER_SUGAR_HOE, "Super Sugar Hoe");
+        translationBuilder.add(Moditem.SUPER_SUGAR_PICKAXE_AXE, "Super Sugar Pickaxe Axe");
         
         // Item Group / Other Translations
         translationBuilder.add("itemGroup.recalc", "Recalc");

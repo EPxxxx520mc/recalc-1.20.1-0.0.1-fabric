@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#recalc:example_block",
+    "#minecraft:mineable/pickaxe",
+    "#minecraft:mineable/axe"
+  ]
+}
