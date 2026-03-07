@@ -215,5 +215,37 @@ public class ModRecipesProvider extends FabricRecipeProvider {
             .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
             .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
             .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_pickaxe_axe"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, Moditem.SUPER_SUGAR_HELMET, 1)
+            .pattern("###")
+            .pattern("# #")
+            .pattern("   ")
+            .input('#', Moditem.SUPER_SUGAR)
+            .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_helmet"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, Moditem.SUPER_SUGAR_CHESTPLATE, 1)
+            .pattern("# #")
+            .pattern("###")
+            .pattern("###")
+            .input('#', Moditem.SUPER_SUGAR)
+            .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_chestplate"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, Moditem.SUPER_SUGAR_LEGGINGS, 1)
+            .pattern("###")
+            .pattern("# #")
+            .pattern("# #")
+            .input('#', Moditem.SUPER_SUGAR)
+            .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_leggings"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, Moditem.SUPER_SUGAR_BOOTS, 1)
+            .pattern("   ")
+            .pattern("# #")
+            .pattern("# #")
+            .input('#', Moditem.SUPER_SUGAR)
+            .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_boots"));
     }
 }
