@@ -1,4 +1,4 @@
-// 1.20.1	2026-03-07T13:14:08.9769769	Recalc/Recipes
+// 1.20.1	2026-03-07T13:17:30.5181263	Recalc/Recipes
 928ed1f0c067d04270791efc131a3e83a32a27f2 data\recalc\advancements\recipes\misc\test\example_item2_from_blasting_test\example_item.json
 6e7d255f5ef24209253380828abd506eaf3fb7b0 data\recalc\recipes\super_sugar_pressure_plate_from_block.json
 ad7d0b07559863401509ff0696258ac89db9f6ec data\recalc\recipes\super_sugar_fence_gate_from_block.json
@@ -32,8 +32,8 @@ ddd0a469d6470d3a253a43af890aaf77f51b5d8f data\recalc\advancements\recipes\buildi
 31bd585c761f7bd759dda7f175cbdbc84494816f data\recalc\recipes\example_block4_shapeless.json
 99cd701e7b1e3510cb32e35495b029596e048134 data\recalc\recipes\super_sugar_from_smelting.json
 47cd7e1af6122541a51401c15f8f08de0c356534 data\recalc\recipes\super_sugar_hoe.json
-60274ec2c123e145cdc8f27cf210161de86fe9ca data\recalc\advancements\recipes\misc\test\example_item2_from_blasting_test\example_block3.json
 9118f5011696ef47bc27c8b5c2b982a46a36ad87 data\recalc\advancements\recipes\building_blocks\super_sugar_button_shapeless.json
+60274ec2c123e145cdc8f27cf210161de86fe9ca data\recalc\advancements\recipes\misc\test\example_item2_from_blasting_test\example_block3.json
 44a3885818ce001b4a648ae08bcb4ba31d8c647b data\recalc\advancements\recipes\food\example_item_to_sugar.json
 abe8c92d7e82517763c3d8d957db3037ccf24d8a data\recalc\advancements\recipes\misc\test\example_item2.json
 3c425cce8425a9548940d3196aecd394a74e53c1 data\recalc\advancements\recipes\building_blocks\super_sugar_wall_from_block.json
