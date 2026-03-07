@@ -11,7 +11,6 @@ import net.minecraft.data.client.Models;
 import net.minecraft.data.family.BlockFamily;
 import com.rimeveil.recalc.block.ModBlockFamilis;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
 
 public class ModModelsProvider extends FabricModelProvider{
     public ModModelsProvider(FabricDataOutput Output) {
