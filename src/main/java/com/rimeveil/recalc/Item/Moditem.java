@@ -48,13 +48,13 @@ public class Moditem {
     public static final Item SUPER_SUGAR_PICKAXE_AXE = regitem("super_sugar_pickaxe_axe", new PickaxeAxeItem(ModToolMaterials.SUPER_SUGAR, 
         8.5F, -3.5F, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_HELMET = regitem("super_sugar_helmet", 
-    new ModarmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.HELMET, new Item.Settings().fireproof()));
+        new ModarmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.HELMET, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_CHESTPLATE = regitem("super_sugar_chestplate", 
-    new ArmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.CHESTPLATE, new Item.Settings().fireproof()));
+        new ModarmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.CHESTPLATE, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_LEGGINGS = regitem("super_sugar_leggings", 
-    new ArmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.LEGGINGS, new Item.Settings().fireproof()));
+        new ModarmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.LEGGINGS, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_BOOTS = regitem("super_sugar_boots", 
-    new ArmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.BOOTS, new Item.Settings().fireproof()));
+        new ModarmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.BOOTS, new Item.Settings().fireproof()));
 
     /**
      * 注册物品
