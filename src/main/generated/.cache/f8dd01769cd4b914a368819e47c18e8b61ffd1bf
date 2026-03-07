@@ -1,4 +1,4 @@
-// 1.20.1	2026-03-07T15:50:42.9975932	Recalc/Recipes
+// 1.20.1	2026-03-07T16:02:32.4133276	Recalc/Recipes
 928ed1f0c067d04270791efc131a3e83a32a27f2 data\recalc\advancements\recipes\misc\test\example_item2_from_blasting_test\example_item.json
 6e7d255f5ef24209253380828abd506eaf3fb7b0 data\recalc\recipes\super_sugar_pressure_plate_from_block.json
 ad7d0b07559863401509ff0696258ac89db9f6ec data\recalc\recipes\super_sugar_fence_gate_from_block.json
@@ -14,8 +14,8 @@ a794a1b14921c113221aeea25c6e033b13d2147c data\recalc\advancements\recipes\buildi
 448e0b533a05874a8134a92fd88c6c560fa34bf3 data\recalc\recipes\super_sugar_from_campfire_cooking.json
 698c4ab756911d6b9728c6f86dc2f3a39719953f data\recalc\advancements\recipes\misc\super_coal.json
 704d0e452d53097be01fa8f20e4f282daf370121 data\recalc\recipes\super_sugar_helmet.json
-8b7767da7f4f2c7207a2a63d858cc19760b42bda data\recalc\advancements\recipes\tools\super_sugar_axe.json
 7594c8194e5781c8d190dee2bc7566ee6d7541ac data\recalc\recipes\super_sugar_sword.json
+8b7767da7f4f2c7207a2a63d858cc19760b42bda data\recalc\advancements\recipes\tools\super_sugar_axe.json
 d213dd30dfb87c3c9e69f5d3ea1804b97001c9bc data\recalc\recipes\sugar_from_campfire_cooking.json
 d490f30fa1a16249543e83e0978614b91f1e1a57 data\recalc\advancements\recipes\combat\super_sugar_helmet.json
 97ec933ef1f15a68bafab4ab98b3d8465f9b39fc data\recalc\recipes\super_coal.json
