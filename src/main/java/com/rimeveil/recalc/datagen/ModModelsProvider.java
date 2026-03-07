@@ -43,5 +43,10 @@ public class ModModelsProvider extends FabricModelProvider{
         itemModelGenerator.register(Moditem.SUPER_SUGAR, Models.GENERATED);
         itemModelGenerator.register(Moditem.CORN, Models.GENERATED);
         itemModelGenerator.register(Moditem.SUPER_COAL, Models.GENERATED);
+        itemModelGenerator.register(Moditem.SUPER_SUGAR_SWORD, Models.HANDHELD);
+        itemModelGenerator.register(Moditem.SUPER_SUGAR_PICKAXE, Models.HANDHELD);
+        itemModelGenerator.register(Moditem.SUPER_SUGAR_AXE, Models.HANDHELD);
+        itemModelGenerator.register(Moditem.SUPER_SUGAR_SHOVEL, Models.HANDHELD);
+        itemModelGenerator.register(Moditem.SUPER_SUGAR_HOE, Models.HANDHELD);
     }
 }

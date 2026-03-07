@@ -154,5 +154,56 @@ public class ModRecipesProvider extends FabricRecipeProvider {
             .input('#', Moditem.EXAMPLE_ITEM2)
             .criterion(hasItem(Moditem.EXAMPLE_ITEM2), conditionsFromItem(Moditem.EXAMPLE_ITEM2))
             .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_coal"));
+
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_SWORD, 1)
+            .pattern("a#a")
+            .pattern("a#a")
+            .pattern("a?a")
+            .input('#', Moditem.SUPER_SUGAR)
+            .input('?', Items.STICK)
+            .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
+            .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_sword"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_AXE, 1)
+            .pattern("$##")
+            .pattern("$?#")
+            .pattern("$?$")
+            .input('#', Moditem.SUPER_SUGAR)
+            .input('?', Items.STICK)
+            .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
+            .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_axe"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_SHOVEL, 1)
+            .pattern("$#$")
+            .pattern("$?$")
+            .pattern("$?$")
+            .input('#', Moditem.SUPER_SUGAR)
+            .input('?', Items.STICK)
+            .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
+            .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_shovel"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_PICKAXE, 1)
+            .pattern("###")
+            .pattern("$?$")
+            .pattern("$?$")
+            .input('#', Moditem.SUPER_SUGAR)
+            .input('?', Items.STICK)
+            .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
+            .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_pickaxe"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_HOE, 1)
+            .pattern("##$")
+            .pattern("?$?")
+            .pattern("?$?")
+            .input('#', Moditem.SUPER_SUGAR)
+            .input('?', Items.STICK)
+            .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
+            .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
+            .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_hoe"));
     }
 }

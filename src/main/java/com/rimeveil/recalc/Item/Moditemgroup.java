@@ -47,6 +47,11 @@ public class Moditemgroup {
                 entries.add(Modblock.SUPER_SUGAR_WALL);
                 entries.add(Modblock.SUPER_SUGAR_DOOR);
                 entries.add(Modblock.SUPER_SUGAR_TRAPDOOR);
+                entries.add(Moditem.SUPER_SUGAR_SWORD);
+                entries.add(Moditem.SUPER_SUGAR_PICKAXE);
+                entries.add(Moditem.SUPER_SUGAR_AXE);
+                entries.add(Moditem.SUPER_SUGAR_SHOVEL);
+                entries.add(Moditem.SUPER_SUGAR_HOE);
             }).build()
    );
    

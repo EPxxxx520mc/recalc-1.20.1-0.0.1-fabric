@@ -41,7 +41,11 @@ public class ModEnZhlangProvider extends FabricLanguageProvider{
         translationBuilder.add(Modblock.SUPER_SUGAR_WALL, "超级糖墙");
         translationBuilder.add(Modblock.SUPER_SUGAR_DOOR, "超级糖门");
         translationBuilder.add(Modblock.SUPER_SUGAR_TRAPDOOR, "超级糖活板门");
-
+        translationBuilder.add(Moditem.SUPER_SUGAR_SWORD, "超级糖剑");
+        translationBuilder.add(Moditem.SUPER_SUGAR_PICKAXE, "超级糖镐");
+        translationBuilder.add(Moditem.SUPER_SUGAR_AXE, "超级糖斧头");
+        translationBuilder.add(Moditem.SUPER_SUGAR_SHOVEL, "超级糖铲子");
+        translationBuilder.add(Moditem.SUPER_SUGAR_HOE, "超级糖锄");
 
 
     }
