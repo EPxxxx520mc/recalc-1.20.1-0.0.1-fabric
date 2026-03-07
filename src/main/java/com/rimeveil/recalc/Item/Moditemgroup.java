@@ -36,7 +36,7 @@ public class Moditemgroup {
                 entries.add(Moditem.SUPER_SUGAR);
                 entries.add(Moditem.CORN);
                 entries.add(Moditem.SUPER_COAL);
-                entries.add(Modblock.SUPER_SUAR_ORE);
+                entries.add(Modblock.SUPER_SUGAR_ORE);
                 entries.add(Modblock.SUPER_SUGAR_BLOCK);
                 entries.add(Modblock.SUPER_SUGAR_STAIRS);
                 entries.add(Modblock.SUPER_SUGAR_SLAB);

@@ -32,7 +32,7 @@ public class Modblock {
     public static final Block EXAMPLE_BLOCK5 = register("test/example_block5", new Block(AbstractBlock.Settings.create().strength(0.5F, 0.5F).requiresTool()));
     
     
-    public static final Block SUPER_SUAR_ORE = register("super_sugar_ore", new Block(AbstractBlock.Settings.create().strength(0.5F, 0.5F).requiresTool()));
+    public static final Block SUPER_SUGAR_ORE = register("super_sugar_ore", new Block(AbstractBlock.Settings.create().strength(0.5F, 0.5F).requiresTool()));
     public static final Block SUPER_SUGAR_BLOCK = register("super_sugar_block", new Block(AbstractBlock.Settings.create().strength(0.5F, 0.5F).requiresTool()));
 
 

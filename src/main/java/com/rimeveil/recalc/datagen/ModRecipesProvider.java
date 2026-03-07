@@ -133,6 +133,8 @@ public class ModRecipesProvider extends FabricRecipeProvider {
         200, Moditem.EXAMPLE_ITEM2, Items.SUGAR, 5F);
 
         // SUPER_SUGAR 配方
+        offerReversibleCompactingRecipes(exporter, RecipeCategory.MISC, Moditem.SUPER_SUGAR, RecipeCategory.BUILDING_BLOCKS, Modblock.SUPER_SUGAR_BLOCK);
+
         offerFoodCookingRecipe(exporter, "campfire_cooking", RecipeSerializer.CAMPFIRE_COOKING, 
         200, Items.SUGAR, Moditem.SUPER_SUGAR, 5F);
         offerFoodCookingRecipe(exporter, "smelting", RecipeSerializer.SMELTING, 

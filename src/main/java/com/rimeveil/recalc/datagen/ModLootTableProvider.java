@@ -31,7 +31,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider{
         addDrop(Modblock.EXAMPLE_BLOCK5, RecalccopperOreDrops(Modblock.EXAMPLE_BLOCK5, Moditem.EXAMPLE_ITEM2, 2, 5));
         
         // 超级糖系列方块掉落表
-        addDrop(Modblock.SUPER_SUAR_ORE, RecalccopperOreDrops(Modblock.SUPER_SUAR_ORE, Moditem.SUPER_SUGAR, 2, 4));
+        addDrop(Modblock.SUPER_SUGAR_ORE, RecalccopperOreDrops(Modblock.SUPER_SUGAR_ORE, Moditem.SUPER_SUGAR, 2, 4));
         addDrop(Modblock.SUPER_SUGAR_BLOCK);
         addDrop(Modblock.SUPER_SUGAR_STAIRS);
         addDrop(Modblock.SUPER_SUGAR_SLAB, slabDrops(Modblock.SUPER_SUGAR_SLAB));

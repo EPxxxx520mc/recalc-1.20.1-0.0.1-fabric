@@ -30,7 +30,7 @@ public class ModEnZhlangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.SUPER_COAL, "超级煤炭");
         
         // 超级糖系列方块翻译
-        translationBuilder.add(Modblock.SUPER_SUAR_ORE, "超级糖矿石");
+        translationBuilder.add(Modblock.SUPER_SUGAR_ORE, "超级糖矿石");
         translationBuilder.add(Modblock.SUPER_SUGAR_BLOCK, "超级糖块");
         translationBuilder.add(Modblock.SUPER_SUGAR_STAIRS, "超级糖楼梯");
         translationBuilder.add(Modblock.SUPER_SUGAR_SLAB, "超级糖台阶");

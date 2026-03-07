@@ -57,7 +57,7 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
 
         // 超级糖系列方块标签
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-            .add(Modblock.SUPER_SUAR_ORE)
+            .add(Modblock.SUPER_SUGAR_ORE)
             .add(Modblock.SUPER_SUGAR_BLOCK)
             .add(Modblock.SUPER_SUGAR_STAIRS)
             .add(Modblock.SUPER_SUGAR_SLAB)
@@ -65,10 +65,12 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
             .add(Modblock.SUPER_SUGAR_PRESSURE_PLATE)
             .add(Modblock.SUPER_SUGAR_FENCE)
             .add(Modblock.SUPER_SUGAR_FENCE_GATE)
-            .add(Modblock.SUPER_SUGAR_WALL);
+            .add(Modblock.SUPER_SUGAR_WALL)
+            .add(Modblock.SUPER_SUGAR_DOOR)
+            .add(Modblock.SUPER_SUGAR_TRAPDOOR);
         
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
-            .add(Modblock.SUPER_SUAR_ORE)
+            .add(Modblock.SUPER_SUGAR_ORE)
             .add(Modblock.SUPER_SUGAR_BLOCK)
             .add(Modblock.SUPER_SUGAR_STAIRS)
             .add(Modblock.SUPER_SUGAR_SLAB)
@@ -76,7 +78,9 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
             .add(Modblock.SUPER_SUGAR_PRESSURE_PLATE)
             .add(Modblock.SUPER_SUGAR_FENCE)
             .add(Modblock.SUPER_SUGAR_FENCE_GATE)
-            .add(Modblock.SUPER_SUGAR_WALL);;
+            .add(Modblock.SUPER_SUGAR_WALL)
+            .add(Modblock.SUPER_SUGAR_DOOR)
+            .add(Modblock.SUPER_SUGAR_TRAPDOOR);;
 
         getOrCreateTagBuilder(BlockTags.WALLS)
             .add(Modblock.SUPER_SUGAR_WALL);

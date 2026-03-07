@@ -26,7 +26,7 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
         translationBuilder.add(Modblock.EXAMPLE_BLOCK5, "Polished Sugar Block");
         
         // Super Sugar Blocks
-        translationBuilder.add(Modblock.SUPER_SUAR_ORE, "Super Sugar Ore");
+        translationBuilder.add(Modblock.SUPER_SUGAR_ORE, "Super Sugar Ore");
         translationBuilder.add(Modblock.SUPER_SUGAR_BLOCK, "Super Sugar Block");
         translationBuilder.add(Modblock.SUPER_SUGAR_STAIRS, "Super Sugar Stairs");
         translationBuilder.add(Modblock.SUPER_SUGAR_SLAB, "Super Sugar Slab");
