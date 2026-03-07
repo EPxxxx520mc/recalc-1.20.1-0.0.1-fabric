@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "recalc:super_sugar_helmet",
+    "recalc:super_sugar_chestplate",
+    "recalc:super_sugar_leggings",
+    "recalc:super_sugar_boots"
+  ]
+}

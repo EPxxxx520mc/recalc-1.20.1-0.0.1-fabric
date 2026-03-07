@@ -13,14 +13,14 @@ import com.rimeveil.recalc.Recalc;
 import net.minecraft.sound.SoundEvents;
 
 public enum ModArmorMaterials implements StringIdentifiable, ArmorMaterial{
-    SUPER_SUGAR("super_sugar", 40, Util.make(new EnumMap(ArmorItem.Type.class), map -> {
+    SUPER_SUGAR("super_sugar", 40, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
 		map.put(ArmorItem.Type.BOOTS, 10);
 		map.put(ArmorItem.Type.LEGGINGS, 18);
 		map.put(ArmorItem.Type.CHESTPLATE, 16);
 		map.put(ArmorItem.Type.HELMET, 8);
 	}), 30, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F, 0.0F, () -> Ingredient.ofItems(Moditem.SUPER_SUGAR));
 
-    private static final EnumMap<ArmorItem.Type, Integer> BASE_DURABILITY = Util.make(new EnumMap(ArmorItem.Type.class), map -> {
+    private static final EnumMap<ArmorItem.Type, Integer> BASE_DURABILITY = Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
 		map.put(ArmorItem.Type.BOOTS, 13);
 		map.put(ArmorItem.Type.LEGGINGS, 15);
 		map.put(ArmorItem.Type.CHESTPLATE, 16);
