@@ -157,13 +157,14 @@ public class ModRecipesProvider extends FabricRecipeProvider {
 
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_SWORD, 1)
-            .pattern(" # ")
-            .pattern(" # ")
+            .pattern(" % ")
+            .pattern("#%#")
             .pattern(" ? ")
             .input('#', Moditem.SUPER_SUGAR)
-            .input('?', Items.STICK)
+            .input('?', Items.BAMBOO)
+            .input('%', Items.AMETHYST_SHARD)
             .criterion(hasItem(Moditem.SUPER_SUGAR), conditionsFromItem(Moditem.SUPER_SUGAR))
-            .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
+            .criterion(hasItem(Items.BAMBOO), conditionsFromItem(Items.BAMBOO))
             .offerTo(exporter, new Identifier(Recalc.MOD_ID, "super_sugar_sword"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Moditem.SUPER_SUGAR_AXE, 1)
