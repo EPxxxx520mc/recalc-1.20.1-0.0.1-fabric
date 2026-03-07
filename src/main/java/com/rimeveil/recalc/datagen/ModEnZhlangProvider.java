@@ -49,6 +49,11 @@ public class ModEnZhlangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.SUPER_SUGAR_PICKAXE_AXE, "超级糖镐斧");
         translationBuilder.add("item.recalc.pickaxe_axe.tooltip.shift", "这个物品可以作为镐子以及斧子同时使用");
         translationBuilder.add("item.recalc.pickaxe_axe.tooltip", "按下§1§l§oShift§r§r§r查看更多信息");
+        translationBuilder.add(Moditem.SUPER_SUGAR_HELMET, "超级糖头盔");
+        translationBuilder.add(Moditem.SUPER_SUGAR_CHESTPLATE, "超级糖胸甲");
+        translationBuilder.add(Moditem.SUPER_SUGAR_LEGGINGS, "超级糖裤子");
+        translationBuilder.add(Moditem.SUPER_SUGAR_BOOTS, "超级糖靴子");
+
         //\u00A7 = § 
         //§0	黑色	\u00A70
         //§1	深蓝色	\u00A71

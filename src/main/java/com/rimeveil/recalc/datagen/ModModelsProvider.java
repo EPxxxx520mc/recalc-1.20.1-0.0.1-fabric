@@ -10,6 +10,8 @@ import com.rimeveil.recalc.Item.Moditem;
 import net.minecraft.data.client.Models;
 import net.minecraft.data.family.BlockFamily;
 import com.rimeveil.recalc.block.ModBlockFamilis;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ArmorMaterial;
 
 public class ModModelsProvider extends FabricModelProvider{
     public ModModelsProvider(FabricDataOutput Output) {
@@ -49,5 +51,9 @@ public class ModModelsProvider extends FabricModelProvider{
         itemModelGenerator.register(Moditem.SUPER_SUGAR_SHOVEL, Models.HANDHELD);
         itemModelGenerator.register(Moditem.SUPER_SUGAR_HOE, Models.HANDHELD);
         itemModelGenerator.register(Moditem.SUPER_SUGAR_PICKAXE_AXE, Models.HANDHELD);
+        itemModelGenerator.registerArmor((ArmorItem) Moditem.SUPER_SUGAR_HELMET);
+        itemModelGenerator.registerArmor((ArmorItem) Moditem.SUPER_SUGAR_CHESTPLATE);
+        itemModelGenerator.registerArmor((ArmorItem) Moditem.SUPER_SUGAR_LEGGINGS);
+        itemModelGenerator.registerArmor((ArmorItem) Moditem.SUPER_SUGAR_BOOTS);
     }
 }

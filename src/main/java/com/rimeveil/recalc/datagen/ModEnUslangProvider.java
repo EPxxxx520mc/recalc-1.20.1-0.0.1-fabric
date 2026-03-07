@@ -45,6 +45,10 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.SUPER_SUGAR_PICKAXE_AXE, "Super Sugar Pickaxe Axe");
         translationBuilder.add("item.recalc.pickaxe_axe.tooltip.shift", "This item can be used as a pickaxe and axe at the same time");
         translationBuilder.add("item.recalc.pickaxe_axe.tooltip", "Press §1§l§oShift§r§r§r for more information");
+        translationBuilder.add(Moditem.SUPER_SUGAR_HELMET, "Super Sugar Helmet");
+        translationBuilder.add(Moditem.SUPER_SUGAR_CHESTPLATE, "Super Sugar Chestplate");
+        translationBuilder.add(Moditem.SUPER_SUGAR_LEGGINGS, "Super Sugar Leggings");
+        translationBuilder.add(Moditem.SUPER_SUGAR_BOOTS, "Super Sugar Boots");
         //\u00A7 = § 
         //§0	黑色	\u00A70
         //§1	深蓝色	\u00A71

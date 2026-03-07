@@ -8,6 +8,7 @@ import com.rimeveil.recalc.tag.ModItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.ItemTags;
 
 public class ModItemTagsProvider extends FabricTagProvider.ItemTagProvider{
     public ModItemTagsProvider(FabricDataOutput Output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
@@ -22,5 +23,10 @@ public class ModItemTagsProvider extends FabricTagProvider.ItemTagProvider{
         .add(Moditem.EXAMPLE_ITEM2)
         .add(Moditem.SUPER_COAL)
         .add(Moditem.SUPER_SUGAR);
+        getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR)
+        .add(Moditem.SUPER_SUGAR_HELMET)
+        .add(Moditem.SUPER_SUGAR_CHESTPLATE)
+        .add(Moditem.SUPER_SUGAR_LEGGINGS)
+        .add(Moditem.SUPER_SUGAR_BOOTS);
     }
 }
