@@ -2,12 +2,12 @@
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "recalc:item/texture/texture",
-		"1": "recalc:item/texture/texture2",
-		"2": "recalc:item/texture/texture3",
-		"3": "recalc:item/texture/texture4",
-		"4": "recalc:item/texture/texture5",
-		"particle": "recalc:item/texture/texture"
+		"0": "recalc:item/texture",
+		"1": "recalc:item/texture2",
+		"2": "recalc:item/texture3",
+		"3": "recalc:item/texture4",
+		"4": "recalc:item/texture5",
+		"particle": "recalc:item/texture"
 	},
 	"elements": [
 		{
