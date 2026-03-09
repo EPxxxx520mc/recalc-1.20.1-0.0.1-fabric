@@ -1,4 +1,4 @@
-// 1.20.1	2026-03-09T11:44:16.9631765	Recalc/Model Definitions
+// 1.20.1	2026-03-09T19:58:24.2861813	Recalc/Model Definitions
 c7816dcfa0223ee8c24da02888bc264aa7fffacd assets\recalc\blockstates\super_sugar_stairs.json
 424f25db8517d60e0ade2f101beb84442ca55fad assets\recalc\models\item\super_sugar_helmet_redstone_trim.json
 54e1a000b60741ecbd2a5749b9d29042043d96c2 assets\recalc\models\item\super_sugar_stairs.json
@@ -32,8 +32,8 @@ f3011f76d0aac10d1d7476325615abe37417c047 assets\recalc\models\block\super_sugar_
 6a74f92256a50bde83008024a992f0cc765ae8c6 assets\recalc\models\item\super_sugar_boots_amethyst_trim.json
 6686665f2b71589972a02b83d4f3f0e96c11c4d9 assets\recalc\models\item\super_sugar_chestplate_netherite_trim.json
 5d1cc4b39d4c4cf506cc1dd43c6b72e372d0f10e assets\recalc\models\item\super_sugar_chestplate_amethyst_trim.json
-9ca1a601fd80d6e9e88c63f27d675edbca80b298 assets\recalc\models\item\super_sugar_helmet_iron_trim.json
 af21c1abe4758d1ea60f16c76b28bce302424d06 assets\recalc\models\item\super_sugar_leggings_lapis_trim.json
+9ca1a601fd80d6e9e88c63f27d675edbca80b298 assets\recalc\models\item\super_sugar_helmet_iron_trim.json
 b8fd93a7daf53c4e14037b99047feaff88cd203c assets\recalc\models\item\super_sugar_boots_netherite_trim.json
 7c49f91c290e684e0a34d06652eb9dfc7a6e3699 assets\recalc\blockstates\test\example_block4.json
 d965b60be17dabcf5e1fae38b53c7a41667a1695 assets\recalc\models\item\super_sugar_slab.json
