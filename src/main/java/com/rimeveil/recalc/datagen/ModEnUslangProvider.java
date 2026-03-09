@@ -49,6 +49,7 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.SUPER_SUGAR_CHESTPLATE, "Super Sugar Chestplate");
         translationBuilder.add(Moditem.SUPER_SUGAR_LEGGINGS, "Super Sugar Leggings");
         translationBuilder.add(Moditem.SUPER_SUGAR_BOOTS, "Super Sugar Boots");
+        translationBuilder.add(Moditem.SUPER_SUGAR_HORSE_ARMOR, "Super Sugar Horse Armor");
         //\u00A7 = § 
         //§0	黑色	\u00A70
         //§1	深蓝色	\u00A71

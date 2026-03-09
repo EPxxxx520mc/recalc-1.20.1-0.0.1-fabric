@@ -53,6 +53,7 @@ public class ModEnZhlangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.SUPER_SUGAR_CHESTPLATE, "超级糖胸甲");
         translationBuilder.add(Moditem.SUPER_SUGAR_LEGGINGS, "超级糖裤子");
         translationBuilder.add(Moditem.SUPER_SUGAR_BOOTS, "超级糖靴子");
+        translationBuilder.add(Moditem.SUPER_SUGAR_HORSE_ARMOR, "超级糖马铠");
 
         //\u00A7 = § 
         //§0	黑色	\u00A70

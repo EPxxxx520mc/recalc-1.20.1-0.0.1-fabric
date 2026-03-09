@@ -8,6 +8,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.item.HoeItem;
+import net.minecraft.item.HorseArmorItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.AxeItem;
@@ -56,12 +57,14 @@ public class Moditem {
     public static final Item SUPER_SUGAR_BOOTS = regitem("super_sugar_boots", 
         new ModarmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.BOOTS, new Item.Settings().fireproof()));
 
-    /**
-     * 注册物品
-     * @param id 物品的ID
-     * @param item 物品实例
-     * @return 注册后的物品
-     */
+    public static final Item SUPER_SUGAR_HORSE_ARMOR = regitem("super_sugar_horse_armor", 
+    new HorseArmorItem(11, "super_sugar_horse_armor",new Item.Settings().maxCount(1).fireproof()));
+
+
+
+
+
+
     public static Item regitem(String id, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(Recalc.MOD_ID, id), item);
     }
