@@ -1,4 +1,4 @@
-// 1.20.1	2026-03-07T17:00:16.9462711	Recalc/Model Definitions
+// 1.20.1	2026-03-09T11:44:16.9631765	Recalc/Model Definitions
 c7816dcfa0223ee8c24da02888bc264aa7fffacd assets\recalc\blockstates\super_sugar_stairs.json
 424f25db8517d60e0ade2f101beb84442ca55fad assets\recalc\models\item\super_sugar_helmet_redstone_trim.json
 54e1a000b60741ecbd2a5749b9d29042043d96c2 assets\recalc\models\item\super_sugar_stairs.json
@@ -13,6 +13,7 @@ a5c5ee3885a40415441b161d356195d3c2aaeb03 assets\recalc\models\item\super_sugar_h
 47c7cb5501bac253681042d8a8f5554f199b3deb assets\recalc\models\item\super_sugar_leggings_emerald_trim.json
 609566ddc6e3ce34e436db441060b0d8de9228ce assets\recalc\models\item\super_sugar_sword.json
 8cd6e864c214f401f0d46779171c9b61d667ea7b assets\recalc\models\block\test\example_block.json
+4848577c627178214f581f6881e95de6f693e60e assets\recalc\models\item\super_sugar_horse_armor.json
 7c9b87867bc480821578773ca2ee6a8e5c1aca36 assets\recalc\models\item\test\example_block3.json
 a547637c22ba77617a912fbc5e61022f4a0cfd95 assets\recalc\models\block\super_sugar_fence_side.json
 a34569b60a5aeb71ea34ff6c76ff213d93189f6c assets\recalc\blockstates\super_sugar_trapdoor.json
@@ -31,8 +32,8 @@ f3011f76d0aac10d1d7476325615abe37417c047 assets\recalc\models\block\super_sugar_
 6a74f92256a50bde83008024a992f0cc765ae8c6 assets\recalc\models\item\super_sugar_boots_amethyst_trim.json
 6686665f2b71589972a02b83d4f3f0e96c11c4d9 assets\recalc\models\item\super_sugar_chestplate_netherite_trim.json
 5d1cc4b39d4c4cf506cc1dd43c6b72e372d0f10e assets\recalc\models\item\super_sugar_chestplate_amethyst_trim.json
-af21c1abe4758d1ea60f16c76b28bce302424d06 assets\recalc\models\item\super_sugar_leggings_lapis_trim.json
 9ca1a601fd80d6e9e88c63f27d675edbca80b298 assets\recalc\models\item\super_sugar_helmet_iron_trim.json
+af21c1abe4758d1ea60f16c76b28bce302424d06 assets\recalc\models\item\super_sugar_leggings_lapis_trim.json
 b8fd93a7daf53c4e14037b99047feaff88cd203c assets\recalc\models\item\super_sugar_boots_netherite_trim.json
 7c49f91c290e684e0a34d06652eb9dfc7a6e3699 assets\recalc\blockstates\test\example_block4.json
 d965b60be17dabcf5e1fae38b53c7a41667a1695 assets\recalc\models\item\super_sugar_slab.json
