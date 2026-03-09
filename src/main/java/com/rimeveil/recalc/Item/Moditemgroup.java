@@ -58,6 +58,7 @@ public class Moditemgroup {
                 entries.add(Moditem.SUPER_SUGAR_LEGGINGS);
                 entries.add(Moditem.SUPER_SUGAR_BOOTS);
                 entries.add(Moditem.SUPER_SUGAR_HORSE_ARMOR);
+                entries.add(Moditem.SUPER_SUGAR_3d_TOY_SWORD);
             }).build()
    );
    

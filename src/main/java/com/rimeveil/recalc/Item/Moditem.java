@@ -56,7 +56,8 @@ public class Moditem {
         new ModarmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.LEGGINGS, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_BOOTS = regitem("super_sugar_boots", 
         new ModarmorItem(ModArmorMaterials.SUPER_SUGAR, ArmorItem.Type.BOOTS, new Item.Settings().fireproof()));
-
+    public static final Item SUPER_SUGAR_3d_TOY_SWORD = regitem("super_sugar_3d_toy_sword", 
+        new SwordItem(ModToolMaterials.SUPER_SUGAR, 20, -2.0F, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_HORSE_ARMOR = regitem("super_sugar_horse_armor", 
     new HorseArmorItem(11, "super_sugar_horse_armor",new Item.Settings().maxCount(1).fireproof()));
 

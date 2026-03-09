@@ -54,5 +54,6 @@ public class ModModelsProvider extends FabricModelProvider{
         itemModelGenerator.registerArmor((ArmorItem) Moditem.SUPER_SUGAR_LEGGINGS);
         itemModelGenerator.registerArmor((ArmorItem) Moditem.SUPER_SUGAR_BOOTS);
         itemModelGenerator.register(Moditem.SUPER_SUGAR_HORSE_ARMOR, Models.GENERATED);
+        
     }
 }
