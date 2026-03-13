@@ -16,6 +16,9 @@ import net.minecraft.item.ShovelItem;
 
 import com.rimeveil.recalc.Item.custom.ModarmorItem;
 import com.rimeveil.recalc.Item.custom.PickaxeAxeItem;
+import com.rimeveil.recalc.block.Modblock;
+
+import net.minecraft.item.AliasedBlockItem;
 import net.minecraft.item.ArmorItem;    
 public class Moditem {
     // 示例物品
@@ -59,8 +62,9 @@ public class Moditem {
     public static final Item SUPER_SUGAR_3D_TOY_SWORD = regitem("super_sugar_3d_toy_sword", 
         new SwordItem(ModToolMaterials.SUPER_SUGAR, 20, -2.0F, new Item.Settings().fireproof()));
     public static final Item SUPER_SUGAR_HORSE_ARMOR = regitem("super_sugar_horse_armor", 
-        new HorseArmorItem(11, "super_sugar_horse_armor",new Item.Settings().maxCount(1).fireproof()));
-    public static final Item ONION_SEEDS = regitem("onion_seeds", new Item(new Item.Settings()));
+        new HorseArmorItem(11, "super_sugar_horse_armor", new Item.Settings().maxCount(1).fireproof()));
+    public static final Item ONION_SEEDS = regitem("onion_seeds", 
+        new AliasedBlockItem(Modblock.ONION_CROP, new Item.Settings()));
 
 
 

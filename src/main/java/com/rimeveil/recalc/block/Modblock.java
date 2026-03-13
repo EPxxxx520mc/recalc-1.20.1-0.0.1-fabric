@@ -1,6 +1,8 @@
 package com.rimeveil.recalc.block;
 
 import com.rimeveil.recalc.Recalc;
+import com.rimeveil.recalc.block.custom.OnionCropBlock;
+
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -13,6 +15,7 @@ import net.minecraft.block.ButtonBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.block.WoodType;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.registry.Registry;
 import net.minecraft.block.PressurePlateBlock;
@@ -54,7 +57,8 @@ public class Modblock {
         new DoorBlock(AbstractBlock.Settings.copy(SUPER_SUGAR_BLOCK), BlockSetType.OAK));
     public static final Block SUPER_SUGAR_TRAPDOOR = register("super_sugar_trapdoor", 
         new TrapdoorBlock(AbstractBlock.Settings.copy(SUPER_SUGAR_BLOCK), BlockSetType.OAK));
-    
+    public static final Block ONION_CROP = Registry.register(Registries.BLOCK, new Identifier(Recalc.MOD_ID, "onion_crop"), 
+        new OnionCropBlock(AbstractBlock.Settings.create().noCollision().ticksRandomly().breakInstantly().pistonBehavior(PistonBehavior.DESTROY)));
     
     public static Block register(String id, Block block) {
         regblocksitem(id, block);
