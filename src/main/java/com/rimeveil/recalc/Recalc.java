@@ -34,6 +34,7 @@ public class Recalc implements ModInitializer {
 		LOGGER.info("load blocks");//控制台输出load blocks
 		ModSoundEvents.registerSounds();//加载音效
 		LOGGER.info("load sounds");//控制台输出load sounds
+		
 
 
 		

@@ -80,7 +80,7 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider{
             .add(Modblock.SUPER_SUGAR_FENCE_GATE)
             .add(Modblock.SUPER_SUGAR_WALL)
             .add(Modblock.SUPER_SUGAR_DOOR)
-            .add(Modblock.SUPER_SUGAR_TRAPDOOR);;
+            .add(Modblock.SUPER_SUGAR_TRAPDOOR);
 
         getOrCreateTagBuilder(BlockTags.WALLS)
             .add(Modblock.SUPER_SUGAR_WALL);
