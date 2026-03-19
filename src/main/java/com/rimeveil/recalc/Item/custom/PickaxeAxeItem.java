@@ -3,9 +3,16 @@ package com.rimeveil.recalc.Item.custom;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.world.World;
 import net.minecraft.text.Text;
+import net.minecraft.text.HoverEvent.Action;
+import net.minecraft.util.ActionResult;
+import com.rimeveil.recalc.sound.ModSoundEvents;
+import net.minecraft.sound.BlockSoundGroup;
+
+
 import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import net.minecraft.client.item.TooltipContext;
@@ -38,4 +45,15 @@ public class PickaxeAxeItem extends AxeItem {
             tooltip.add(Text.translatable("item.recalc.pickaxe_axe.tooltip"));
         }
     }
+
+
+    @Override
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        if (!context.getWorld().isClient()) {
+            BlockState state = context.getWorld().getBlockState(context.getBlockPos());
+            if (state.isIn(ModBlockTags.PICKAXE_AXE)) {
+                context.getWorld().playSound(null, context.getBlockPos(), ModSoundEvents.TEXT, BlockSoundGroup.BLOCKS, 1.0F, 1.0F);
+            }
+        }
+    } 
 }
