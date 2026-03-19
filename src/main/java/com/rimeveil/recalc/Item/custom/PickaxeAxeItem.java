@@ -7,10 +7,10 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.block.BlockState;
 import net.minecraft.world.World;
 import net.minecraft.text.Text;
-import net.minecraft.text.HoverEvent.Action;
 import net.minecraft.util.ActionResult;
 import com.rimeveil.recalc.sound.ModSoundEvents;
-import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundCategory;
+
 
 
 import org.jetbrains.annotations.Nullable;
@@ -49,11 +49,13 @@ public class PickaxeAxeItem extends AxeItem {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
+        super.useOnBlock(context);
         if (!context.getWorld().isClient()) {
             BlockState state = context.getWorld().getBlockState(context.getBlockPos());
             if (state.isIn(ModBlockTags.PICKAXE_AXE)) {
-                context.getWorld().playSound(null, context.getBlockPos(), ModSoundEvents.TEXT, BlockSoundGroup.BLOCKS, 1.0F, 1.0F);
+                context.getWorld().playSound(null, context.getBlockPos(), ModSoundEvents.TEXT, SoundCategory.BLOCKS, 1.0F, 1.0F);
             }
         }
+        return ActionResult.SUCCESS;
     } 
 }

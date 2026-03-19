@@ -15,7 +15,7 @@ public class ModSoundEvents {
     public static final SoundEvent BLOCK_FALL = register("block_fall");
     public static final SoundEvent BLOCK_LOOT = register("block_loot");
 
-    public static final BlockSoundGroup BLOCKS = new BlockSoundGroup(1.0F,1.0F,
+    public static final BlockSoundGroup BLOCK_SOUND_GROUP = new BlockSoundGroup(1.0F,1.0F,
         BLOCK_BREAK,
         BLOCK_STEP,
         BLOCK_PLACE,
