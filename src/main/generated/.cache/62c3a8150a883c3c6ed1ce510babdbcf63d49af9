@@ -1,4 +1,4 @@
-// 1.20.1	2026-04-27T17:23:26.3379002	Recalc/Model Definitions
+// 1.20.1	2026-04-27T17:45:13.2139248	Recalc/Model Definitions
 907ee3ccfa8e8f52d8d71add0a6ba050f23b0b57 assets\recalc\models\item\super_sugar_chestplate_emerald_trim.json
 39f5c0e691cf3f59b6395fa4eed6ed4d1df82360 assets\recalc\models\item\super_sugar_door.json
 7dfcd7eba653f8a64fb0e2e022c88fdaed3678fe assets\recalc\models\block\test\example_block3.json
@@ -81,8 +81,8 @@ a55a8fe67949cc69e491a3aa8abe851cc22a755c assets\recalc\models\item\super_sugar_h
 0503ba84516658f65e1a95cb2653a14b1dd0fafa assets\recalc\blockstates\super_sugar_door.json
 1586435414d8cbb939120a3b937f00d8d3f5e4b8 assets\recalc\models\item\test\example_block.json
 eea6df53670f7f3a303cf85dbc846fd23e2155d9 assets\recalc\models\item\super_sugar_boots_lapis_trim.json
-66177fdaf21915dd2ef1fb183deb9118f0fdba3a assets\recalc\models\item\super_sugar_wall.json
 80c9a73f920fbc2bace2c02ffd442036923eb225 assets\recalc\models\block\super_sugar_ore.json
+66177fdaf21915dd2ef1fb183deb9118f0fdba3a assets\recalc\models\item\super_sugar_wall.json
 e5638dcbaecde65b53d4db9bc4f3466ed3bc5b53 assets\recalc\blockstates\super_sugar_button.json
 e9a3ab8066a48a3e71a4f0f3911261dcc8497ff8 assets\recalc\models\item\super_sugar_button.json
 d965b60be17dabcf5e1fae38b53c7a41667a1695 assets\recalc\models\item\super_sugar_slab.json

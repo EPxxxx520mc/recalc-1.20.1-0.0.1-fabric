@@ -16,6 +16,8 @@
   "block.recalc.test.example_block4": "Compressed Sugar Block",
   "block.recalc.test.example_block5": "Polished Sugar Block",
   "category.recalc": "Recalc",
+  "command.recalc.frame_removed": "Fictional Frame has been removed!",
+  "command.recalc.only_player": "This command can only be executed by a player!",
   "item.recalc.corn": "Corn",
   "item.recalc.fictional_frame": "Fictional Frame",
   "item.recalc.pickaxe_axe.tooltip": "Press §1§l§oShift§r§r§r for more information",
@@ -37,5 +39,9 @@
   "item.recalc.test.example_item": "Sugar Crystal",
   "item.recalc.test.example_item2": "Refined Sugar Ingot",
   "itemGroup.recalc": "Recalc",
-  "key.recalc.toggle_battle_ui": "Toggle Battle UI"
+  "key.recalc.toggle_battle_ui": "Toggle Battle UI",
+  "message.recalc.frame_already_attached": "You already have the Fictional Frame attached!",
+  "message.recalc.frame_attached": "Fictional Frame has been attached to you!",
+  "message.recalc.no_frame": "No frame attached! Please use Fictional Frame first.",
+  "ui.recalc.battle": "Recalc Battle"
 }

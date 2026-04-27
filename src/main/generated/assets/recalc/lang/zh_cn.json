@@ -16,6 +16,8 @@
   "block.recalc.test.example_block4": "示例方块4",
   "block.recalc.test.example_block5": "示例方块5",
   "category.recalc": "Recalc",
+  "command.recalc.frame_removed": "虚构框架已移除！",
+  "command.recalc.only_player": "该命令只能由玩家执行！",
   "item.recalc.corn": "玉米",
   "item.recalc.fictional_frame": "虚构框架",
   "item.recalc.pickaxe_axe.tooltip": "按下§1§l§oShift§r§r§r查看更多信息",
@@ -37,5 +39,9 @@
   "item.recalc.test.example_item": "示例物品1",
   "item.recalc.test.example_item2": "示例物品2",
   "itemGroup.recalc": "Recalc",
-  "key.recalc.toggle_battle_ui": "切换战斗UI"
+  "key.recalc.toggle_battle_ui": "切换战斗UI",
+  "message.recalc.frame_already_attached": "你已经附着了虚构框架！",
+  "message.recalc.frame_attached": "虚构框架已附着在你身上！",
+  "message.recalc.no_frame": "没有附着框架！请先使用虚构框架。",
+  "ui.recalc.battle": "Recalc Battle"
 }
