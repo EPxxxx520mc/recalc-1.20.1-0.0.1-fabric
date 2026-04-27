@@ -1,22 +1,28 @@
 package com.rimeveil.recalc.data;
 
 import net.minecraft.entity.player.PlayerEntity;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import net.minecraft.nbt.NbtCompound;
 
 public class PlayerFrameData {
-    private static final Map<UUID, Boolean> frameAttachedPlayers = new HashMap<>();
+    private static final String NBT_KEY = "recalc:has_frame";
 
     public static boolean hasFrameAttached(PlayerEntity player) {
-        return frameAttachedPlayers.getOrDefault(player.getUuid(), false);
+        NbtCompound nbt = new NbtCompound();
+        player.writeNbt(nbt);
+        return nbt.contains(NBT_KEY) && nbt.getBoolean(NBT_KEY);
     }
 
     public static void attachFrame(PlayerEntity player) {
-        frameAttachedPlayers.put(player.getUuid(), true);
+        NbtCompound nbt = new NbtCompound();
+        player.writeNbt(nbt);
+        nbt.putBoolean(NBT_KEY, true);
+        player.readNbt(nbt);
     }
 
     public static void detachFrame(PlayerEntity player) {
-        frameAttachedPlayers.put(player.getUuid(), false);
+        NbtCompound nbt = new NbtCompound();
+        player.writeNbt(nbt);
+        nbt.putBoolean(NBT_KEY, false);
+        player.readNbt(nbt);
     }
 }
