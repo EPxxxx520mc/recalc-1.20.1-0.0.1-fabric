@@ -4,9 +4,12 @@ import com.rimeveil.recalc.data.PlayerFrameData;
 import com.rimeveil.recalc.keybind.ModKeybinds;
 import com.rimeveil.recalc.ui.RecalcBattleUI;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClientEventHandlers {
+    private static final Logger LOGGER = LoggerFactory.getLogger("recalc");
     private static boolean wasKeyDown = false;
 
     public static void register() {
@@ -16,12 +19,18 @@ public class ClientEventHandlers {
             boolean isKeyDown = ModKeybinds.toggleBattleUI.isPressed();
             
             if (isKeyDown && !wasKeyDown) {
+                LOGGER.info("V key pressed");
+                client.player.sendMessage(Text.literal("V key pressed!"), true);
+                
                 if (PlayerFrameData.hasFrameAttached(client.player)) {
+                    LOGGER.info("Player has frame attached, toggling UI");
                     if (client.currentScreen instanceof RecalcBattleUI) {
                         client.setScreen(null);
                     } else {
                         client.setScreen(new RecalcBattleUI());
                     }
+                } else {
+                    client.player.sendMessage(Text.literal("No frame attached! Use Fictional Frame first."), true);
                 }
             }
             
