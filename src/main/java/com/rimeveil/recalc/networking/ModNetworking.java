@@ -2,12 +2,14 @@ package com.rimeveil.recalc.networking;
 
 import com.rimeveil.recalc.Recalc;
 import com.rimeveil.recalc.data.PlayerFrameData;
+import com.rimeveil.recalc.data.PlayerFrameSavedData;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
 public class ModNetworking {
@@ -17,7 +19,9 @@ public class ModNetworking {
         // Server-side
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             ServerPlayerEntity player = handler.player;
-            boolean hasFrame = PlayerFrameData.hasFrameAttached(player);
+            ServerWorld overworld = server.getOverworld();
+            PlayerFrameSavedData data = PlayerFrameSavedData.get(overworld);
+            boolean hasFrame = data.hasFrameAttached(player.getUuid());
             PacketByteBuf buf = PacketByteBufs.create();
             buf.writeBoolean(hasFrame);
             ServerPlayNetworking.send(player, SYNC_FRAME_STATE, buf);
