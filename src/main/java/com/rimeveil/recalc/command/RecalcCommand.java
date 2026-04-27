@@ -2,9 +2,11 @@ package com.rimeveil.recalc.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.rimeveil.recalc.data.PlayerFrameData;
+import com.rimeveil.recalc.networking.ModNetworking;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
 import static net.minecraft.server.command.CommandManager.literal;
@@ -15,8 +17,10 @@ public class RecalcCommand {
             .then(literal("clear")
                 .executes(context -> {
                     if (context.getSource().getPlayer() != null) {
-                        PlayerFrameData.detachFrame(context.getSource().getPlayer());
+                        ServerPlayerEntity player = context.getSource().getPlayer();
+                        PlayerFrameData.detachFrame(player);
                         context.getSource().sendFeedback(() -> Text.translatable("command.recalc.frame_removed"), false);
+                        ModNetworking.syncToPlayer(player, false);
                         return 1;
                     }
                     context.getSource().sendError(Text.translatable("command.recalc.only_player"));

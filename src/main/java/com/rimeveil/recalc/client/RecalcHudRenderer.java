@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class RecalcHudRenderer {
     public static void register() {
@@ -29,14 +30,22 @@ public class RecalcHudRenderer {
 
         int logoX = screenWidth - 150;
         int logoY = screenHeight - 100;
+        int barWidth = 100;
 
         String logoText = "Recalc";
         int textWidth = client.textRenderer.getWidth(logoText);
-        int textX = logoX + 50 - textWidth / 2;
+        float scale = (float) barWidth / textWidth;
+        int textX = logoX + barWidth / 2;
         int textY = logoY;
 
         int glowColor = 0xFFFFFF | ((int) (glowIntensity * 80 + 175) << 24);
         int textColor = 0xFFFFFF | ((int) (alpha * 255) << 24);
+
+        MatrixStack matrices = context.getMatrices();
+        matrices.push();
+        matrices.translate(textX, textY, 0);
+        matrices.scale(scale, scale, 1);
+        matrices.translate(-textWidth / 2f, 0, 0);
 
         // Draw glow effect (multiple layers)
         for (int i = 0; i < 3; i++) {
@@ -46,16 +55,16 @@ public class RecalcHudRenderer {
                 context.drawText(
                     client.textRenderer,
                     Text.literal(logoText),
-                    textX + offset,
-                    textY + offset,
+                    offset,
+                    offset,
                     0xFFFFFF | (glowAlpha << 24),
                     false
                 );
                 context.drawText(
                     client.textRenderer,
                     Text.literal(logoText),
-                    textX - offset,
-                    textY - offset,
+                    -offset,
+                    -offset,
                     0xFFFFFF | (glowAlpha << 24),
                     false
                 );
@@ -66,16 +75,17 @@ public class RecalcHudRenderer {
         context.drawText(
             client.textRenderer,
             Text.literal(logoText),
-            textX,
-            textY,
+            0,
+            0,
             textColor,
             false
         );
 
+        matrices.pop();
+
         // Draw progress bar background
         int barX = logoX;
-        int barY = logoY + 20;
-        int barWidth = 100;
+        int barY = logoY + (int) (client.textRenderer.fontHeight * scale) + 10;
         int barHeight = 8;
         
         context.fill(

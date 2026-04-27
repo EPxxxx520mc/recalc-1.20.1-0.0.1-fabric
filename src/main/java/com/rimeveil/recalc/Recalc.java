@@ -9,6 +9,7 @@ import com.rimeveil.recalc.command.RecalcCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.rimeveil.recalc.sound.ModSoundEvents;
+import com.rimeveil.recalc.networking.ModNetworking;
 
 public class Recalc implements ModInitializer {
 	public static final String MOD_ID = "recalc";
@@ -39,6 +40,9 @@ public class Recalc implements ModInitializer {
 		
 		CommandRegistrationCallback.EVENT.register(RecalcCommand::register);
 		LOGGER.info("Registered commands");
+		
+		ModNetworking.register();
+		LOGGER.info("Registered networking");
 		
 		
 		LOGGER.info("Hello recalc!");//控制台输出Hello recalc!
