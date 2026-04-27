@@ -20,13 +20,9 @@ public class ClientEventHandlers {
             
             if (isKeyDown && !wasKeyDown) {
                 LOGGER.info("V key pressed");
-                client.player.sendMessage(Text.literal("V key pressed!"), true);
                 
                 if (PlayerFrameData.hasFrameAttached(client.player)) {
-                    LOGGER.info("Player has frame attached, toggling UI");
-                    if (client.currentScreen instanceof RecalcBattleUI) {
-                        client.setScreen(null);
-                    } else {
+                    if (!(client.currentScreen instanceof RecalcBattleUI)) {
                         client.setScreen(new RecalcBattleUI());
                     }
                 } else {

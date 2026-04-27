@@ -54,6 +54,10 @@ public class RecalcBattleUI extends Screen {
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
             return true;
         }
+        if (keyCode == GLFW.GLFW_KEY_V) {
+            this.close();
+            return true;
+        }
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 }
