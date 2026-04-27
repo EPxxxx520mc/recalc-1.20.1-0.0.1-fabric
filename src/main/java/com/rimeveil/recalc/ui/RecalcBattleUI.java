@@ -1,5 +1,6 @@
 package com.rimeveil.recalc.ui;
 
+import com.rimeveil.recalc.client.ClientEventHandlers;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -10,6 +11,12 @@ import org.lwjgl.glfw.GLFW;
 public class RecalcBattleUI extends Screen {
     public RecalcBattleUI() {
         super(Text.literal("recalc_battle"));
+    }
+    
+    @Override
+    public void removed() {
+        super.removed();
+        ClientEventHandlers.uiClosed();
     }
 
     @Override
