@@ -60,6 +60,7 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
         translationBuilder.add("message.recalc.no_frame", "No frame attached! Please use Fictional Frame first.");
         translationBuilder.add("command.recalc.frame_removed", "Fictional Frame has been removed!");
         translationBuilder.add("command.recalc.only_player", "This command can only be executed by a player!");
+        translationBuilder.add("message.recalc.wait_for_animation", "Please wait for the animation to complete!");
         //\u00A7 = § 
         //§0	黑色	\u00A70
         //§1	深蓝色	\u00A71

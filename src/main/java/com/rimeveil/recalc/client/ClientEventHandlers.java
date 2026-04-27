@@ -13,10 +13,22 @@ public class ClientEventHandlers {
     private static boolean wasKeyDown = false;
     private static long lastCloseTime = 0;
     private static final long COOLDOWN_TIME = 250; // 250ms cooldown
+    private static boolean previousFrameAttached = false;
 
     public static void register() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null) return;
+
+            boolean currentFrameAttached = PlayerFrameData.hasFrameAttached(client.player);
+
+            // Check if player just attached the frame
+            if (currentFrameAttached && !previousFrameAttached) {
+                AnimationState.start();
+            }
+            previousFrameAttached = currentFrameAttached;
+
+            // Update animation state
+            AnimationState.update();
 
             boolean isKeyDown = ModKeybinds.toggleBattleUI.isPressed();
             
@@ -25,12 +37,14 @@ public class ClientEventHandlers {
                 
                 long currentTime = System.currentTimeMillis();
                 if (currentTime - lastCloseTime > COOLDOWN_TIME) {
-                    if (PlayerFrameData.hasFrameAttached(client.player)) {
-                        if (!(client.currentScreen instanceof RecalcBattleUI)) {
-                            client.setScreen(new RecalcBattleUI());
+                    if (currentFrameAttached) {
+                        if (AnimationState.isComplete()) {
+                            if (!(client.currentScreen instanceof RecalcBattleUI)) {
+                                client.setScreen(new RecalcBattleUI());
+                            }
                         }
                     } else {
-                        client.player.sendMessage(Text.literal("No frame attached! Use Fictional Frame first."), true);
+                        client.player.sendMessage(Text.translatable("message.recalc.no_frame"), true);
                     }
                 }
             }

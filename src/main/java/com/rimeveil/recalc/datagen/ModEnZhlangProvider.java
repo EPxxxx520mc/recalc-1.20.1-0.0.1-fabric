@@ -64,6 +64,7 @@ public class ModEnZhlangProvider extends FabricLanguageProvider{
         translationBuilder.add("message.recalc.no_frame", "没有附着框架！请先使用虚构框架。");
         translationBuilder.add("command.recalc.frame_removed", "虚构框架已移除！");
         translationBuilder.add("command.recalc.only_player", "该命令只能由玩家执行！");
+        translationBuilder.add("message.recalc.wait_for_animation", "请等待动画完成！");
 
         //\u00A7 = § 
         //§0	黑色	\u00A70
