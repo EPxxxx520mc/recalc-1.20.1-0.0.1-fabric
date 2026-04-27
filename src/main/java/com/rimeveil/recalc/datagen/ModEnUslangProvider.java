@@ -51,6 +51,9 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.SUPER_SUGAR_BOOTS, "Super Sugar Boots");
         translationBuilder.add(Moditem.SUPER_SUGAR_HORSE_ARMOR, "Super Sugar Horse Armor");
         translationBuilder.add(Moditem.SUPER_SUGAR_3D_TOY_SWORD, "Super Sugar 3D Toy Sword");
+        translationBuilder.add(Moditem.FICTIONAL_FRAME, "Fictional Frame");
+        translationBuilder.add("key.recalc.toggle_battle_ui", "Toggle Battle UI");
+        translationBuilder.add("category.recalc", "Recalc");
         //\u00A7 = § 
         //§0	黑色	\u00A70
         //§1	深蓝色	\u00A71

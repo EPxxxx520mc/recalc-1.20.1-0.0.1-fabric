@@ -5,6 +5,7 @@ import net.minecraft.text.Text;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
+import org.lwjgl.glfw.GLFW;
 
 public class RecalcBattleUI extends Screen {
     public RecalcBattleUI() {
@@ -18,7 +19,7 @@ public class RecalcBattleUI extends Screen {
         ButtonWidget btn = ButtonWidget.builder(
             Text.literal("recalc_battle"),
             button -> {
-                this.close();
+                // 这个按钮现在不做任何事，防止关闭
             }).dimensions(width / 2 - 50, height / 2, 100, 20).build();
         this.addDrawableChild(btn);
     }
@@ -41,5 +42,18 @@ public class RecalcBattleUI extends Screen {
     @Override
     public boolean shouldPause() {
         return false;
+    }
+
+    @Override
+    public boolean shouldCloseOnEsc() {
+        return false;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 }

@@ -1,9 +1,11 @@
  package com.rimeveil.recalc;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import com.rimeveil.recalc.Item.Moditem;
 import com.rimeveil.recalc.Item.Moditemgroup;
 import com.rimeveil.recalc.block.Modblock;
+import com.rimeveil.recalc.command.RecalcCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.rimeveil.recalc.sound.ModSoundEvents;
@@ -35,8 +37,9 @@ public class Recalc implements ModInitializer {
 		ModSoundEvents.registerSounds();//加载音效
 		LOGGER.info("load sounds");//控制台输出load sounds
 		
-
-
+		CommandRegistrationCallback.EVENT.register(RecalcCommand::register);
+		LOGGER.info("Registered commands");
+		
 		
 		LOGGER.info("Hello recalc!");//控制台输出Hello recalc!
 	}

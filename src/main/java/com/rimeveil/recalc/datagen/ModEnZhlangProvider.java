@@ -55,6 +55,9 @@ public class ModEnZhlangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.SUPER_SUGAR_BOOTS, "超级糖靴子");
         translationBuilder.add(Moditem.SUPER_SUGAR_HORSE_ARMOR, "超级糖马铠");
         translationBuilder.add(Moditem.SUPER_SUGAR_3D_TOY_SWORD, "超级糖3D玩具剑");
+        translationBuilder.add(Moditem.FICTIONAL_FRAME, "虚构框架");
+        translationBuilder.add("key.recalc.toggle_battle_ui", "切换战斗UI");
+        translationBuilder.add("category.recalc", "Recalc");
 
         //\u00A7 = § 
         //§0	黑色	\u00A70

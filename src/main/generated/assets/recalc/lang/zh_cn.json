@@ -16,6 +16,7 @@
   "block.recalc.test.example_block4": "示例方块4",
   "block.recalc.test.example_block5": "示例方块5",
   "item.recalc.corn": "玉米",
+  "item.recalc.fictional_frame": "虚构框架",
   "item.recalc.pickaxe_axe.tooltip": "按下§1§l§oShift§r§r§r查看更多信息",
   "item.recalc.pickaxe_axe.tooltip.shift": "这个物品可以作为镐子以及斧子同时使用",
   "item.recalc.super_coal": "超级煤炭",
@@ -34,5 +35,7 @@
   "item.recalc.super_sugar_sword": "超级糖剑",
   "item.recalc.test.example_item": "示例物品1",
   "item.recalc.test.example_item2": "示例物品2",
+  "key.recalc.toggle_battle_ui": "切换战斗UI",
+  "category.recalc": "Recalc",
   "itemGroup.recalc": "Recalc"
 }

@@ -16,6 +16,7 @@ import net.minecraft.item.ShovelItem;
 
 import com.rimeveil.recalc.Item.custom.ModarmorItem;
 import com.rimeveil.recalc.Item.custom.PickaxeAxeItem;
+import com.rimeveil.recalc.Item.custom.FictionalFrameItem;
 import com.rimeveil.recalc.block.Modblock;
 
 import net.minecraft.item.AliasedBlockItem;
@@ -65,6 +66,8 @@ public class Moditem {
         new HorseArmorItem(11, "super_sugar_horse_armor", new Item.Settings().maxCount(1).fireproof()));
     public static final Item ONION_SEEDS = regitem("onion_seeds", 
         new AliasedBlockItem(Modblock.ONION_CROP, new Item.Settings()));
+    public static final Item FICTIONAL_FRAME = regitem("fictional_frame",
+        new FictionalFrameItem(new Item.Settings().maxCount(1)));
 
 
 
