@@ -58,6 +58,12 @@ public class ModEnZhlangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.FICTIONAL_FRAME, "虚构框架");
         translationBuilder.add("key.recalc.toggle_battle_ui", "切换战斗UI");
         translationBuilder.add("category.recalc", "Recalc");
+        translationBuilder.add("ui.recalc.battle", "Recalc Battle");
+        translationBuilder.add("message.recalc.frame_attached", "虚构框架已附着在你身上！");
+        translationBuilder.add("message.recalc.frame_already_attached", "你已经附着了虚构框架！");
+        translationBuilder.add("message.recalc.no_frame", "没有附着框架！请先使用虚构框架。");
+        translationBuilder.add("command.recalc.frame_removed", "虚构框架已移除！");
+        translationBuilder.add("command.recalc.only_player", "该命令只能由玩家执行！");
 
         //\u00A7 = § 
         //§0	黑色	\u00A70

@@ -19,9 +19,9 @@ public class FictionalFrameItem extends Item {
         if (!world.isClient) {
             if (!PlayerFrameData.hasFrameAttached(user)) {
                 PlayerFrameData.attachFrame(user);
-                user.sendMessage(Text.literal("虚构框架已附着在你身上！"), true);
+                user.sendMessage(Text.translatable("message.recalc.frame_attached"), true);
             } else {
-                user.sendMessage(Text.literal("你已经附着了虚构框架！"), true);
+                user.sendMessage(Text.translatable("message.recalc.frame_already_attached"), true);
             }
         }
         return TypedActionResult.success(user.getStackInHand(hand));

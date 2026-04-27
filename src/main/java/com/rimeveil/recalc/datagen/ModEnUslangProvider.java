@@ -54,6 +54,12 @@ public class ModEnUslangProvider extends FabricLanguageProvider{
         translationBuilder.add(Moditem.FICTIONAL_FRAME, "Fictional Frame");
         translationBuilder.add("key.recalc.toggle_battle_ui", "Toggle Battle UI");
         translationBuilder.add("category.recalc", "Recalc");
+        translationBuilder.add("ui.recalc.battle", "Recalc Battle");
+        translationBuilder.add("message.recalc.frame_attached", "Fictional Frame has been attached to you!");
+        translationBuilder.add("message.recalc.frame_already_attached", "You already have the Fictional Frame attached!");
+        translationBuilder.add("message.recalc.no_frame", "No frame attached! Please use Fictional Frame first.");
+        translationBuilder.add("command.recalc.frame_removed", "Fictional Frame has been removed!");
+        translationBuilder.add("command.recalc.only_player", "This command can only be executed by a player!");
         //\u00A7 = § 
         //§0	黑色	\u00A70
         //§1	深蓝色	\u00A71

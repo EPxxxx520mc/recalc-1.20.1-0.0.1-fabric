@@ -16,10 +16,10 @@ public class RecalcCommand {
                 .executes(context -> {
                     if (context.getSource().getPlayer() != null) {
                         PlayerFrameData.detachFrame(context.getSource().getPlayer());
-                        context.getSource().sendFeedback(() -> Text.literal("虚构框架已移除！"), false);
+                        context.getSource().sendFeedback(() -> Text.translatable("command.recalc.frame_removed"), false);
                         return 1;
                     }
-                    context.getSource().sendError(Text.literal("该命令只能由玩家执行！"));
+                    context.getSource().sendError(Text.translatable("command.recalc.only_player"));
                     return 0;
                 })
             )

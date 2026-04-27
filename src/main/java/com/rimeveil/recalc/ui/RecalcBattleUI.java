@@ -10,7 +10,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class RecalcBattleUI extends Screen {
     public RecalcBattleUI() {
-        super(Text.literal("recalc_battle"));
+        super(Text.translatable("ui.recalc.battle"));
     }
     
     @Override
@@ -24,7 +24,7 @@ public class RecalcBattleUI extends Screen {
         super.init();
         this.children().clear();
         ButtonWidget btn = ButtonWidget.builder(
-            Text.literal("recalc_battle"),
+            Text.translatable("ui.recalc.battle"),
             button -> {
                 // 这个按钮现在不做任何事，防止关闭
             }).dimensions(width / 2 - 50, height / 2, 100, 20).build();
@@ -41,7 +41,7 @@ public class RecalcBattleUI extends Screen {
             width / 2 + 100, height / 2 + 80,
             0x88000000);
 
-        String tip = "Recalc Battle";
+        Text tip = Text.translatable("ui.recalc.battle");
         TextRenderer textRenderer = this.textRenderer;
         context.drawText(textRenderer, tip, width / 2 - textRenderer.getWidth(tip) / 2, height / 2 - 20, 0xFFFFFFFF, false);
     }
