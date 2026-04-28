@@ -14,8 +14,8 @@ import net.minecraft.util.Identifier;
  * ================================================
  */
 public class RecalcHudRenderer {
-    // 自定义字体 ID（对应 assets/recalc/font/Recalc_font.json）
-    private static final Identifier CUSTOM_FONT_ID = new Identifier("recalc", "Recalc_font");
+    // 自定义字体 ID（对应 assets/recalc/font/recalc_font.json）
+    private static final Identifier CUSTOM_FONT_ID = new Identifier("recalc", "recalc_font");
 
     public static void register() {
         HudRenderCallback.EVENT.register(RecalcHudRenderer::render);

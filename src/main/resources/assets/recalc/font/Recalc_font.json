@@ -2,7 +2,7 @@
   "providers": [
     {
       "type": "ttf",
-      "file": "recalc:font/Overt.ttf",
+      "file": "recalc:font/overt.ttf",
       "shift": [0, 0],
       "size": 10.0,
       "oversample": 2.0
