@@ -6,10 +6,11 @@ public class AnimationState {
     private static boolean complete = false;
     private static final long DURATION = 3000; // 3 seconds total
 
+    // ✅ 每次都完整重置动画状态，确保每次都播放！
     public static void start() {
         active = true;
-        startTime = System.currentTimeMillis();
         complete = false;
+        startTime = System.currentTimeMillis();
     }
 
     public static void update() {

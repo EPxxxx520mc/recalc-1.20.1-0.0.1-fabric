@@ -27,8 +27,9 @@ public class ClientEventHandlers {
             }
             previousFrameAttached = currentFrameAttached;
 
-            // Update animation state
-            AnimationState.update();
+            // Update animation states
+            AnimationState.update();           // 附着动画更新
+            RemoveAnimationState.update();    // 移除动画更新 ✅
 
             boolean isKeyDown = ModKeybinds.toggleBattleUI.isPressed();
             

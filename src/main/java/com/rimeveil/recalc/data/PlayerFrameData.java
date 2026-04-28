@@ -1,5 +1,6 @@
 package com.rimeveil.recalc.data;
 
+import com.rimeveil.recalc.Recalc;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -24,6 +25,7 @@ public class PlayerFrameData {
             ServerWorld overworld = ((ServerPlayerEntity) player).getServer().getOverworld();
             FrameState state = FrameState.get(overworld);
             state.setFrame(player.getName().getString(), player.getUuid(), true);
+            Recalc.LOGGER.info("Attached frame to " + player.getName().getString());
         }
         clientCache.put(player.getUuid(), true);
     }
@@ -33,6 +35,7 @@ public class PlayerFrameData {
             ServerWorld overworld = ((ServerPlayerEntity) player).getServer().getOverworld();
             FrameState state = FrameState.get(overworld);
             state.setFrame(player.getName().getString(), player.getUuid(), false);
+            Recalc.LOGGER.info("Detached frame from " + player.getName().getString());
         }
         clientCache.put(player.getUuid(), false);
     }
