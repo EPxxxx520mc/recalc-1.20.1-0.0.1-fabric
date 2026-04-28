@@ -43,5 +43,6 @@
   "message.recalc.frame_already_attached": "You already have the Fictional Frame attached!",
   "message.recalc.frame_attached": "Fictional Frame has been attached to you!",
   "message.recalc.no_frame": "No frame attached! Please use Fictional Frame first.",
+  "message.recalc.wait_for_animation": "Please wait for the animation to complete!",
   "ui.recalc.battle": "Recalc Battle"
 }

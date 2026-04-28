@@ -43,5 +43,6 @@
   "message.recalc.frame_already_attached": "你已经附着了虚构框架！",
   "message.recalc.frame_attached": "虚构框架已附着在你身上！",
   "message.recalc.no_frame": "没有附着框架！请先使用虚构框架。",
+  "message.recalc.wait_for_animation": "请等待动画完成！",
   "ui.recalc.battle": "Recalc Battle"
 }
