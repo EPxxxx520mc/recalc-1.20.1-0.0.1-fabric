@@ -23,12 +23,12 @@ public class ClientEventHandlers {
 
             // 检查玩家是否刚刚附着了框架
             if (currentFrameAttached && !previousFrameAttached) {
-                AnimationManager.startAttach();  // ✅ 使用整合类
+                AnimationManager.start(AnimationManager.ID_ATTACH);  // ✅ 纯ID模式
             }
             previousFrameAttached = currentFrameAttached;
 
-            // 更新所有动画（一行代码搞定！）
-            AnimationManager.updateAll();  // ✅ 使用整合类
+            // 更新所有动画（一行代码搞定）
+            AnimationManager.updateAll();  // ✅ 这个本来就是通用的
 
             boolean isKeyDown = ModKeybinds.toggleBattleUI.isPressed();
             
@@ -38,7 +38,7 @@ public class ClientEventHandlers {
                 long currentTime = System.currentTimeMillis();
                 if (currentTime - lastCloseTime > COOLDOWN_TIME) {
                     if (currentFrameAttached) {
-                        if (AnimationManager.isComplete(AnimationManager.ATTACH)) {  // ✅ 使用整合类
+                        if (AnimationManager.isComplete(AnimationManager.ID_ATTACH)) {  // ✅ 纯ID模式
                             if (!(client.currentScreen instanceof RecalcBattleUI)) {
                                 client.setScreen(new RecalcBattleUI());
                             }

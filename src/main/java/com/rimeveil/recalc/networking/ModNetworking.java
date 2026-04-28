@@ -39,7 +39,7 @@ public class ModNetworking {
                 if (client.player != null) {
                     if (hasFrame) {
                         PlayerFrameData.attachFrame(client.player);
-                        AnimationManager.startAttach();  // ✅ 使用整合类
+                        AnimationManager.start(AnimationManager.ID_ATTACH);  // ✅ 纯ID模式
                     } else {
                         PlayerFrameData.detachFrame(client.player);
                     }
@@ -51,7 +51,7 @@ public class ModNetworking {
         ClientPlayNetworking.registerGlobalReceiver(PLAY_REMOVE_ANIMATION, (client, handler, buf, responseSender) -> {
             Recalc.LOGGER.info("Client received remove animation signal!");
             client.execute(() -> {
-                AnimationManager.startRemove();  // ✅ 使用整合类
+                AnimationManager.start(AnimationManager.ID_REMOVE);  // ✅ 纯ID模式
             });
         });
     }

@@ -8,7 +8,7 @@ import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * ================================================
- * 🎨 HUD 渲染器（使用整合版动画管理器）
+ * 🎨 HUD 渲染器（纯ID模式）
  * ================================================
  */
 public class RecalcHudRenderer {
@@ -21,11 +21,11 @@ public class RecalcHudRenderer {
         renderRemoveAnimation(context);
     }
 
-    // ========================================================================
+    // ==========================================
     // 🎬 渲染附着动画（右下角白色）
-    // ========================================================================
+    // ==========================================
     private static void renderAttachAnimation(DrawContext context) {
-        if (!AnimationManager.isAttachActive()) {
+        if (!AnimationManager.isActive(AnimationManager.ID_ATTACH)) {
             return;
         }
 
@@ -37,9 +37,10 @@ public class RecalcHudRenderer {
         int screenWidth = context.getScaledWindowWidth();
         int screenHeight = context.getScaledWindowHeight();
         
-        float alpha = AnimationManager.getAttachFadeIn() * AnimationManager.getAttachFadeOut();
-        float glowIntensity = AnimationManager.getAttachGlow();
-        float progress = AnimationManager.getAttachProgress();
+        float alpha = AnimationManager.getFadeInProgress(AnimationManager.ID_ATTACH, 0.1f) 
+                    * AnimationManager.getFadeOutProgress(AnimationManager.ID_ATTACH, 0.1f);
+        float glowIntensity = AnimationManager.getGlowIntensity(AnimationManager.ID_ATTACH, 4.0f);
+        float progress = AnimationManager.getProgress(AnimationManager.ID_ATTACH);
 
         int logoX = screenWidth - 150;
         int logoY = screenHeight - 100;
@@ -103,11 +104,11 @@ public class RecalcHudRenderer {
         drawBorder(context, barX, barY, barWidth, barHeight, alpha, 0xFFFFFF);
     }
 
-    // ========================================================================
+    // ==========================================
     // 🔴 渲染移除动画（左下角红色）
-    // ========================================================================
+    // ==========================================
     private static void renderRemoveAnimation(DrawContext context) {
-        if (!AnimationManager.isRemoveActive()) {
+        if (!AnimationManager.isActive(AnimationManager.ID_REMOVE)) {
             return;
         }
 
@@ -119,9 +120,10 @@ public class RecalcHudRenderer {
         int screenWidth = context.getScaledWindowWidth();
         int screenHeight = context.getScaledWindowHeight();
         
-        float alpha = AnimationManager.getRemoveFadeIn() * AnimationManager.getRemoveFadeOut();
-        float glowIntensity = AnimationManager.getRemoveGlow();
-        float reverseProgress = AnimationManager.getRemoveReverseProgress();
+        float alpha = AnimationManager.getFadeInProgress(AnimationManager.ID_REMOVE, 0.1f) 
+                    * AnimationManager.getFadeOutProgress(AnimationManager.ID_REMOVE, 0.1f);
+        float glowIntensity = AnimationManager.getGlowIntensity(AnimationManager.ID_REMOVE, 4.0f);
+        float reverseProgress = AnimationManager.getReverseProgress(AnimationManager.ID_REMOVE);
 
         int logoX = 50;
         int logoY = screenHeight - 100;
