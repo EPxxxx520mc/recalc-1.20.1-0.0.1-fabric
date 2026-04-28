@@ -4,14 +4,19 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
+import net.minecraft.text.Style;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 
 /**
  * ================================================
- * 🎨 HUD 渲染器（纯ID模式）
+ * 🎨 HUD 渲染器（使用 Text.withFont() 指定字体）
  * ================================================
  */
 public class RecalcHudRenderer {
+    // 自定义字体 ID（对应 assets/recalc/font/my_custom_font.json）
+    private static final Identifier CUSTOM_FONT_ID = new Identifier("recalc", "my_custom_font");
+
     public static void register() {
         HudRenderCallback.EVENT.register(RecalcHudRenderer::render);
     }
@@ -39,7 +44,6 @@ public class RecalcHudRenderer {
         
         float alpha = AnimationManager.getFadeInProgress(AnimationManager.ID_ATTACH, 0.1f) 
                     * AnimationManager.getFadeOutProgress(AnimationManager.ID_ATTACH, 0.1f);
-        float glowIntensity = AnimationManager.getGlowIntensity(AnimationManager.ID_ATTACH, 4.0f);
         float progress = AnimationManager.getProgress(AnimationManager.ID_ATTACH);
 
         int logoX = screenWidth - 150;
@@ -47,7 +51,9 @@ public class RecalcHudRenderer {
         int barWidth = 100;
 
         String logoText = "Recalc";
-        int textWidth = client.textRenderer.getWidth(logoText);
+        Text styledText = Text.literal(logoText).setStyle(Style.EMPTY.withFont(CUSTOM_FONT_ID));
+        
+        int textWidth = client.textRenderer.getWidth(styledText);
         float scale = (float) barWidth / textWidth;
         int textX = logoX + barWidth / 2;
         int textY = logoY;
@@ -66,7 +72,7 @@ public class RecalcHudRenderer {
             if (glowAlpha > 0) {
                 context.drawText(
                     client.textRenderer,
-                    Text.literal(logoText),
+                    styledText,
                     offset,
                     offset,
                     0xFFFFFF | (glowAlpha << 24),
@@ -74,7 +80,7 @@ public class RecalcHudRenderer {
                 );
                 context.drawText(
                     client.textRenderer,
-                    Text.literal(logoText),
+                    styledText,
                     -offset,
                     -offset,
                     0xFFFFFF | (glowAlpha << 24),
@@ -85,7 +91,7 @@ public class RecalcHudRenderer {
 
         context.drawText(
             client.textRenderer,
-            Text.literal(logoText),
+            styledText,
             0,
             0,
             textColor,
@@ -122,7 +128,6 @@ public class RecalcHudRenderer {
         
         float alpha = AnimationManager.getFadeInProgress(AnimationManager.ID_REMOVE, 0.1f) 
                     * AnimationManager.getFadeOutProgress(AnimationManager.ID_REMOVE, 0.1f);
-        float glowIntensity = AnimationManager.getGlowIntensity(AnimationManager.ID_REMOVE, 4.0f);
         float reverseProgress = AnimationManager.getReverseProgress(AnimationManager.ID_REMOVE);
 
         int logoX = 50;
@@ -130,7 +135,9 @@ public class RecalcHudRenderer {
         int barWidth = 100;
 
         String logoText = "Recalc";
-        int textWidth = client.textRenderer.getWidth(logoText);
+        Text styledText = Text.literal(logoText).setStyle(Style.EMPTY.withFont(CUSTOM_FONT_ID));
+        
+        int textWidth = client.textRenderer.getWidth(styledText);
         float scale = (float) barWidth / textWidth;
         int textX = logoX + barWidth / 2;
         int textY = logoY;
@@ -149,7 +156,7 @@ public class RecalcHudRenderer {
             if (glowAlpha > 0) {
                 context.drawText(
                     client.textRenderer,
-                    Text.literal(logoText),
+                    styledText,
                     offset,
                     offset,
                     0xFF3333 | (glowAlpha << 24),
@@ -157,7 +164,7 @@ public class RecalcHudRenderer {
                 );
                 context.drawText(
                     client.textRenderer,
-                    Text.literal(logoText),
+                    styledText,
                     -offset,
                     -offset,
                     0xFF3333 | (glowAlpha << 24),
@@ -168,7 +175,7 @@ public class RecalcHudRenderer {
 
         context.drawText(
             client.textRenderer,
-            Text.literal(logoText),
+            styledText,
             0,
             0,
             textColor,
