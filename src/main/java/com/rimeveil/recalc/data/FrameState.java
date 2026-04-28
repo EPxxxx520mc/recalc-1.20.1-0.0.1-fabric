@@ -12,7 +12,8 @@ import java.util.UUID;
 
 public class FrameState extends PersistentState {
     private static final String DATA_NAME = "recalc_frame_data";
-    private final Map<UUID, Boolean> players = new HashMap<>();
+    private final Map<String, Boolean> playersByUuid = new HashMap<>(); // 正式版用 UUID
+    private final Map<String, Boolean> playersByName = new HashMap<>(); // 开发版用名字（防止UUID随机）
 
     public static FrameState create() {
         Recalc.LOGGER.info("Creating new FrameState");
@@ -21,23 +22,44 @@ public class FrameState extends PersistentState {
 
     public static FrameState fromNbt(NbtCompound nbt) {
         FrameState state = new FrameState();
-        NbtCompound playersNbt = nbt.getCompound("players");
-        for (String key : playersNbt.getKeys()) {
-            UUID uuid = UUID.fromString(key);
-            state.players.put(uuid, playersNbt.getBoolean(key));
+        
+        // 加载 UUID 格式（带检查）
+        if (nbt.contains("playersByUuid")) {
+            NbtCompound playersByUuid = nbt.getCompound("playersByUuid");
+            for (String key : playersByUuid.getKeys()) {
+                state.playersByUuid.put(key, playersByUuid.getBoolean(key));
+            }
         }
-        Recalc.LOGGER.info("Loaded FrameState from NBT: " + state.players.size() + " players");
+        
+        // 加载名字格式（带检查）
+        if (nbt.contains("playersByName")) {
+            NbtCompound playersByName = nbt.getCompound("playersByName");
+            for (String key : playersByName.getKeys()) {
+                state.playersByName.put(key, playersByName.getBoolean(key));
+            }
+        }
+        
+        Recalc.LOGGER.info("Loaded FrameState from NBT: " + state.playersByUuid.size() + " UUID, " + state.playersByName.size() + " names");
         return state;
     }
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt) {
-        NbtCompound playersNbt = new NbtCompound();
-        for (Map.Entry<UUID, Boolean> entry : players.entrySet()) {
-            playersNbt.putBoolean(entry.getKey().toString(), entry.getValue());
+        // 保存 UUID 格式
+        NbtCompound playersByUuid = new NbtCompound();
+        for (Map.Entry<String, Boolean> entry : this.playersByUuid.entrySet()) {
+            playersByUuid.putBoolean(entry.getKey(), entry.getValue());
         }
-        nbt.put("players", playersNbt);
-        Recalc.LOGGER.info("Saved FrameState: " + players.size() + " players");
+        nbt.put("playersByUuid", playersByUuid);
+        
+        // 保存名字格式
+        NbtCompound playersByName = new NbtCompound();
+        for (Map.Entry<String, Boolean> entry : this.playersByName.entrySet()) {
+            playersByName.putBoolean(entry.getKey(), entry.getValue());
+        }
+        nbt.put("playersByName", playersByName);
+        
+        Recalc.LOGGER.info("Saved FrameState: " + this.playersByUuid.size() + " UUID, " + this.playersByName.size() + " names");
         return nbt;
     }
 
@@ -47,13 +69,19 @@ public class FrameState extends PersistentState {
         return state;
     }
 
-    public boolean hasFrame(UUID uuid) {
-        return players.getOrDefault(uuid, false);
+    public boolean hasFrame(String playerName, UUID uuid) {
+        // 先检查名字，再检查 UUID（开发环境主要靠名字）
+        if (playersByName.containsKey(playerName)) {
+            return playersByName.get(playerName);
+        }
+        return playersByUuid.getOrDefault(uuid.toString(), false);
     }
 
-    public void setFrame(UUID uuid, boolean hasFrame) {
-        players.put(uuid, hasFrame);
+    public void setFrame(String playerName, UUID uuid, boolean hasFrame) {
+        // 两种格式都保存，确保万无一失！
+        playersByUuid.put(uuid.toString(), hasFrame);
+        playersByName.put(playerName, hasFrame);
         markDirty();
-        Recalc.LOGGER.info("Set frame for " + uuid + ": " + hasFrame);
+        Recalc.LOGGER.info("Set frame for " + playerName + "(" + uuid + "): " + hasFrame);
     }
 }

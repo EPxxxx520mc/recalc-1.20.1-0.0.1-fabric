@@ -3,7 +3,6 @@ package com.rimeveil.recalc.data;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.World;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -17,14 +16,14 @@ public class PlayerFrameData {
         }
         ServerWorld overworld = ((ServerPlayerEntity) player).getServer().getOverworld();
         FrameState state = FrameState.get(overworld);
-        return state.hasFrame(player.getUuid());
+        return state.hasFrame(player.getName().getString(), player.getUuid());
     }
 
     public static void attachFrame(PlayerEntity player) {
         if (!player.getWorld().isClient) {
             ServerWorld overworld = ((ServerPlayerEntity) player).getServer().getOverworld();
             FrameState state = FrameState.get(overworld);
-            state.setFrame(player.getUuid(), true);
+            state.setFrame(player.getName().getString(), player.getUuid(), true);
         }
         clientCache.put(player.getUuid(), true);
     }
@@ -33,7 +32,7 @@ public class PlayerFrameData {
         if (!player.getWorld().isClient) {
             ServerWorld overworld = ((ServerPlayerEntity) player).getServer().getOverworld();
             FrameState state = FrameState.get(overworld);
-            state.setFrame(player.getUuid(), false);
+            state.setFrame(player.getName().getString(), player.getUuid(), false);
         }
         clientCache.put(player.getUuid(), false);
     }

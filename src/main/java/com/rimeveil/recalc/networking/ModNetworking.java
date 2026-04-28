@@ -19,7 +19,6 @@ public class ModNetworking {
             ServerPlayerEntity player = handler.player;
             boolean hasFrame = PlayerFrameData.hasFrameAttached(player);
             Recalc.LOGGER.info("Syncing frame state for " + player.getName().getString() + ": " + hasFrame);
-            
             PacketByteBuf buf = PacketByteBufs.create();
             buf.writeBoolean(hasFrame);
             ServerPlayNetworking.send(player, SYNC_FRAME_STATE, buf);
