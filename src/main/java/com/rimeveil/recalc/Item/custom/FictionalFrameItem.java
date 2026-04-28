@@ -2,6 +2,7 @@ package com.rimeveil.recalc.Item.custom;
 
 import com.rimeveil.recalc.data.PlayerFrameData;
 import com.rimeveil.recalc.networking.ModNetworking;
+import com.rimeveil.recalc.client.renderer.FictionalFrameRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,100 +19,70 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 /**
  * ================================================
- * 🎬 虚构框架物品 - GeckoLib 动画物品
+ * 🎬 虚构框架 - GeckoLib 动画物品
  * ================================================
- *
+ * 
  * 【功能】
- * - 继承 GeoItem，支持 3D 动画模型
- * - 右键使用可附着框架到玩家身上
- *
+ * - 继承 Item 并实现 GeoItem 接口
+ * - 支持 3D 动画模型渲染
+ * - 保留原有的右键附着框架功能
+ * 
  * 【引用位置】
- * - Moditem.java:69 注册物品
- * - FictionalFrameRenderer.java 渲染器
- * - RecalcClient.java 注册渲染器
+ * - Moditem.java: 注册为物品
+ * - FictionalFrameRenderer.java: 渲染器
+ * - RecalcClient.java: 注册渲染器
+ * 
+ * 【资源文件位置】
+ * - 模型: assets/recalc/geo/fictional_frame.json
+ * - 动画: assets/recalc/animations/fictional_frame.animation.json
+ * - 纹理: assets/recalc/textures/item/fictional_frame.png
  * ================================================
  */
 public class FictionalFrameItem extends Item implements GeoItem {
-
-    // ==========================================
-    // 🎮 GeckoLib 动画系统
-    // ==========================================
-
+    
     /**
      * 【动画缓存】
      * GeckoLib 要求每个动画物品都有一个缓存实例
      * 用于存储和管理动画状态
      */
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-
+    
+    /**
+     * 【渲染提供者】
+     * 用于提供物品的渲染器实例
+     * 这是 GeoItem 接口要求实现的方法
+     */
+    private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
+    
     /**
      * 【定义动画】
-     * 这里定义要在 BlockBench 中制作的动画名称
-     * 例如："idle" 表示空闲动画
-     *
-     * 注意：需要在 BlockBench 中导出同名动画！
+     * 这里定义了物品的默认动画
+     * "idle" 是在 BlockBench 中定义的动画名称
+     * 
+     * 如果要添加更多动画，可以这样定义：
+     * private static final RawAnimation USE_ANIM = RawAnimation.begin().thenPlay("use");
+     * private static final RawAnimation OPEN_ANIM = RawAnimation.begin().thenPlay("open");
      */
     private static final RawAnimation IDLE_ANIM = RawAnimation.begin()
-            .thenLoop("idle");
-
-    // ==========================================
-    // 🏗️ 构造函数
-    // ==========================================
-
+        .thenLoop("idle");  // 循环播放 idle 动画
+    
+    /**
+     * 【构造函数】
+     * @param settings 物品设置
+     */
     public FictionalFrameItem(Settings settings) {
         super(settings);
     }
-
-    // ==========================================
-    // 🎬 GeckoLib 动画接口实现
-    // ==========================================
-
+    
     /**
-     * 【注册动画控制器】
-     * 在这里定义物品的动画行为
-     *
-     * 【调用位置】
-     * - GeckoLib 内部自动调用
-     *
-     * 【功能】
-     * - 添加动画控制器，控制播放什么动画
-     * - 可以添加多个控制器，实现复杂动画
-     */
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, state -> {
-            // 循环播放 idle 动画
-            state.getController().setAnimation(IDLE_ANIM);
-            return PlayState.CONTINUE;
-        }));
-    }
-
-    /**
-     * 【获取动画缓存】
-     * GeckoLib 内部使用
-     */
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.cache;
-    }
-
-    // ==========================================
-    // 🎮 物品使用逻辑（原有功能保留）
-    // ==========================================
-
-    /**
-     * 【右键使用物品】
-     * 当玩家手持虚构框架右键时，将框架附着到玩家身上
-     *
-     * 【调用位置】
-     * - Minecraft 内部调用（玩家右键物品时）
-     *
-     * 【功能】
-     * 1. 检查玩家是否已有框架
-     * 2. 如果没有，附着框架并播放动画
-     * 3. 如果已有，提示已附着
+     * ================================================
+     * 🎮 右键使用功能（保留原有逻辑）
+     * ================================================
      */
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
@@ -127,5 +98,62 @@ public class FictionalFrameItem extends Item implements GeoItem {
             }
         }
         return TypedActionResult.success(user.getStackInHand(hand));
+    }
+    
+    /**
+     * ================================================
+     * 🎬 GeckoLib 动画控制器注册
+     * ================================================
+     * 
+     * 【功能】
+     * 在这里注册物品的动画控制器
+     * 控制器负责管理动画的播放、切换等
+     * 
+     * 【如何添加新动画】
+     * 1. 在 BlockBench 中创建新动画并导出
+     * 2. 在这里添加新的 AnimationController
+     * 3. 使用 state.getController().setAnimation(新动画) 切换
+     * ================================================
+     */
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 0, state -> {
+            // 循环播放 idle 动画
+            // 如果要根据条件切换动画，可以在这里添加判断：
+            // if (某个条件) {
+            //     state.getController().setAnimation(其他动画);
+            // }
+            
+            state.getController().setAnimation(IDLE_ANIM);
+            return PlayState.CONTINUE;  // 继续播放
+        }));
+    }
+    
+    /**
+     * 【获取动画缓存】
+     * GeckoLib 要求的接口方法
+     */
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+    
+    /**
+     * 【获取渲染提供者】
+     * GeoItem 接口要求实现的方法
+     * 用于提供物品的渲染器
+     */
+    @Override
+    public Supplier<Object> getRenderProvider() {
+        return this.renderProvider;
+    }
+    
+    /**
+     * 【创建渲染器】
+     * 用于在客户端创建渲染器实例
+     */
+    @Override
+    public void createRenderer(Consumer<Object> consumer) {
+        consumer.accept(new FictionalFrameRenderer());
     }
 }
