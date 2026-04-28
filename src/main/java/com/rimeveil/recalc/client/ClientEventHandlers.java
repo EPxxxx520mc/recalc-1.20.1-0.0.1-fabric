@@ -12,7 +12,7 @@ public class ClientEventHandlers {
     private static final Logger LOGGER = LoggerFactory.getLogger("recalc");
     private static boolean wasKeyDown = false;
     private static long lastCloseTime = 0;
-    private static final long COOLDOWN_TIME = 250; // 250ms cooldown
+    private static final long COOLDOWN_TIME = 250;
     private static boolean previousFrameAttached = false;
 
     public static void register() {
@@ -21,15 +21,14 @@ public class ClientEventHandlers {
 
             boolean currentFrameAttached = PlayerFrameData.hasFrameAttached(client.player);
 
-            // Check if player just attached the frame
+            // 检查玩家是否刚刚附着了框架
             if (currentFrameAttached && !previousFrameAttached) {
-                AnimationState.start();
+                AnimationManager.startAttach();  // ✅ 使用整合类
             }
             previousFrameAttached = currentFrameAttached;
 
-            // Update animation states
-            AnimationState.update();           // 附着动画更新
-            RemoveAnimationState.update();    // 移除动画更新 ✅
+            // 更新所有动画（一行代码搞定！）
+            AnimationManager.updateAll();  // ✅ 使用整合类
 
             boolean isKeyDown = ModKeybinds.toggleBattleUI.isPressed();
             
@@ -39,7 +38,7 @@ public class ClientEventHandlers {
                 long currentTime = System.currentTimeMillis();
                 if (currentTime - lastCloseTime > COOLDOWN_TIME) {
                     if (currentFrameAttached) {
-                        if (AnimationState.isComplete()) {
+                        if (AnimationManager.isComplete(AnimationManager.ATTACH)) {  // ✅ 使用整合类
                             if (!(client.currentScreen instanceof RecalcBattleUI)) {
                                 client.setScreen(new RecalcBattleUI());
                             }
