@@ -13,6 +13,7 @@ import com.rimeveil.recalc.networking.ModNetworking;
 
 public class Recalc implements ModInitializer {
 	public static final String MOD_ID = "recalc";
+	public static final String MOD_VERSION = "0.0.1";
 
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.

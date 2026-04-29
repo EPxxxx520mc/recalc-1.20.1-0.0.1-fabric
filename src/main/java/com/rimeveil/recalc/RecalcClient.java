@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import com.rimeveil.recalc.block.Modblock;
 import com.rimeveil.recalc.client.ClientEventHandlers;
 import com.rimeveil.recalc.client.RecalcHudRenderer;
+import com.rimeveil.recalc.client.RecalcBattleHUD;
 import com.rimeveil.recalc.keybind.ModKeybinds;
 
 public class RecalcClient implements ClientModInitializer {
@@ -18,5 +19,6 @@ public class RecalcClient implements ClientModInitializer {
         ModKeybinds.register();
         ClientEventHandlers.register();
         RecalcHudRenderer.register();
+        RecalcBattleHUD.register();
     }
 }
