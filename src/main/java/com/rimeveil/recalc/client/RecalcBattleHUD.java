@@ -9,28 +9,23 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 public class RecalcBattleHUD {
     private static final Identifier RECALC_FONT = new Identifier(Recalc.MOD_ID, "recalc_font");
+    private static final Identifier SLOT_TEXTURE = new Identifier(Recalc.MOD_ID, "textures/ui/slot.png");
     private static final Identifier SLOT_GLOW_TEXTURE = new Identifier(Recalc.MOD_ID, "textures/ui/slot_glow.png");
     
     private static final int COLOR_WHITE = 0xFFFFFFFF;
-    private static final int COLOR_TECH_BLUE = 0xFF88CCFF;
-    private static final int COLOR_DARK_BLUE = 0xFF003366;
     private static final int COLOR_GRAY_BG = 0x66000000;
-    private static final int COLOR_EMPTY_SLOT = 0x33000000;
-    private static final int COLOR_FILLED_SLOT = 0xFF66AAFF;
-    private static final int COLOR_SLOT_BORDER = 0xFF88CCFF;
     
     private static final int SLOT_COUNT = 10;
-    private static final int SLOT_WIDTH = 18;
-    private static final int SLOT_HEIGHT = 24;
-    private static final int SLOT_SPACING = 4;
+    private static final int SLOT_WIDTH = 24;
+    private static final int SLOT_HEIGHT = 36;
+    private static final int SLOT_SPACING = 6;
     private static final int BORDER_THICKNESS = 2;
-    private static final int GLOW_EXTEND = 2;
+    private static final int GLOW_EXTEND = 3;
     
     public static void register() {
         HudRenderCallback.EVENT.register(RecalcBattleHUD::render);
@@ -79,7 +74,7 @@ public class RecalcBattleHUD {
         
         context.fill(x, y, x + totalWidth, y + totalHeight, COLOR_GRAY_BG);
         
-        int borderColor = 0xCC88CCFF;
+        int borderColor = 0xCCFFFFFF;
         context.fill(x, y, x + totalWidth, y + BORDER_THICKNESS, borderColor);
         context.fill(x, y + totalHeight - BORDER_THICKNESS, x + totalWidth, y + totalHeight, borderColor);
         context.fill(x, y, x + BORDER_THICKNESS, y + totalHeight, borderColor);
@@ -91,31 +86,46 @@ public class RecalcBattleHUD {
             drawSlot(context, currentX, y + BORDER_THICKNESS, slotPercent > 0, slotPercent);
             currentX += SLOT_WIDTH + SLOT_SPACING;
         }
-        
-        String energyText = String.format("%.0f / %.0f", currentEnergy, maxEnergy);
-        Text styledText = Text.literal(energyText);
-        int textWidth = client.textRenderer.getWidth(styledText);
-        int textX = x + totalWidth / 2 - textWidth / 2;
-        int textY = y + totalHeight + 5;
-        context.drawText(client.textRenderer, styledText, textX, textY, COLOR_WHITE, true);
     }
     
     private static void drawSlot(DrawContext context, int x, int y, boolean hasGlow, float fillPercent) {
-        context.fill(x, y, x + SLOT_WIDTH, y + SLOT_HEIGHT, COLOR_EMPTY_SLOT);
+        try {
+            context.drawTexture(SLOT_TEXTURE, x, y, 0, 0, SLOT_WIDTH, SLOT_HEIGHT, SLOT_WIDTH, SLOT_HEIGHT);
+        } catch (Exception e) {
+            drawFallbackSlot(context, x, y);
+        }
         
         if (fillPercent > 0) {
             int fillWidth = (int)(SLOT_WIDTH * fillPercent);
-            context.fill(x, y, x + fillWidth, y + SLOT_HEIGHT, COLOR_FILLED_SLOT);
-            context.fill(x, y, x + fillWidth, y + 2, COLOR_WHITE);
+            drawSlotFill(context, x, y, fillWidth);
         }
-        
-        context.fill(x, y, x + SLOT_WIDTH, y + 1, COLOR_SLOT_BORDER);
-        context.fill(x, y + SLOT_HEIGHT - 1, x + SLOT_WIDTH, y + SLOT_HEIGHT, COLOR_SLOT_BORDER);
-        context.fill(x, y, x + 1, y + SLOT_HEIGHT, COLOR_SLOT_BORDER);
-        context.fill(x + SLOT_WIDTH - 1, y, x + SLOT_WIDTH, y + SLOT_HEIGHT, COLOR_SLOT_BORDER);
         
         if (hasGlow) {
             drawSlotGlow(context, x, y, fillPercent);
+        }
+    }
+    
+    private static void drawFallbackSlot(DrawContext context, int x, int y) {
+        for (int py = 0; py < SLOT_HEIGHT; py++) {
+            float progress = (float)py / SLOT_HEIGHT;
+            int trapezoidWidth = (int)(SLOT_WIDTH * (1.0f - 0.33f * progress));
+            int offset = (SLOT_WIDTH - trapezoidWidth) / 2;
+            
+            context.fill(x + offset, y + py, x + offset + trapezoidWidth, y + py + 1, 0x66FFFFFF);
+        }
+    }
+    
+    private static void drawSlotFill(DrawContext context, int x, int y, int fillWidth) {
+        for (int py = 0; py < SLOT_HEIGHT; py++) {
+            float progress = (float)py / SLOT_HEIGHT;
+            int trapezoidWidth = (int)(SLOT_WIDTH * (1.0f - 0.33f * progress));
+            int offset = (SLOT_WIDTH - trapezoidWidth) / 2;
+            
+            int fillEnd = Math.min(trapezoidWidth, (int)(fillWidth * (1.0f - 0.33f * progress)));
+            
+            if (fillEnd > 0) {
+                context.fill(x + offset, y + py, x + offset + fillEnd, y + py + 1, COLOR_WHITE);
+            }
         }
     }
     
@@ -135,9 +145,18 @@ public class RecalcBattleHUD {
         try {
             context.drawTexture(SLOT_GLOW_TEXTURE, glowX, glowY, 0, 0, glowWidth, glowHeight, glowWidth, glowHeight);
         } catch (Exception e) {
-            int fillWidth = (int)(SLOT_WIDTH * fillPercent);
-            int glowColor = ((int)(alpha * 180) << 24) | (COLOR_TECH_BLUE & 0x00FFFFFF);
-            context.fill(x - GLOW_EXTEND, y - GLOW_EXTEND, x + fillWidth + GLOW_EXTEND, y + SLOT_HEIGHT + GLOW_EXTEND, glowColor);
+            for (int py = 0; py < SLOT_HEIGHT + GLOW_EXTEND * 2; py++) {
+                float progress = (float)(py - GLOW_EXTEND) / SLOT_HEIGHT;
+                float clampedProgress = Math.max(0.0f, Math.min(1.0f, progress));
+                int trapezoidWidth = (int)((SLOT_WIDTH + GLOW_EXTEND * 2) * (1.0f - 0.33f * clampedProgress));
+                int offset = (glowWidth - trapezoidWidth) / 2;
+                
+                int fillEnd = (int)(fillPercent * trapezoidWidth);
+                if (fillEnd > 0) {
+                    int glowColor = ((int)(alpha * 200) << 24) | (COLOR_WHITE & 0x00FFFFFF);
+                    context.fill(glowX + offset, glowY + py, glowX + offset + fillEnd, glowY + py + 1, glowColor);
+                }
+            }
         }
         
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -154,10 +173,10 @@ public class RecalcBattleHUD {
             isHovered = (mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size);
         }
         
-        int bgColor = isHovered ? 0x88003366 : 0x66000000;
+        int bgColor = isHovered ? 0x88FFFFFF : 0x66000000;
         context.fill(x, y, x + size, y + size, bgColor);
         
-        int borderColor = isHovered ? COLOR_WHITE : COLOR_TECH_BLUE;
+        int borderColor = COLOR_WHITE;
         context.fill(x, y, x + size, y + 2, borderColor);
         context.fill(x, y + size - 2, x + size, y + size, borderColor);
         context.fill(x, y, x + 2, y + size, borderColor);
@@ -174,7 +193,7 @@ public class RecalcBattleHUD {
             context.fill(tx - 2, ty - 2, tx + 2, ty + 2, borderColor);
         }
         
-        context.fill(centerX - 5, centerY - 5, centerX + 5, centerY + 5, COLOR_DARK_BLUE);
+        context.fill(centerX - 5, centerY - 5, centerX + 5, centerY + 5, 0xFF333333);
         context.fill(centerX - 4, centerY - 4, centerX + 4, centerY + 4, borderColor);
     }
     
@@ -223,7 +242,7 @@ public class RecalcBattleHUD {
         
         Text version = Text.literal(versionText);
         int versionWidth = client.textRenderer.getWidth(version);
-        context.drawText(client.textRenderer, version, x - versionWidth, currentY, COLOR_TECH_BLUE, true);
+        context.drawText(client.textRenderer, version, x - versionWidth, currentY, COLOR_WHITE, true);
         currentY -= lineHeight;
         
         Text coords = Text.literal(coordsText);
@@ -255,7 +274,7 @@ public class RecalcBattleHUD {
             int offset = (3 - i) * 2;
             int layerAlpha = (int)(glowIntensity * (0.4f - i * 0.1f) * 255);
             if (layerAlpha > 0) {
-                int layerColor = (layerAlpha << 24) | (COLOR_TECH_BLUE & 0x00FFFFFF);
+                int layerColor = (layerAlpha << 24) | (COLOR_WHITE & 0x00FFFFFF);
                 context.drawText(client.textRenderer, styledText, x + offset, y + offset, layerColor, false);
                 context.drawText(client.textRenderer, styledText, x - offset, y - offset, layerColor, false);
             }
