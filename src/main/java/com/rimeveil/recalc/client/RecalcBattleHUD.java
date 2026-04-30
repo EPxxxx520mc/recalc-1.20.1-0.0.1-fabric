@@ -19,13 +19,14 @@ public class RecalcBattleHUD {
     
     private static final int COLOR_WHITE = 0xFFFFFFFF;
     private static final int COLOR_GRAY_BG = 0x66000000;
+    private static final int COLOR_SLOT_EMPTY = 0x33333333;
+    private static final int COLOR_SLOT_FILL = 0xCCFFFFFF;
     
     private static final int SLOT_COUNT = 10;
-    private static final int SLOT_WIDTH = 24;
-    private static final int SLOT_HEIGHT = 36;
+    private static final int SLOT_WIDTH = 30;
+    private static final int SLOT_HEIGHT = 45;
     private static final int SLOT_SPACING = 6;
-    private static final int BORDER_THICKNESS = 2;
-    private static final int GLOW_EXTEND = 3;
+    private static final int SKEW_PIXELS = 15;
     
     public static void register() {
         HudRenderCallback.EVENT.register(RecalcBattleHUD::render);
@@ -69,63 +70,82 @@ public class RecalcBattleHUD {
         float maxEnergy = BattleHUDManager.getEnergyMax();
         float fillPercent = Math.min(1.0f, currentEnergy / maxEnergy);
         
-        int totalWidth = SLOT_COUNT * SLOT_WIDTH + (SLOT_COUNT - 1) * SLOT_SPACING + BORDER_THICKNESS * 2;
-        int totalHeight = SLOT_HEIGHT + BORDER_THICKNESS * 2;
+        int totalWidth = SLOT_COUNT * SLOT_WIDTH + (SLOT_COUNT - 1) * SLOT_SPACING + SKEW_PIXELS;
+        int totalHeight = SLOT_HEIGHT;
         
-        context.fill(x, y, x + totalWidth, y + totalHeight, COLOR_GRAY_BG);
+        drawOuterBorder(context, x - 5, y - 5, totalWidth + 10, totalHeight + 10);
         
-        int borderColor = 0xCCFFFFFF;
-        context.fill(x, y, x + totalWidth, y + BORDER_THICKNESS, borderColor);
-        context.fill(x, y + totalHeight - BORDER_THICKNESS, x + totalWidth, y + totalHeight, borderColor);
-        context.fill(x, y, x + BORDER_THICKNESS, y + totalHeight, borderColor);
-        context.fill(x + totalWidth - BORDER_THICKNESS, y, x + totalWidth, y + totalHeight, borderColor);
-        
-        int currentX = x + BORDER_THICKNESS;
+        int currentX = x;
         for (int i = 0; i < SLOT_COUNT; i++) {
             float slotPercent = Math.min(1.0f, Math.max(0.0f, fillPercent * SLOT_COUNT - i));
-            drawSlot(context, currentX, y + BORDER_THICKNESS, slotPercent > 0, slotPercent);
+            drawSlot(context, currentX, y, slotPercent > 0, slotPercent);
             currentX += SLOT_WIDTH + SLOT_SPACING;
         }
     }
     
-    private static void drawSlot(DrawContext context, int x, int y, boolean hasGlow, float fillPercent) {
-        try {
-            context.drawTexture(SLOT_TEXTURE, x, y, 0, 0, SLOT_WIDTH, SLOT_HEIGHT, SLOT_WIDTH, SLOT_HEIGHT);
-        } catch (Exception e) {
-            drawFallbackSlot(context, x, y);
+    private static void drawOuterBorder(DrawContext context, int x, int y, int width, int height) {
+        for (int py = 0; py < height; py++) {
+            float progress = (float)py / height;
+            int xOffset = (int)(SKEW_PIXELS * progress);
+            int lineWidth = width - xOffset;
+            
+            if (py < 4 || py >= height - 4) {
+                context.fill(x + xOffset, y + py, x + xOffset + lineWidth, y + py + 1, 0xCCFFFFFF);
+            } else if (py < 8 || py >= height - 8) {
+                context.fill(x + xOffset, y + py, x + xOffset + lineWidth, y + py + 1, 0x44FFFFFF);
+            }
         }
         
-        if (fillPercent > 0) {
-            int fillWidth = (int)(SLOT_WIDTH * fillPercent);
-            drawSlotFill(context, x, y, fillWidth);
+        for (int px = 0; px < 4; px++) {
+            for (int py = 0; py < height; py++) {
+                float progress = (float)py / height;
+                int xOffset = (int)(SKEW_PIXELS * progress);
+                context.fill(x + xOffset + px, y + py, x + xOffset + px + 1, y + py + 1, 0xCCFFFFFF);
+            }
+        }
+        
+        for (int px = 0; px < 4; px++) {
+            for (int py = 0; py < height; py++) {
+                float progress = (float)py / height;
+                int xOffset = (int)(SKEW_PIXELS * progress);
+                int endX = x + xOffset + width - 1 - px;
+                context.fill(endX, y + py, endX + 1, y + py + 1, 0xCCFFFFFF);
+            }
+        }
+    }
+    
+    private static void drawSlot(DrawContext context, int x, int y, boolean hasGlow, float fillPercent) {
+        for (int py = 0; py < SLOT_HEIGHT; py++) {
+            float progress = (float)py / SLOT_HEIGHT;
+            int xOffset = (int)(SKEW_PIXELS * progress);
+            
+            for (int px = 0; px < 2; px++) {
+                context.fill(x + xOffset + px, y + py, x + xOffset + px + 1, y + py + 1, 0xAAFFFFFF);
+            }
+            
+            for (int px = SLOT_WIDTH - 2; px < SLOT_WIDTH; px++) {
+                context.fill(x + xOffset + px, y + py, x + xOffset + px + 1, y + py + 1, 0xAAFFFFFF);
+            }
+            
+            if (py < 2 || py >= SLOT_HEIGHT - 2) {
+                for (int px = 0; px < SLOT_WIDTH; px++) {
+                    context.fill(x + xOffset + px, y + py, x + xOffset + px + 1, y + py + 1, 0xAAFFFFFF);
+                }
+            }
+            
+            if (fillPercent > 0) {
+                int fillWidth = (int)(SLOT_WIDTH * fillPercent);
+                if (fillWidth > 0) {
+                    int currentFill = Math.min(fillWidth, SLOT_WIDTH);
+                    context.fill(x + xOffset + 2, y + py + 2, x + xOffset + currentFill - 2, y + py + 1, COLOR_SLOT_FILL);
+                }
+            } else {
+                context.fill(x + xOffset + 2, y + py + 2, x + xOffset + SLOT_WIDTH - 2, y + py + 1, COLOR_SLOT_EMPTY);
+            }
         }
         
         if (hasGlow) {
             drawSlotGlow(context, x, y, fillPercent);
-        }
-    }
-    
-    private static void drawFallbackSlot(DrawContext context, int x, int y) {
-        for (int py = 0; py < SLOT_HEIGHT; py++) {
-            float progress = (float)py / SLOT_HEIGHT;
-            int trapezoidWidth = (int)(SLOT_WIDTH * (1.0f - 0.33f * progress));
-            int offset = (SLOT_WIDTH - trapezoidWidth) / 2;
-            
-            context.fill(x + offset, y + py, x + offset + trapezoidWidth, y + py + 1, 0x66FFFFFF);
-        }
-    }
-    
-    private static void drawSlotFill(DrawContext context, int x, int y, int fillWidth) {
-        for (int py = 0; py < SLOT_HEIGHT; py++) {
-            float progress = (float)py / SLOT_HEIGHT;
-            int trapezoidWidth = (int)(SLOT_WIDTH * (1.0f - 0.33f * progress));
-            int offset = (SLOT_WIDTH - trapezoidWidth) / 2;
-            
-            int fillEnd = Math.min(trapezoidWidth, (int)(fillWidth * (1.0f - 0.33f * progress)));
-            
-            if (fillEnd > 0) {
-                context.fill(x + offset, y + py, x + offset + fillEnd, y + py + 1, COLOR_WHITE);
-            }
         }
     }
     
@@ -134,29 +154,22 @@ public class RecalcBattleHUD {
         double speed = isFull ? 300.0 : 500.0;
         double alpha = Math.sin(System.currentTimeMillis() / speed) * 0.25 + 0.75;
         
-        int glowX = x - GLOW_EXTEND;
-        int glowY = y - GLOW_EXTEND;
-        int glowWidth = SLOT_WIDTH + GLOW_EXTEND * 2;
-        int glowHeight = SLOT_HEIGHT + GLOW_EXTEND * 2;
-        
         RenderSystem.enableBlend();
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, (float)alpha);
         
         try {
-            context.drawTexture(SLOT_GLOW_TEXTURE, glowX, glowY, 0, 0, glowWidth, glowHeight, glowWidth, glowHeight);
-        } catch (Exception e) {
-            for (int py = 0; py < SLOT_HEIGHT + GLOW_EXTEND * 2; py++) {
-                float progress = (float)(py - GLOW_EXTEND) / SLOT_HEIGHT;
-                float clampedProgress = Math.max(0.0f, Math.min(1.0f, progress));
-                int trapezoidWidth = (int)((SLOT_WIDTH + GLOW_EXTEND * 2) * (1.0f - 0.33f * clampedProgress));
-                int offset = (glowWidth - trapezoidWidth) / 2;
+            for (int py = 0; py < SLOT_HEIGHT; py++) {
+                float progress = (float)py / SLOT_HEIGHT;
+                int xOffset = (int)(SKEW_PIXELS * progress);
                 
-                int fillEnd = (int)(fillPercent * trapezoidWidth);
-                if (fillEnd > 0) {
-                    int glowColor = ((int)(alpha * 200) << 24) | (COLOR_WHITE & 0x00FFFFFF);
-                    context.fill(glowX + offset, glowY + py, glowX + offset + fillEnd, glowY + py + 1, glowColor);
+                int fillWidth = (int)(SLOT_WIDTH * fillPercent);
+                if (fillWidth > 0) {
+                    int glowColor = ((int)(alpha * 180) << 24) | 0x00FFFFFF;
+                    context.fill(x + xOffset, y + py, x + xOffset + fillWidth, y + py + 1, glowColor);
                 }
             }
+        } catch (Exception e) {
+            LogUtil.warn("Glow texture failed: " + e.getMessage());
         }
         
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
