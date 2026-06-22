@@ -6,10 +6,10 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 import net.minecraft.text.Style;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
+import com.rimeveil.recalc.Recalc;
 
 public class RecalcHudRenderer {
-    private static final Identifier CUSTOM_FONT_ID = new Identifier("recalc", "recalc_font");
+    private static final net.minecraft.util.Identifier CUSTOM_FONT_ID = Recalc.id("recalc_font");
     
     private static final String LOGO_TEXT = "Recalc";
     private static final int BAR_WIDTH = 100;
@@ -17,10 +17,6 @@ public class RecalcHudRenderer {
     private static final int LOGO_Y_OFFSET = 100;
     private static final int ATTACH_X_OFFSET = 150;
     private static final int REMOVE_X_OFFSET = 50;
-    private static final int GLOW_LAYERS = 3;
-    private static final float GLOW_BASE_OFFSET = 2f;
-    private static final float GLOW_BASE_ALPHA = 0.3f;
-    private static final float GLOW_ALPHA_DECREMENT = 0.1f;
     private static final float FADE_PERCENT = 0.1f;
     private static final int BORDER_ALPHA_MULTIPLIER = 150;
     private static final int BAR_BG_ALPHA_MULTIPLIER = 100;
@@ -55,7 +51,7 @@ public class RecalcHudRenderer {
         int logoX = screenWidth - ATTACH_X_OFFSET;
         int logoY = screenHeight - LOGO_Y_OFFSET;
 
-        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFFFFFF);
+        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFFFFFF, 0x65DFFF);
     }
 
     private static void renderRemoveAnimation(DrawContext context) {
@@ -78,12 +74,12 @@ public class RecalcHudRenderer {
         int logoX = REMOVE_X_OFFSET;
         int logoY = screenHeight - LOGO_Y_OFFSET;
 
-        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFF3333);
+        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFF5A6E, 0xFF1F46);
     }
 
     private static void renderAnimation(DrawContext context, MinecraftClient client, 
                                         int logoX, int logoY, float alpha, float progress, 
-                                        int color) {
+                                        int color, int glowColor) {
         Text styledText = Text.literal(LOGO_TEXT).setStyle(Style.EMPTY.withFont(CUSTOM_FONT_ID));
         
         int textWidth = client.textRenderer.getWidth(styledText);
@@ -91,30 +87,31 @@ public class RecalcHudRenderer {
         int textX = logoX + BAR_WIDTH / 2;
         int textY = logoY;
 
-        int textColor = color | ((int) (alpha * 255) << 24);
-
         MatrixStack matrices = context.getMatrices();
         matrices.push();
         matrices.translate(textX, textY, 0);
         matrices.scale(scale, scale, 1);
         matrices.translate(-textWidth / 2f, 0, 0);
 
-        for (int i = 0; i < GLOW_LAYERS; i++) {
-            int offset = (int) ((GLOW_LAYERS - i) * GLOW_BASE_OFFSET);
-            int glowAlpha = (int) (alpha * (GLOW_BASE_ALPHA - i * GLOW_ALPHA_DECREMENT) * 255);
-            if (glowAlpha > 0) {
-                int glowColor = color | (glowAlpha << 24);
-                context.drawText(client.textRenderer, styledText, offset, offset, glowColor, false);
-                context.drawText(client.textRenderer, styledText, -offset, -offset, glowColor, false);
-            }
-        }
-
-        context.drawText(client.textRenderer, styledText, 0, 0, textColor, false);
+        HudRenderUtils.drawGlowingText(
+            context,
+            client.textRenderer,
+            styledText,
+            0,
+            0,
+            color,
+            glowColor,
+            alpha,
+            false
+        );
         matrices.pop();
 
         int barX = logoX;
         int barY = logoY + (int) (client.textRenderer.fontHeight * scale) + 10;
-        
+
+        int glowAlpha = (int)(alpha * 48);
+        int barGlowColor = HudRenderUtils.withAlpha(glowColor, glowAlpha);
+        context.fill(barX - 2, barY - 2, barX + BAR_WIDTH + 2, barY + BAR_HEIGHT + 2, barGlowColor);
         context.fill(barX, barY, barX + BAR_WIDTH, barY + BAR_HEIGHT, 
                     (int) (alpha * BAR_BG_ALPHA_MULTIPLIER) << 24 | 0x333333);
         int filledWidth = (int) (progress * BAR_WIDTH);

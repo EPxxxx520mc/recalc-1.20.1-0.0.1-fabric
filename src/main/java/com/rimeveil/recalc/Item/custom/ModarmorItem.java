@@ -1,27 +1,29 @@
 package com.rimeveil.recalc.Item.custom;
 
-import com.google.common.collect.ImmutableMap;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
+import com.rimeveil.recalc.Item.ModArmorMaterials;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import com.rimeveil.recalc.Item.ModArmorMaterials;
-import java.util.Arrays;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 import java.util.List;
 import java.util.Map;
-public class ModarmorItem extends ArmorItem{
-    private static final Map<ArmorMaterial, List<StatusEffectInstance>> MAP = 
-        (new ImmutableMap.Builder<ArmorMaterial, List<StatusEffectInstance>>()
-            .put(ModArmorMaterials.SUPER_SUGAR,
-                Arrays.asList(
-                    new StatusEffectInstance(StatusEffects.SPEED, 200, 1, false, false, true),
-                    new StatusEffectInstance(StatusEffects.JUMP_BOOST, 200, 1, false, false, true)
-            ))
-            .build());
+
+public class ModarmorItem extends ArmorItem {
+    private static final int HELMET_ARMOR_SLOT = 3;
+    private static final int EFFECT_REFRESH_THRESHOLD_TICKS = 100;
+
+    private static final Map<ArmorMaterial, List<StatusEffectInstance>> MATERIAL_EFFECTS = Map.of(
+        ModArmorMaterials.SUPER_SUGAR,
+        List.of(
+            new StatusEffectInstance(StatusEffects.SPEED, 200, 1, false, false, true),
+            new StatusEffectInstance(StatusEffects.JUMP_BOOST, 200, 1, false, false, true)
+        )
+    );
 
     public ModarmorItem(ArmorMaterial material, Type type, Settings settings) {
         super(material, type, settings);
@@ -29,41 +31,40 @@ public class ModarmorItem extends ArmorItem{
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (!world.isClient && entity instanceof PlayerEntity player) {
-            if (isWearingAllArmor(player) && hasFullSuitOfArmorOn(player)) {
-                evaluateArmorEffect(player);
-            }
-        }
         super.inventoryTick(stack, world, entity, slot, selected);
+
+        if (world.isClient || !(entity instanceof PlayerEntity player) || !isHelmetStack(player, stack)) {
+            return;
+        }
+
+        applyFullSuitEffects(player);
     }
 
-    private void evaluateArmorEffect(PlayerEntity player) {
-        for (Map.Entry<ArmorMaterial, List<StatusEffectInstance>> entry : MAP.entrySet()) {
-            ArmorMaterial material = entry.getKey();
-            List<StatusEffectInstance> effects = entry.getValue();
+    private static boolean isHelmetStack(PlayerEntity player, ItemStack stack) {
+        return player.getInventory().armor.get(HELMET_ARMOR_SLOT) == stack;
+    }
 
-            if (hasCorrectMaterialArmorOn(material, player)) {
-                for (StatusEffectInstance effect : effects) {
+    private static void applyFullSuitEffects(PlayerEntity player) {
+        if (!isWearingFullSuit(player)) {
+            return;
+        }
 
-                    player.addStatusEffect(new StatusEffectInstance(effect));
-                }
-            }
+        ArmorMaterial material = getArmorMaterial(player.getInventory().armor.get(0));
+        if (material == null || !hasFullSuitOfMaterial(player, material)) {
+            return;
+        }
+
+        List<StatusEffectInstance> effects = MATERIAL_EFFECTS.get(material);
+        if (effects == null) {
+            return;
+        }
+
+        for (StatusEffectInstance effect : effects) {
+            refreshEffect(player, effect);
         }
     }
 
-    private boolean hasCorrectMaterialArmorOn(ArmorMaterial material, PlayerEntity player) {
-        for (ItemStack armorStack : player.getInventory().armor) {
-            if (!(armorStack.getItem() instanceof ArmorItem armorItem)) {
-                return false;
-            }
-            if (armorItem.getMaterial() != material) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isWearingAllArmor(PlayerEntity player) {
+    private static boolean isWearingFullSuit(PlayerEntity player) {
         for (ItemStack armorStack : player.getInventory().armor) {
             if (armorStack.isEmpty()) {
                 return false;
@@ -72,7 +73,31 @@ public class ModarmorItem extends ArmorItem{
         return true;
     }
 
-    private boolean hasFullSuitOfArmorOn(PlayerEntity player) {
-        return isWearingAllArmor(player);
+    private static boolean hasFullSuitOfMaterial(PlayerEntity player, ArmorMaterial material) {
+        for (ItemStack armorStack : player.getInventory().armor) {
+            ArmorMaterial stackMaterial = getArmorMaterial(armorStack);
+            if (stackMaterial != material) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static ArmorMaterial getArmorMaterial(ItemStack stack) {
+        if (stack.getItem() instanceof ArmorItem armorItem) {
+            return armorItem.getMaterial();
+        }
+        return null;
+    }
+
+    private static void refreshEffect(PlayerEntity player, StatusEffectInstance effect) {
+        StatusEffectInstance current = player.getStatusEffect(effect.getEffectType());
+        if (current != null
+            && current.getAmplifier() >= effect.getAmplifier()
+            && current.getDuration() > EFFECT_REFRESH_THRESHOLD_TICKS) {
+            return;
+        }
+
+        player.addStatusEffect(new StatusEffectInstance(effect));
     }
 }

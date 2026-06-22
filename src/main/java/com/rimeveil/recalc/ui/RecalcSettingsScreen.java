@@ -1,66 +1,76 @@
-
 package com.rimeveil.recalc.ui;
 
-import com.rimeveil.recalc.Recalc;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
 
 public class RecalcSettingsScreen extends Screen {
-    
+    private static final int PANEL_WIDTH = 300;
+    private static final int PANEL_HEIGHT = 200;
+    private static final int BORDER_SIZE = 2;
+    private static final int BUTTON_WIDTH = 120;
+    private static final int BUTTON_HEIGHT = 20;
+    private static final int BACK_BUTTON_Y_OFFSET = 50;
+    private static final int TITLE_Y_OFFSET = 30;
+    private static final int PANEL_COLOR = 0xCC000000;
+    private static final int BORDER_COLOR = 0x9988CCFF;
+    private static final int TEXT_COLOR = 0xFFFFFFFF;
+
     public RecalcSettingsScreen() {
         super(Text.translatable("ui.recalc.settings"));
     }
-    
+
     @Override
     protected void init() {
         super.init();
-        this.children().clear();
-        
-        int buttonWidth = 120;
-        int buttonHeight = 20;
-        int buttonX = this.width / 2 - buttonWidth / 2;
-        int buttonY = this.height / 2 + 50;
-        
-        ButtonWidget backButton = ButtonWidget.builder(
+        int buttonX = this.width / 2 - BUTTON_WIDTH / 2;
+        int buttonY = this.height / 2 + BACK_BUTTON_Y_OFFSET;
+
+        this.addDrawableChild(ButtonWidget.builder(
             Text.translatable("ui.recalc.back"),
-            button -> {
-                if (this.client != null) {
-                    this.client.setScreen(null);
-                }
-            }).dimensions(buttonX, buttonY, buttonWidth, buttonHeight).build();
-        
-        this.addDrawableChild(backButton);
+            button -> close()
+        ).dimensions(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT).build());
     }
-    
+
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context);
-        
+
         int centerX = this.width / 2;
         int centerY = this.height / 2;
-        
-        int bgWidth = 300;
-        int bgHeight = 200;
-        int bgX = centerX - bgWidth / 2;
-        int bgY = centerY - bgHeight / 2;
-        
-        context.fill(bgX, bgY, bgX + bgWidth, bgY + bgHeight, 0xCC000000);
-        
-        context.fill(bgX, bgY, bgX + bgWidth, bgY + 2, 0x9988CCFF);
-        context.fill(bgX, bgY + bgHeight - 2, bgX + bgWidth, bgY + bgHeight, 0x9988CCFF);
-        context.fill(bgX, bgY, bgX + 2, bgY + bgHeight, 0x9988CCFF);
-        context.fill(bgX + bgWidth - 2, bgY, bgX + bgWidth, bgY + bgHeight, 0x9988CCFF);
-        
-        Text title = Text.translatable("ui.recalc.settings");
-        context.drawText(this.textRenderer, title, centerX - this.textRenderer.getWidth(title) / 2, bgY + 30, 0xFFFFFFFF, false);
-        
+        int panelX = centerX - PANEL_WIDTH / 2;
+        int panelY = centerY - PANEL_HEIGHT / 2;
+
+        drawPanel(context, panelX, panelY);
+        drawCenteredTitle(context, centerX, panelY + TITLE_Y_OFFSET);
+
         super.render(context, mouseX, mouseY, delta);
     }
-    
+
     @Override
     public boolean shouldPause() {
         return false;
+    }
+
+    @Override
+    public void close() {
+        if (this.client != null) {
+            this.client.setScreen(null);
+        }
+    }
+
+    private static void drawPanel(DrawContext context, int x, int y) {
+        context.fill(x, y, x + PANEL_WIDTH, y + PANEL_HEIGHT, PANEL_COLOR);
+        context.fill(x, y, x + PANEL_WIDTH, y + BORDER_SIZE, BORDER_COLOR);
+        context.fill(x, y + PANEL_HEIGHT - BORDER_SIZE, x + PANEL_WIDTH, y + PANEL_HEIGHT, BORDER_COLOR);
+        context.fill(x, y, x + BORDER_SIZE, y + PANEL_HEIGHT, BORDER_COLOR);
+        context.fill(x + PANEL_WIDTH - BORDER_SIZE, y, x + PANEL_WIDTH, y + PANEL_HEIGHT, BORDER_COLOR);
+    }
+
+    private void drawCenteredTitle(DrawContext context, int centerX, int y) {
+        Text title = Text.translatable("ui.recalc.settings");
+        int titleX = centerX - this.textRenderer.getWidth(title) / 2;
+        context.drawText(this.textRenderer, title, titleX, y, TEXT_COLOR, false);
     }
 }

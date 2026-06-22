@@ -16,20 +16,22 @@ public class RecalcCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess, CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(literal("recalc")
             .then(literal("clear")
-                .executes(context -> {
-                    ServerPlayerEntity player = context.getSource().getPlayer();
-                    if (player != null) {
-                        PlayerFrameData.detachFrame(player);
-                        context.getSource().sendFeedback(() -> Text.translatable("command.recalc.frame_removed"), false);
-                        ModNetworking.syncToPlayer(player, false);
-                        ModNetworking.sendRemoveAnimation(player);
-                        LogUtil.debug("Executed clear command for {}", player.getName().getString());
-                        return 1;
-                    }
-                    context.getSource().sendError(Text.translatable("command.recalc.only_player"));
-                    return 0;
-                })
+                .executes(context -> clearFrame(context.getSource()))
             )
         );
+    }
+
+    private static int clearFrame(ServerCommandSource source) {
+        if (!(source.getEntity() instanceof ServerPlayerEntity player)) {
+            source.sendError(Text.translatable("command.recalc.only_player"));
+            return 0;
+        }
+
+        PlayerFrameData.detachFrame(player);
+        ModNetworking.syncToPlayer(player, false);
+        ModNetworking.sendRemoveAnimation(player);
+        source.sendFeedback(() -> Text.translatable("command.recalc.frame_removed"), false);
+        LogUtil.debug("Executed clear command for {}", player.getName().getString());
+        return 1;
     }
 }

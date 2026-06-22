@@ -6,17 +6,17 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.PersistentState;
 import net.minecraft.world.PersistentStateManager;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class FrameState extends PersistentState {
     private static final String DATA_NAME = "recalc_frame_data";
     private static final String KEY_PLAYERS_BY_UUID = "playersByUuid";
     private static final String KEY_PLAYERS_BY_NAME = "playersByName";
-    
-    private final Map<String, Boolean> playersByUuid = new HashMap<>();
-    private final Map<String, Boolean> playersByName = new HashMap<>();
+
+    private final Set<String> playersByUuid = new HashSet<>();
+    private final Set<String> playersByName = new HashSet<>();
 
     public static FrameState create() {
         LogUtil.debug("Creating new FrameState");
@@ -25,62 +25,62 @@ public class FrameState extends PersistentState {
 
     public static FrameState fromNbt(NbtCompound nbt) {
         FrameState state = new FrameState();
-        
-        if (nbt.contains(KEY_PLAYERS_BY_UUID)) {
-            NbtCompound playersByUuidNbt = nbt.getCompound(KEY_PLAYERS_BY_UUID);
-            for (String key : playersByUuidNbt.getKeys()) {
-                state.playersByUuid.put(key, playersByUuidNbt.getBoolean(key));
-            }
-        }
-        
-        if (nbt.contains(KEY_PLAYERS_BY_NAME)) {
-            NbtCompound playersByNameNbt = nbt.getCompound(KEY_PLAYERS_BY_NAME);
-            for (String key : playersByNameNbt.getKeys()) {
-                state.playersByName.put(key, playersByNameNbt.getBoolean(key));
-            }
-        }
-        
-        LogUtil.debug("Loaded FrameState from NBT: {} UUID, {} names", 
-                     state.playersByUuid.size(), state.playersByName.size());
+        readPlayerSet(nbt, KEY_PLAYERS_BY_UUID, state.playersByUuid);
+        readPlayerSet(nbt, KEY_PLAYERS_BY_NAME, state.playersByName);
+        LogUtil.debug("Loaded FrameState from NBT: {} UUID, {} names", state.playersByUuid.size(), state.playersByName.size());
         return state;
-    }
-
-    @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
-        NbtCompound playersByUuidNbt = new NbtCompound();
-        for (Map.Entry<String, Boolean> entry : this.playersByUuid.entrySet()) {
-            playersByUuidNbt.putBoolean(entry.getKey(), entry.getValue());
-        }
-        nbt.put(KEY_PLAYERS_BY_UUID, playersByUuidNbt);
-        
-        NbtCompound playersByNameNbt = new NbtCompound();
-        for (Map.Entry<String, Boolean> entry : this.playersByName.entrySet()) {
-            playersByNameNbt.putBoolean(entry.getKey(), entry.getValue());
-        }
-        nbt.put(KEY_PLAYERS_BY_NAME, playersByNameNbt);
-        
-        LogUtil.debug("Saved FrameState: {} UUID, {} names", 
-                     this.playersByUuid.size(), this.playersByName.size());
-        return nbt;
     }
 
     public static FrameState get(ServerWorld world) {
         PersistentStateManager manager = world.getPersistentStateManager();
-        FrameState state = manager.getOrCreate(FrameState::fromNbt, FrameState::create, DATA_NAME);
-        return state;
+        return manager.getOrCreate(FrameState::fromNbt, FrameState::create, DATA_NAME);
+    }
+
+    @Override
+    public NbtCompound writeNbt(NbtCompound nbt) {
+        nbt.put(KEY_PLAYERS_BY_UUID, writePlayerSet(playersByUuid));
+        nbt.put(KEY_PLAYERS_BY_NAME, writePlayerSet(playersByName));
+        LogUtil.debug("Saved FrameState: {} UUID, {} names", playersByUuid.size(), playersByName.size());
+        return nbt;
     }
 
     public boolean hasFrame(String playerName, UUID uuid) {
-        if (playersByName.containsKey(playerName)) {
-            return playersByName.get(playerName);
-        }
-        return playersByUuid.getOrDefault(uuid.toString(), false);
+        return playersByUuid.contains(uuid.toString()) || playersByName.contains(playerName);
     }
 
     public void setFrame(String playerName, UUID uuid, boolean hasFrame) {
-        playersByUuid.put(uuid.toString(), hasFrame);
-        playersByName.put(playerName, hasFrame);
+        updateSet(playersByUuid, uuid.toString(), hasFrame);
+        updateSet(playersByName, playerName, hasFrame);
         markDirty();
         LogUtil.debug("Set frame for {} ({}) to {}", playerName, uuid, hasFrame);
+    }
+
+    private static void readPlayerSet(NbtCompound nbt, String key, Set<String> target) {
+        if (!nbt.contains(key)) {
+            return;
+        }
+
+        NbtCompound playersNbt = nbt.getCompound(key);
+        for (String playerKey : playersNbt.getKeys()) {
+            if (playersNbt.getBoolean(playerKey)) {
+                target.add(playerKey);
+            }
+        }
+    }
+
+    private static NbtCompound writePlayerSet(Set<String> players) {
+        NbtCompound nbt = new NbtCompound();
+        for (String player : players) {
+            nbt.putBoolean(player, true);
+        }
+        return nbt;
+    }
+
+    private static void updateSet(Set<String> set, String value, boolean shouldContain) {
+        if (shouldContain) {
+            set.add(value);
+        } else {
+            set.remove(value);
+        }
     }
 }

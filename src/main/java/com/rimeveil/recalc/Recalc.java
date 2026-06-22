@@ -1,51 +1,36 @@
- package com.rimeveil.recalc;
+package com.rimeveil.recalc;
 
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import com.rimeveil.recalc.Item.Moditem;
 import com.rimeveil.recalc.Item.Moditemgroup;
 import com.rimeveil.recalc.block.Modblock;
 import com.rimeveil.recalc.command.RecalcCommand;
+import com.rimeveil.recalc.networking.ModNetworking;
+import com.rimeveil.recalc.sound.ModSoundEvents;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.rimeveil.recalc.sound.ModSoundEvents;
-import com.rimeveil.recalc.networking.ModNetworking;
 
 public class Recalc implements ModInitializer {
-	public static final String MOD_ID = "recalc";
-	public static final String MOD_VERSION = "0.0.1";
+    public static final String MOD_ID = "recalc";
+    public static final String MOD_VERSION = "0.0.1";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static Identifier id(String path) {
+        return new Identifier(MOD_ID, path);
+    }
 
-	// 入口
-	@Override
-	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-		// Runs our example mod item registry.
+    @Override
+    public void onInitialize() {
+        Moditem.regitems();
+        Moditemgroup.regitemtogroup();
+        Modblock.regblocks();
+        ModSoundEvents.registerSounds();
 
+        CommandRegistrationCallback.EVENT.register(RecalcCommand::register);
+        ModNetworking.register();
 
-
-		Moditem.regitems();//加载物品
-		LOGGER.info("load items");//控制台输出load items
-		Moditemgroup.regitemtogroup();//加载物品组
-		LOGGER.info("load item groups");//控制台输出load item groups
-		Modblock.regblocks();//加载方块
-		LOGGER.info("load blocks");//控制台输出load blocks
-		ModSoundEvents.registerSounds();//加载音效
-		LOGGER.info("load sounds");//控制台输出load sounds
-		
-		CommandRegistrationCallback.EVENT.register(RecalcCommand::register);
-		LOGGER.info("Registered commands");
-		
-		ModNetworking.register();
-		LOGGER.info("Registered networking");
-		
-		
-		LOGGER.info("Hello recalc!");//控制台输出Hello recalc!
-	}
+        LOGGER.info("Recalc initialized");
+    }
 }

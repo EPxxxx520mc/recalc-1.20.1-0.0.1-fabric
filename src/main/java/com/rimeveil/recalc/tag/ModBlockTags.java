@@ -4,13 +4,12 @@ import com.rimeveil.recalc.Recalc;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-
 
 public class ModBlockTags {
     public static final TagKey<Block> EXAMPLE_BLOCK = of("example_block");
     public static final TagKey<Block> PICKAXE_AXE = of("pickaxe_axe");
+
     private static TagKey<Block> of(String id) {
-        return TagKey.of(RegistryKeys.BLOCK, new Identifier(Recalc.MOD_ID, id));
+        return TagKey.of(RegistryKeys.BLOCK, Recalc.id(id));
     }
 }
