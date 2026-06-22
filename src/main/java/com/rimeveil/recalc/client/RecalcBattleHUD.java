@@ -34,6 +34,7 @@ public class RecalcBattleHUD {
 
     private static final int MANA_X = 20;
     private static final int MANA_Y = 20;
+    private static final float MANA_UI_SCALE = 0.78F;
     private static final int MANA_PANEL_WIDTH = 286;
     private static final int MANA_PANEL_HEIGHT = 42;
     private static final int MANA_BAR_X_OFFSET = 42;
@@ -51,6 +52,7 @@ public class RecalcBattleHUD {
     private static final int PLAYER_PANEL_MARGIN = 10;
     private static final int PLAYER_PANEL_PADDING = 6;
     private static final int PLAYER_LINE_HEIGHT = 11;
+    private static final float PLAYER_UI_SCALE = 0.82F;
     private static final int LOGO_MARGIN = 20;
 
     public static void register() {
@@ -97,10 +99,18 @@ public class RecalcBattleHUD {
         int screenWidth = context.getScaledWindowWidth();
         int screenHeight = context.getScaledWindowHeight();
 
-        drawManaBar(context, client, MANA_X, MANA_Y);
+        drawScaledManaBar(context, client);
         drawSettingsButton(context, client, getSettingsBounds(screenWidth));
         drawPlayerInfo(context, client, screenWidth, screenHeight);
         drawRecalcLogo(context, client, LOGO_MARGIN, screenHeight - 30);
+    }
+
+    private static void drawScaledManaBar(DrawContext context, MinecraftClient client) {
+        context.getMatrices().push();
+        context.getMatrices().translate(MANA_X, MANA_Y, 0);
+        context.getMatrices().scale(MANA_UI_SCALE, MANA_UI_SCALE, 1.0F);
+        drawManaBar(context, client, 0, 0);
+        context.getMatrices().pop();
     }
 
     private static void drawManaBar(DrawContext context, MinecraftClient client, int x, int y) {
@@ -217,17 +227,24 @@ public class RecalcBattleHUD {
     private static void drawPlayerInfo(DrawContext context, MinecraftClient client, int screenWidth, int screenHeight) {
         List<Text> lines = getPlayerSummary(client);
         Bounds bounds = getPlayerInfoBounds(client, screenWidth, screenHeight);
+        int logicalWidth = getPlayerPanelLogicalWidth(client, lines);
+        int logicalHeight = getPlayerPanelLogicalHeight(lines);
 
-        context.fill(bounds.x + 2, bounds.y + 2, bounds.right() + 2, bounds.bottom() + 2, 0x55000000);
-        context.fill(bounds.x, bounds.y, bounds.right(), bounds.bottom(), 0x8805030C);
-        drawRectBorder(context, bounds.x, bounds.y, bounds.width, bounds.height, 0x665E4DD8);
+        context.getMatrices().push();
+        context.getMatrices().translate(bounds.x, bounds.y, 0);
+        context.getMatrices().scale(PLAYER_UI_SCALE, PLAYER_UI_SCALE, 1.0F);
 
-        int textY = bounds.y + PLAYER_PANEL_PADDING;
+        context.fill(2, 2, logicalWidth + 2, logicalHeight + 2, 0x55000000);
+        context.fill(0, 0, logicalWidth, logicalHeight, 0x8805030C);
+        drawRectBorder(context, 0, 0, logicalWidth, logicalHeight, 0x665E4DD8);
+
+        int textY = PLAYER_PANEL_PADDING;
         for (int i = 0; i < lines.size(); i++) {
             int color = i == 0 ? 0xFFA9E8FF : COLOR_WHITE;
-            context.drawText(client.textRenderer, lines.get(i), bounds.x + PLAYER_PANEL_PADDING, textY, color, true);
+            context.drawText(client.textRenderer, lines.get(i), PLAYER_PANEL_PADDING, textY, color, true);
             textY += PLAYER_LINE_HEIGHT;
         }
+        context.getMatrices().pop();
     }
 
     private static void drawRecalcLogo(DrawContext context, MinecraftClient client, int x, int y) {
@@ -316,13 +333,8 @@ public class RecalcBattleHUD {
 
     private static Bounds getPlayerInfoBounds(MinecraftClient client, int screenWidth, int screenHeight) {
         List<Text> lines = getPlayerSummary(client);
-        int contentWidth = 0;
-        for (Text line : lines) {
-            contentWidth = Math.max(contentWidth, client.textRenderer.getWidth(line));
-        }
-
-        int width = contentWidth + PLAYER_PANEL_PADDING * 2;
-        int height = lines.size() * PLAYER_LINE_HEIGHT + PLAYER_PANEL_PADDING * 2;
+        int width = Math.round(getPlayerPanelLogicalWidth(client, lines) * PLAYER_UI_SCALE);
+        int height = Math.round(getPlayerPanelLogicalHeight(lines) * PLAYER_UI_SCALE);
         return new Bounds(
             screenWidth - PLAYER_PANEL_MARGIN - width,
             screenHeight - PLAYER_PANEL_MARGIN - height,
@@ -332,7 +344,24 @@ public class RecalcBattleHUD {
     }
 
     private static Bounds manaBounds() {
-        return new Bounds(MANA_X, MANA_Y, MANA_PANEL_WIDTH, MANA_PANEL_HEIGHT);
+        return new Bounds(
+            MANA_X,
+            MANA_Y,
+            Math.round(MANA_PANEL_WIDTH * MANA_UI_SCALE),
+            Math.round(MANA_PANEL_HEIGHT * MANA_UI_SCALE)
+        );
+    }
+
+    private static int getPlayerPanelLogicalWidth(MinecraftClient client, List<Text> lines) {
+        int contentWidth = 0;
+        for (Text line : lines) {
+            contentWidth = Math.max(contentWidth, client.textRenderer.getWidth(line));
+        }
+        return contentWidth + PLAYER_PANEL_PADDING * 2;
+    }
+
+    private static int getPlayerPanelLogicalHeight(List<Text> lines) {
+        return lines.size() * PLAYER_LINE_HEIGHT + PLAYER_PANEL_PADDING * 2;
     }
 
     private static Bounds getSettingsBounds(int screenWidth) {
