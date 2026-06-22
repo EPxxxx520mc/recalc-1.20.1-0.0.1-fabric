@@ -20,29 +20,26 @@ public class RecalcBattleHUD {
     private static final Identifier RECALC_FONT = Recalc.id("recalc_font");
     private static final Identifier SETTINGS_BUTTON_TEXTURE = Recalc.id("textures/ui/settings_button.png");
 
-    private static final int COLOR_WHITE = 0xFFFFFFFF;
-    private static final int COLOR_PANEL = 0x880A0718;
-    private static final int COLOR_PANEL_DARK = 0xBB05030C;
-    private static final int COLOR_BORDER_DIM = 0x885E4DD8;
-    private static final int COLOR_BORDER_BRIGHT = 0xFFD6E2FF;
-    private static final int COLOR_MANA_START = 0xFF5EE7FF;
-    private static final int COLOR_MANA_MID = 0xFF8E6CFF;
-    private static final int COLOR_MANA_END = 0xFFFF7BDE;
-    private static final int COLOR_MANA_SHINE = 0x88FFFFFF;
-    private static final int COLOR_MANA_EMPTY = 0x660E1021;
-    private static final int COLOR_TEXT_SHADOW = 0xB0000000;
+    private static final int WHITE = 0xFFFFFFFF;
+    private static final int WHITE_SOFT = 0xB8FFFFFF;
+    private static final int WHITE_FAINT = 0x30FFFFFF;
+    private static final int GLASS_BACKGROUND = 0x16050A0E;
+    private static final int ACCENT_CYAN = 0xFFB9F3FA;
+    private static final int ACCENT_BLUE = 0xFFBBDDF7;
+    private static final int ACCENT_LAVENDER = 0xFFD8D2FA;
+    private static final int TEXT_SHADOW = 0x80000000;
 
-    private static final int MANA_X = 20;
-    private static final int MANA_Y = 20;
-    private static final float MANA_UI_SCALE = 0.78F;
-    private static final int MANA_PANEL_WIDTH = 286;
-    private static final int MANA_PANEL_HEIGHT = 42;
-    private static final int MANA_BAR_X_OFFSET = 42;
-    private static final int MANA_BAR_Y_OFFSET = 16;
-    private static final int MANA_BAR_WIDTH = 220;
-    private static final int MANA_BAR_HEIGHT = 12;
-    private static final int MANA_CORE_SIZE = 18;
-    private static final int MANA_SEGMENT_COUNT = 10;
+    private static final int ABILITY_X = 20;
+    private static final int ABILITY_Y = 20;
+    private static final float ABILITY_UI_SCALE = 0.78F;
+    private static final int ABILITY_PANEL_WIDTH = 270;
+    private static final int ABILITY_PANEL_HEIGHT = 34;
+    private static final int ABILITY_BAR_X = 12;
+    private static final int ABILITY_BAR_Y = 18;
+    private static final int ABILITY_BAR_WIDTH = 238;
+    private static final int ABILITY_BAR_HEIGHT = 9;
+    private static final int ABILITY_BAR_SLANT = 8;
+    private static final int ABILITY_SEGMENT_COUNT = 10;
 
     private static final int SETTINGS_BUTTON_SIZE = 18;
     private static final int SETTINGS_BUTTON_MARGIN = 14;
@@ -63,8 +60,8 @@ public class RecalcBattleHUD {
         int screenWidth = context.getScaledWindowWidth();
         int screenHeight = context.getScaledWindowHeight();
 
-        if (manaBounds().contains(mouseX, mouseY)) {
-            context.drawTooltip(client.textRenderer, getManaDetails(), mouseX, mouseY);
+        if (abilityBounds().contains(mouseX, mouseY)) {
+            context.drawTooltip(client.textRenderer, getAbilityDetails(), mouseX, mouseY);
             return;
         }
 
@@ -99,111 +96,104 @@ public class RecalcBattleHUD {
         int screenWidth = context.getScaledWindowWidth();
         int screenHeight = context.getScaledWindowHeight();
 
-        drawScaledManaBar(context, client);
+        drawScaledAbilityBar(context, client);
         drawSettingsButton(context, client, getSettingsBounds(screenWidth));
         drawPlayerInfo(context, client, screenWidth, screenHeight);
         drawRecalcLogo(context, client, LOGO_MARGIN, screenHeight - 30);
     }
 
-    private static void drawScaledManaBar(DrawContext context, MinecraftClient client) {
+    private static void drawScaledAbilityBar(DrawContext context, MinecraftClient client) {
         context.getMatrices().push();
-        context.getMatrices().translate(MANA_X, MANA_Y, 0);
-        context.getMatrices().scale(MANA_UI_SCALE, MANA_UI_SCALE, 1.0F);
-        drawManaBar(context, client, 0, 0);
+        context.getMatrices().translate(ABILITY_X, ABILITY_Y, 0);
+        context.getMatrices().scale(ABILITY_UI_SCALE, ABILITY_UI_SCALE, 1.0F);
+        drawAbilityBar(context, client);
         context.getMatrices().pop();
     }
 
-    private static void drawManaBar(DrawContext context, MinecraftClient client, int x, int y) {
-        float currentEnergy = BattleHUDManager.getEnergyCurrent();
-        float maxEnergy = BattleHUDManager.getEnergyMax();
-        float fillPercent = clamp(maxEnergy <= 0 ? 0 : currentEnergy / maxEnergy, 0.0f, 1.0f);
+    private static void drawAbilityBar(DrawContext context, MinecraftClient client) {
+        float current = BattleHUDManager.getAbilityCurrent();
+        float max = BattleHUDManager.getAbilityMax();
+        float fillPercent = clamp(max <= 0 ? 0 : current / max, 0.0f, 1.0f);
 
-        drawManaPanel(context, x, y);
-        drawManaCore(context, x + 20, y + MANA_PANEL_HEIGHT / 2, fillPercent);
-        drawManaTrack(context, x + MANA_BAR_X_OFFSET, y + MANA_BAR_Y_OFFSET, fillPercent);
-        drawManaText(context, client, x + MANA_BAR_X_OFFSET, y + 4, currentEnergy, maxEnergy);
+        drawAbilityFrame(context);
+        drawAbilityTrack(context, fillPercent);
+        drawAbilityText(context, client, current, max);
     }
 
-    private static void drawManaPanel(DrawContext context, int x, int y) {
-        context.fill(x + 2, y + 3, x + MANA_PANEL_WIDTH + 2, y + MANA_PANEL_HEIGHT + 3, 0x66000000);
-        context.fill(x, y, x + MANA_PANEL_WIDTH, y + MANA_PANEL_HEIGHT, COLOR_PANEL);
-        context.fill(x + 2, y + 2, x + MANA_PANEL_WIDTH - 2, y + MANA_PANEL_HEIGHT - 2, COLOR_PANEL_DARK);
+    private static void drawAbilityFrame(DrawContext context) {
+        drawParallelogram(context, 0, 0, ABILITY_PANEL_WIDTH, ABILITY_PANEL_HEIGHT, 10, GLASS_BACKGROUND);
 
-        drawRectBorder(context, x, y, MANA_PANEL_WIDTH, MANA_PANEL_HEIGHT, COLOR_BORDER_DIM);
-        context.fill(x + 1, y + 1, x + 86, y + 2, COLOR_BORDER_BRIGHT);
-        context.fill(x + 1, y + 1, x + 2, y + 24, COLOR_BORDER_BRIGHT);
+        context.fill(10, 2, 92, 3, WHITE_SOFT);
+        context.fill(8, 3, 10, 15, WHITE_SOFT);
+        context.fill(92, 2, 112, 3, ACCENT_CYAN);
+        context.fill(255, 31, 268, 32, WHITE_FAINT);
+        context.fill(268, 21, 269, 32, WHITE_FAINT);
     }
 
-    private static void drawManaCore(DrawContext context, int centerX, int centerY, float fillPercent) {
-        int half = MANA_CORE_SIZE / 2;
-        int pulseAlpha = (int)(95 + Math.sin(System.currentTimeMillis() / 340.0) * 45 * Math.max(0.2f, fillPercent));
-        int pulseColor = (pulseAlpha << 24) | 0x00A8DFFF;
+    private static void drawAbilityTrack(DrawContext context, float fillPercent) {
+        drawParallelogram(
+            context,
+            ABILITY_BAR_X,
+            ABILITY_BAR_Y,
+            ABILITY_BAR_WIDTH,
+            ABILITY_BAR_HEIGHT,
+            ABILITY_BAR_SLANT,
+            WHITE_SOFT
+        );
+        drawParallelogram(
+            context,
+            ABILITY_BAR_X + 2,
+            ABILITY_BAR_Y + 1,
+            ABILITY_BAR_WIDTH - 4,
+            ABILITY_BAR_HEIGHT - 2,
+            ABILITY_BAR_SLANT - 2,
+            0x26000000
+        );
 
-        drawDiamond(context, centerX, centerY, half + 5, 0x33000000);
-        drawDiamond(context, centerX, centerY, half + 3, pulseColor);
-        drawDiamond(context, centerX, centerY, half + 1, 0xFF17122E);
-        drawDiamond(context, centerX, centerY, half - 2, blend(COLOR_MANA_START, COLOR_MANA_END, fillPercent));
-        context.fill(centerX - 1, centerY - half + 4, centerX + 1, centerY + half - 4, 0xAAFFFFFF);
-    }
-
-    private static void drawManaTrack(DrawContext context, int x, int y, float fillPercent) {
-        context.fill(x - 2, y - 2, x + MANA_BAR_WIDTH + 2, y + MANA_BAR_HEIGHT + 2, 0xAA000000);
-        context.fill(x, y, x + MANA_BAR_WIDTH, y + MANA_BAR_HEIGHT, COLOR_MANA_EMPTY);
-        context.fill(x, y, x + MANA_BAR_WIDTH, y + 1, 0x44FFFFFF);
-        context.fill(x, y + MANA_BAR_HEIGHT - 1, x + MANA_BAR_WIDTH, y + MANA_BAR_HEIGHT, 0x77000000);
-
-        int fillWidth = Math.round(MANA_BAR_WIDTH * fillPercent);
+        int fillWidth = Math.round((ABILITY_BAR_WIDTH - 4) * fillPercent);
         if (fillWidth > 0) {
-            drawGradientFill(context, x, y + 1, fillWidth, MANA_BAR_HEIGHT - 2);
-            drawManaGlow(context, x, y, fillWidth);
-            drawManaShine(context, x, y, fillWidth);
+            drawParallelogram(
+                context,
+                ABILITY_BAR_X + 2,
+                ABILITY_BAR_Y + 1,
+                fillWidth,
+                ABILITY_BAR_HEIGHT - 2,
+                Math.min(ABILITY_BAR_SLANT - 2, fillWidth),
+                ACCENT_CYAN
+            );
+            drawAbilityPulse(context, fillWidth);
         }
 
-        drawManaSegments(context, x, y);
-        drawRectBorder(context, x - 1, y - 1, MANA_BAR_WIDTH + 2, MANA_BAR_HEIGHT + 2, COLOR_BORDER_DIM);
-    }
-
-    private static void drawGradientFill(DrawContext context, int x, int y, int width, int height) {
-        for (int i = 0; i < width; i++) {
-            float progress = width <= 1 ? 1.0f : (float)i / (float)(width - 1);
-            int color = progress < 0.55f
-                ? blend(COLOR_MANA_START, COLOR_MANA_MID, progress / 0.55f)
-                : blend(COLOR_MANA_MID, COLOR_MANA_END, (progress - 0.55f) / 0.45f);
-            context.fill(x + i, y, x + i + 1, y + height, color);
-        }
-    }
-
-    private static void drawManaGlow(DrawContext context, int x, int y, int fillWidth) {
-        int glowAlpha = (int)(72 + Math.sin(System.currentTimeMillis() / 420.0) * 26);
-        int glowColor = (glowAlpha << 24) | 0x00A7EFFF;
-        context.fill(x - 1, y - 3, x + fillWidth + 1, y - 1, glowColor);
-        context.fill(x - 1, y + MANA_BAR_HEIGHT + 1, x + fillWidth + 1, y + MANA_BAR_HEIGHT + 3, glowColor);
-    }
-
-    private static void drawManaShine(DrawContext context, int x, int y, int fillWidth) {
-        int cycle = (int)((System.currentTimeMillis() / 18L) % (MANA_BAR_WIDTH + 34));
-        int shineX = x + cycle - 28;
-        int shineStart = Math.max(x, shineX);
-        int shineEnd = Math.min(x + fillWidth, shineX + 22);
-
-        if (shineEnd > shineStart) {
-            context.fill(shineStart, y + 2, shineEnd, y + 4, COLOR_MANA_SHINE);
+        int segmentWidth = ABILITY_BAR_WIDTH / ABILITY_SEGMENT_COUNT;
+        for (int i = 1; i < ABILITY_SEGMENT_COUNT; i++) {
+            int segmentX = ABILITY_BAR_X + i * segmentWidth;
+            context.fill(segmentX, ABILITY_BAR_Y + 2, segmentX + 1, ABILITY_BAR_Y + ABILITY_BAR_HEIGHT - 2, 0x45FFFFFF);
         }
     }
 
-    private static void drawManaSegments(DrawContext context, int x, int y) {
-        int segmentWidth = MANA_BAR_WIDTH / MANA_SEGMENT_COUNT;
-        for (int i = 1; i < MANA_SEGMENT_COUNT; i++) {
-            int segmentX = x + i * segmentWidth;
-            context.fill(segmentX, y + 1, segmentX + 1, y + MANA_BAR_HEIGHT - 1, 0x77000000);
-            context.fill(segmentX + 1, y + 1, segmentX + 2, y + MANA_BAR_HEIGHT - 1, 0x22FFFFFF);
+    private static void drawAbilityPulse(DrawContext context, int fillWidth) {
+        int contentWidth = Math.max(1, fillWidth - 10);
+        int scanOffset = (int)((System.currentTimeMillis() / 15L) % (contentWidth + 16)) - 8;
+        int scanX = ABILITY_BAR_X + 5 + scanOffset;
+        int fillEnd = ABILITY_BAR_X + 2 + fillWidth;
+
+        if (scanX < fillEnd) {
+            int right = Math.min(scanX + 5, fillEnd);
+            context.fill(scanX, ABILITY_BAR_Y + 2, right, ABILITY_BAR_Y + ABILITY_BAR_HEIGHT - 2, 0x78FFFFFF);
         }
+
+        int capX = ABILITY_BAR_X + fillWidth - 1;
+        context.fill(capX, ABILITY_BAR_Y, capX + 2, ABILITY_BAR_Y + ABILITY_BAR_HEIGHT, ACCENT_LAVENDER);
     }
 
-    private static void drawManaText(DrawContext context, MinecraftClient client, int x, int y, float currentEnergy, float maxEnergy) {
-        Text text = Text.literal(String.format("MANA  %.0f / %.0f", currentEnergy, maxEnergy));
-        context.drawText(client.textRenderer, text, x + 1, y + 1, COLOR_TEXT_SHADOW, false);
-        context.drawText(client.textRenderer, text, x, y, COLOR_WHITE, false);
+    private static void drawAbilityText(DrawContext context, MinecraftClient client, float current, float max) {
+        Text label = Text.literal("ABILITY");
+        Text value = Text.literal(String.format("%.0f / %.0f", current, max));
+
+        context.drawText(client.textRenderer, label, 13, 6, WHITE, true);
+        int valueX = ABILITY_PANEL_WIDTH - 14 - client.textRenderer.getWidth(value);
+        context.drawText(client.textRenderer, value, valueX + 1, 7, TEXT_SHADOW, false);
+        context.drawText(client.textRenderer, value, valueX, 6, ACCENT_BLUE, false);
     }
 
     private static void drawSettingsButton(DrawContext context, MinecraftClient client, Bounds bounds) {
@@ -234,13 +224,13 @@ public class RecalcBattleHUD {
         context.getMatrices().translate(bounds.x, bounds.y, 0);
         context.getMatrices().scale(PLAYER_UI_SCALE, PLAYER_UI_SCALE, 1.0F);
 
-        context.fill(2, 2, logicalWidth + 2, logicalHeight + 2, 0x55000000);
-        context.fill(0, 0, logicalWidth, logicalHeight, 0x8805030C);
-        drawRectBorder(context, 0, 0, logicalWidth, logicalHeight, 0x665E4DD8);
+        context.fill(0, 0, logicalWidth, logicalHeight, GLASS_BACKGROUND);
+        drawTechCorners(context, 0, 0, logicalWidth, logicalHeight);
+        context.fill(logicalWidth - 34, 0, logicalWidth, 1, ACCENT_CYAN);
 
         int textY = PLAYER_PANEL_PADDING;
         for (int i = 0; i < lines.size(); i++) {
-            int color = i == 0 ? 0xFFA9E8FF : COLOR_WHITE;
+            int color = i == 0 ? ACCENT_CYAN : WHITE;
             context.drawText(client.textRenderer, lines.get(i), PLAYER_PANEL_PADDING, textY, color, true);
             textY += PLAYER_LINE_HEIGHT;
         }
@@ -249,12 +239,7 @@ public class RecalcBattleHUD {
 
     private static void drawRecalcLogo(DrawContext context, MinecraftClient client, int x, int y) {
         Text logo = Text.literal("Recalc").setStyle(Style.EMPTY.withFont(RECALC_FONT));
-        float pulse = (float)(0.82 + Math.sin(System.currentTimeMillis() / 520.0) * 0.12);
-
-        int textWidth = client.textRenderer.getWidth(logo);
-        int flareAlpha = Math.round(42 * pulse);
-        int flareColor = HudRenderUtils.withAlpha(0x66DFFF, flareAlpha);
-        context.fill(x - 4, y + client.textRenderer.fontHeight / 2, x + textWidth + 4, y + client.textRenderer.fontHeight / 2 + 1, flareColor);
+        float pulse = (float)(0.88 + Math.sin(System.currentTimeMillis() / 600.0) * 0.08);
 
         HudRenderUtils.drawGlowingText(
             context,
@@ -263,32 +248,36 @@ public class RecalcBattleHUD {
             x,
             y,
             0xFFFFFF,
-            0x65DFFF,
+            0xB9F3FA,
             pulse,
             true
         );
+
+        int textWidth = client.textRenderer.getWidth(logo);
+        context.fill(x, y + client.textRenderer.fontHeight + 2, x + textWidth, y + client.textRenderer.fontHeight + 3, WHITE_FAINT);
+        context.fill(x + textWidth - 14, y + client.textRenderer.fontHeight + 2, x + textWidth, y + client.textRenderer.fontHeight + 3, ACCENT_CYAN);
     }
 
-    private static List<Text> getManaDetails() {
-        float current = BattleHUDManager.getEnergyCurrent();
-        float max = BattleHUDManager.getEnergyMax();
+    private static List<Text> getAbilityDetails() {
+        float current = BattleHUDManager.getAbilityCurrent();
+        float max = BattleHUDManager.getAbilityMax();
         float percent = max <= 0 ? 0 : clamp(current / max, 0.0f, 1.0f);
 
         Text state;
         if (percent >= 0.99f) {
-            state = Text.translatable("hud.recalc.mana_state.full");
+            state = Text.translatable("hud.recalc.ability_state.full");
         } else if (percent <= 0.2f) {
-            state = Text.translatable("hud.recalc.mana_state.low");
+            state = Text.translatable("hud.recalc.ability_state.low");
         } else {
-            state = Text.translatable("hud.recalc.mana_state.stable");
+            state = Text.translatable("hud.recalc.ability_state.stable");
         }
 
         return List.of(
-            Text.translatable("hud.recalc.mana_title").formatted(Formatting.AQUA),
-            Text.translatable("hud.recalc.mana_current", String.format("%.0f", current)),
-            Text.translatable("hud.recalc.mana_capacity", String.format("%.0f", max)),
-            Text.translatable("hud.recalc.mana_charge", String.format("%.0f", percent * 100)),
-            Text.translatable("hud.recalc.mana_state", state)
+            Text.translatable("hud.recalc.ability_title").formatted(Formatting.WHITE),
+            Text.translatable("hud.recalc.ability_current", String.format("%.0f", current)),
+            Text.translatable("hud.recalc.ability_capacity", String.format("%.0f", max)),
+            Text.translatable("hud.recalc.ability_charge", String.format("%.0f", percent * 100)),
+            Text.translatable("hud.recalc.ability_state", state)
         );
     }
 
@@ -297,7 +286,7 @@ public class RecalcBattleHUD {
         int chunkX = Math.floorDiv(client.player.getBlockX(), 16);
         int chunkZ = Math.floorDiv(client.player.getBlockZ(), 16);
 
-        lines.add(Text.translatable("hud.recalc.player_title").formatted(Formatting.LIGHT_PURPLE));
+        lines.add(Text.translatable("hud.recalc.player_title").formatted(Formatting.WHITE));
         lines.add(Text.translatable(
             "hud.recalc.health",
             String.format("%.1f", client.player.getHealth()),
@@ -343,12 +332,12 @@ public class RecalcBattleHUD {
         );
     }
 
-    private static Bounds manaBounds() {
+    private static Bounds abilityBounds() {
         return new Bounds(
-            MANA_X,
-            MANA_Y,
-            Math.round(MANA_PANEL_WIDTH * MANA_UI_SCALE),
-            Math.round(MANA_PANEL_HEIGHT * MANA_UI_SCALE)
+            ABILITY_X,
+            ABILITY_Y,
+            Math.round(ABILITY_PANEL_WIDTH * ABILITY_UI_SCALE),
+            Math.round(ABILITY_PANEL_HEIGHT * ABILITY_UI_SCALE)
         );
     }
 
@@ -381,31 +370,28 @@ public class RecalcBattleHUD {
         return (int)(client.mouse.getY() * client.getWindow().getScaledHeight() / client.getWindow().getHeight());
     }
 
-    private static void drawDiamond(DrawContext context, int centerX, int centerY, int radius, int color) {
-        for (int dy = -radius; dy <= radius; dy++) {
-            int halfWidth = radius - Math.abs(dy);
-            context.fill(centerX - halfWidth, centerY + dy, centerX + halfWidth + 1, centerY + dy + 1, color);
+    private static void drawParallelogram(DrawContext context, int x, int y, int width, int height, int slant, int color) {
+        if (width <= 0 || height <= 0) {
+            return;
+        }
+
+        for (int row = 0; row < height; row++) {
+            float progress = height == 1 ? 0.0f : (float)row / (height - 1);
+            int offset = Math.round(slant * (1.0f - progress));
+            context.fill(x + offset, y + row, x + offset + width, y + row + 1, color);
         }
     }
 
-    private static void drawRectBorder(DrawContext context, int x, int y, int width, int height, int color) {
-        context.fill(x, y, x + width, y + 1, color);
-        context.fill(x, y + height - 1, x + width, y + height, color);
-        context.fill(x, y, x + 1, y + height, color);
-        context.fill(x + width - 1, y, x + width, y + height, color);
-    }
-
-    private static int blend(int startColor, int endColor, float progress) {
-        float amount = clamp(progress, 0.0f, 1.0f);
-        int a = lerp((startColor >>> 24) & 0xFF, (endColor >>> 24) & 0xFF, amount);
-        int r = lerp((startColor >>> 16) & 0xFF, (endColor >>> 16) & 0xFF, amount);
-        int g = lerp((startColor >>> 8) & 0xFF, (endColor >>> 8) & 0xFF, amount);
-        int b = lerp(startColor & 0xFF, endColor & 0xFF, amount);
-        return a << 24 | r << 16 | g << 8 | b;
-    }
-
-    private static int lerp(int start, int end, float amount) {
-        return Math.round(start + (end - start) * amount);
+    private static void drawTechCorners(DrawContext context, int x, int y, int width, int height) {
+        int corner = 10;
+        context.fill(x, y, x + corner, y + 1, WHITE_SOFT);
+        context.fill(x, y, x + 1, y + corner, WHITE_SOFT);
+        context.fill(x + width - corner, y, x + width, y + 1, WHITE_SOFT);
+        context.fill(x + width - 1, y, x + width, y + corner, WHITE_SOFT);
+        context.fill(x, y + height - 1, x + corner, y + height, WHITE_SOFT);
+        context.fill(x, y + height - corner, x + 1, y + height, WHITE_SOFT);
+        context.fill(x + width - corner, y + height - 1, x + width, y + height, WHITE_SOFT);
+        context.fill(x + width - 1, y + height - corner, x + width, y + height, WHITE_SOFT);
     }
 
     private static float clamp(float value, float min, float max) {

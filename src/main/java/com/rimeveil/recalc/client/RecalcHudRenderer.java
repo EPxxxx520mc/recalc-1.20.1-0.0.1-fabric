@@ -18,9 +18,7 @@ public class RecalcHudRenderer {
     private static final int ATTACH_X_OFFSET = 150;
     private static final int REMOVE_X_OFFSET = 50;
     private static final float FADE_PERCENT = 0.1f;
-    private static final int BORDER_ALPHA_MULTIPLIER = 150;
-    private static final int BAR_BG_ALPHA_MULTIPLIER = 100;
-    private static final int BAR_FG_ALPHA_MULTIPLIER = 200;
+    private static final int BAR_SLANT = 7;
 
     public static void register() {
         HudRenderCallback.EVENT.register(RecalcHudRenderer::render);
@@ -51,7 +49,7 @@ public class RecalcHudRenderer {
         int logoX = screenWidth - ATTACH_X_OFFSET;
         int logoY = screenHeight - LOGO_Y_OFFSET;
 
-        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFFFFFF, 0x65DFFF);
+        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFFFFFF, 0xB9F3FA);
     }
 
     private static void renderRemoveAnimation(DrawContext context) {
@@ -74,7 +72,7 @@ public class RecalcHudRenderer {
         int logoX = REMOVE_X_OFFSET;
         int logoY = screenHeight - LOGO_Y_OFFSET;
 
-        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFF5A6E, 0xFF1F46);
+        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFFFFFF, 0xD8D2FA);
     }
 
     private static void renderAnimation(DrawContext context, MinecraftClient client, 
@@ -109,22 +107,48 @@ public class RecalcHudRenderer {
         int barX = logoX;
         int barY = logoY + (int) (client.textRenderer.fontHeight * scale) + 10;
 
-        int glowAlpha = (int)(alpha * 48);
+        int glowAlpha = (int)(alpha * 34);
         int barGlowColor = HudRenderUtils.withAlpha(glowColor, glowAlpha);
-        context.fill(barX - 2, barY - 2, barX + BAR_WIDTH + 2, barY + BAR_HEIGHT + 2, barGlowColor);
-        context.fill(barX, barY, barX + BAR_WIDTH, barY + BAR_HEIGHT, 
-                    (int) (alpha * BAR_BG_ALPHA_MULTIPLIER) << 24 | 0x333333);
+        drawParallelogram(context, barX - 2, barY - 2, BAR_WIDTH + 4, BAR_HEIGHT + 4, BAR_SLANT, barGlowColor);
+        drawParallelogram(
+            context,
+            barX,
+            barY,
+            BAR_WIDTH,
+            BAR_HEIGHT,
+            BAR_SLANT - 1,
+            HudRenderUtils.withAlpha(0xFFFFFF, (int)(alpha * 170))
+        );
+        drawParallelogram(
+            context,
+            barX + 2,
+            barY + 1,
+            BAR_WIDTH - 4,
+            BAR_HEIGHT - 2,
+            BAR_SLANT - 3,
+            HudRenderUtils.withAlpha(0x000000, (int)(alpha * 42))
+        );
         int filledWidth = (int) (progress * BAR_WIDTH);
-        context.fill(barX, barY, barX + filledWidth, barY + BAR_HEIGHT, 
-                    (int) (alpha * BAR_FG_ALPHA_MULTIPLIER) << 24 | color);
-        drawBorder(context, barX, barY, BAR_WIDTH, BAR_HEIGHT, alpha, color);
+        drawParallelogram(
+            context,
+            barX + 2,
+            barY + 1,
+            Math.max(0, filledWidth - 4),
+            BAR_HEIGHT - 2,
+            Math.min(BAR_SLANT - 3, Math.max(0, filledWidth - 4)),
+            HudRenderUtils.withAlpha(glowColor, (int)(alpha * 230))
+        );
     }
 
-    private static void drawBorder(DrawContext context, int x, int y, int width, int height, float alpha, int color) {
-        int alphaInt = (int) (alpha * BORDER_ALPHA_MULTIPLIER) << 24;
-        context.fill(x - 1, y - 1, x + width + 1, y, alphaInt | color);
-        context.fill(x - 1, y + height, x + width + 1, y + height + 1, alphaInt | color);
-        context.fill(x - 1, y, x, y + height, alphaInt | color);
-        context.fill(x + width, y, x + width + 1, y + height, alphaInt | color);
+    private static void drawParallelogram(DrawContext context, int x, int y, int width, int height, int slant, int color) {
+        if (width <= 0 || height <= 0) {
+            return;
+        }
+
+        for (int row = 0; row < height; row++) {
+            float progress = height == 1 ? 0.0f : (float)row / (height - 1);
+            int offset = Math.round(slant * (1.0f - progress));
+            context.fill(x + offset, y + row, x + offset + width, y + row + 1, color);
+        }
     }
 }

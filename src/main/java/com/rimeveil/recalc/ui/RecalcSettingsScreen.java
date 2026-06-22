@@ -13,8 +13,9 @@ public class RecalcSettingsScreen extends Screen {
     private static final int BUTTON_HEIGHT = 20;
     private static final int BACK_BUTTON_Y_OFFSET = 50;
     private static final int TITLE_Y_OFFSET = 30;
-    private static final int PANEL_COLOR = 0xCC000000;
-    private static final int BORDER_COLOR = 0x9988CCFF;
+    private static final int PANEL_COLOR = 0x24050A0E;
+    private static final int BORDER_COLOR = 0xB8FFFFFF;
+    private static final int ACCENT_COLOR = 0xFFB9F3FA;
     private static final int TEXT_COLOR = 0xFFFFFFFF;
 
     public RecalcSettingsScreen() {
@@ -35,8 +36,6 @@ public class RecalcSettingsScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context);
-
         int centerX = this.width / 2;
         int centerY = this.height / 2;
         int panelX = centerX - PANEL_WIDTH / 2;
@@ -62,15 +61,22 @@ public class RecalcSettingsScreen extends Screen {
 
     private static void drawPanel(DrawContext context, int x, int y) {
         context.fill(x, y, x + PANEL_WIDTH, y + PANEL_HEIGHT, PANEL_COLOR);
-        context.fill(x, y, x + PANEL_WIDTH, y + BORDER_SIZE, BORDER_COLOR);
-        context.fill(x, y + PANEL_HEIGHT - BORDER_SIZE, x + PANEL_WIDTH, y + PANEL_HEIGHT, BORDER_COLOR);
-        context.fill(x, y, x + BORDER_SIZE, y + PANEL_HEIGHT, BORDER_COLOR);
-        context.fill(x + PANEL_WIDTH - BORDER_SIZE, y, x + PANEL_WIDTH, y + PANEL_HEIGHT, BORDER_COLOR);
+        int corner = 18;
+        context.fill(x, y, x + corner, y + BORDER_SIZE, BORDER_COLOR);
+        context.fill(x, y, x + BORDER_SIZE, y + corner, BORDER_COLOR);
+        context.fill(x + PANEL_WIDTH - corner, y, x + PANEL_WIDTH, y + BORDER_SIZE, BORDER_COLOR);
+        context.fill(x + PANEL_WIDTH - BORDER_SIZE, y, x + PANEL_WIDTH, y + corner, BORDER_COLOR);
+        context.fill(x, y + PANEL_HEIGHT - BORDER_SIZE, x + corner, y + PANEL_HEIGHT, BORDER_COLOR);
+        context.fill(x, y + PANEL_HEIGHT - corner, x + BORDER_SIZE, y + PANEL_HEIGHT, BORDER_COLOR);
+        context.fill(x + PANEL_WIDTH - corner, y + PANEL_HEIGHT - BORDER_SIZE, x + PANEL_WIDTH, y + PANEL_HEIGHT, BORDER_COLOR);
+        context.fill(x + PANEL_WIDTH - BORDER_SIZE, y + PANEL_HEIGHT - corner, x + PANEL_WIDTH, y + PANEL_HEIGHT, BORDER_COLOR);
+        context.fill(x + PANEL_WIDTH - 72, y, x + PANEL_WIDTH, y + 1, ACCENT_COLOR);
     }
 
     private void drawCenteredTitle(DrawContext context, int centerX, int y) {
         Text title = Text.translatable("ui.recalc.settings");
         int titleX = centerX - this.textRenderer.getWidth(title) / 2;
-        context.drawText(this.textRenderer, title, titleX, y, TEXT_COLOR, false);
+        context.drawText(this.textRenderer, title, titleX, y, TEXT_COLOR, true);
+        context.fill(centerX - 28, y + this.textRenderer.fontHeight + 4, centerX + 28, y + this.textRenderer.fontHeight + 5, ACCENT_COLOR);
     }
 }
