@@ -28,7 +28,7 @@ public class FictionalFrameItem extends Item {
                 PlayerFrameData.attachFrame(user);
                 user.sendMessage(Text.translatable("message.recalc.frame_attached"), true);
                 if (user instanceof ServerPlayerEntity serverPlayer) {
-                    ModNetworking.syncToPlayer(serverPlayer, true);
+                    ModNetworking.syncToPlayer(serverPlayer, true, true);
                 }
                 LogUtil.debug("Fictional frame used by {}", user.getName().getString());
             } else {

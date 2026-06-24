@@ -19,17 +19,26 @@ public class ModNetworking {
             ServerPlayerEntity player = handler.player;
             boolean hasFrame = PlayerFrameData.hasFrameAttached(player);
             LogUtil.debug("Syncing frame state for {}: {}", player.getName().getString(), hasFrame);
-            sendFrameState(player, hasFrame);
+            sendFrameState(player, hasFrame, false);
         });
     }
 
     public static void syncToPlayer(ServerPlayerEntity player, boolean hasFrame) {
+        syncToPlayer(player, hasFrame, false);
+    }
+
+    public static void syncToPlayer(ServerPlayerEntity player, boolean hasFrame, boolean playAttachAnimation) {
         if (player == null) {
             return;
         }
 
-        LogUtil.debug("Sending frame state to {}: {}", player.getName().getString(), hasFrame);
-        sendFrameState(player, hasFrame);
+        LogUtil.debug(
+            "Sending frame state to {}: {} (attach animation: {})",
+            player.getName().getString(),
+            hasFrame,
+            playAttachAnimation
+        );
+        sendFrameState(player, hasFrame, playAttachAnimation);
     }
 
     public static void sendRemoveAnimation(ServerPlayerEntity player) {
@@ -41,9 +50,10 @@ public class ModNetworking {
         ServerPlayNetworking.send(player, PLAY_REMOVE_ANIMATION, PacketByteBufs.empty());
     }
 
-    private static void sendFrameState(ServerPlayerEntity player, boolean hasFrame) {
+    private static void sendFrameState(ServerPlayerEntity player, boolean hasFrame, boolean playAttachAnimation) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeBoolean(hasFrame);
+        buf.writeBoolean(playAttachAnimation);
         ServerPlayNetworking.send(player, SYNC_FRAME_STATE, buf);
     }
 }

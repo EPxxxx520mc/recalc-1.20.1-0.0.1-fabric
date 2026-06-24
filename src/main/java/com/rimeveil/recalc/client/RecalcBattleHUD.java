@@ -23,22 +23,36 @@ public class RecalcBattleHUD {
     private static final int WHITE = 0xFFFFFFFF;
     private static final int WHITE_SOFT = 0xB8FFFFFF;
     private static final int WHITE_FAINT = 0x30FFFFFF;
-    private static final int GLASS_BACKGROUND = 0x16050A0E;
-    private static final int ACCENT_CYAN = 0xFFB9F3FA;
-    private static final int ACCENT_BLUE = 0xFFBBDDF7;
-    private static final int ACCENT_LAVENDER = 0xFFD8D2FA;
+    private static final int GLASS_BACKGROUND = 0x553A424A;
+    private static final int GLASS_BACKGROUND_DARK = 0x7A22282E;
+    private static final int PANEL_SHADOW = 0x5820252B;
+    private static final int PANEL_STROKE = 0xC8E1E7EA;
+    private static final int PANEL_STROKE_FAINT = 0x5CE1E7EA;
+    private static final int CELL_EMPTY = 0x64D0D7DB;
+    private static final int CELL_FILLED = 0xEAF4F7F8;
+    private static final int ACCENT_CYAN = 0xFFC7F6FA;
+    private static final int ACCENT_BLUE = 0xFFDCE5EA;
+    private static final int ACCENT_LAVENDER = 0xFFE7E3F5;
     private static final int TEXT_SHADOW = 0x80000000;
 
     private static final int ABILITY_X = 20;
     private static final int ABILITY_Y = 20;
     private static final int ABILITY_PANEL_WIDTH = 218;
     private static final int ABILITY_PANEL_HEIGHT = 30;
-    private static final int ABILITY_BAR_X = 10;
-    private static final int ABILITY_BAR_Y = 17;
-    private static final int ABILITY_BAR_WIDTH = 190;
-    private static final int ABILITY_BAR_HEIGHT = 7;
-    private static final int ABILITY_BAR_SLANT = 6;
+    private static final int ABILITY_BAR_X = 8;
+    private static final int ABILITY_BAR_Y = 5;
+    private static final int ABILITY_BAR_WIDTH = 166;
+    private static final int ABILITY_BAR_HEIGHT = 10;
+    private static final int ABILITY_BAR_SLANT = 5;
     private static final int ABILITY_SEGMENT_COUNT = 10;
+    private static final int ABILITY_SEGMENT_GAP = 2;
+    private static final int ABILITY_STATUS_X = 187;
+    private static final int ABILITY_STATUS_Y = 3;
+    private static final int ABILITY_STATUS_SIZE = 24;
+    private static final int ABILITY_PROMPT_X = 12;
+    private static final int ABILITY_PROMPT_Y = 18;
+    private static final int ABILITY_PROMPT_RIGHT_PADDING = 8;
+    private static final int ABILITY_PROMPT_TEXT_PADDING = 4;
 
     private static final int SETTINGS_BUTTON_SIZE = 18;
     private static final int SETTINGS_BUTTON_MARGIN = 14;
@@ -199,79 +213,155 @@ public class RecalcBattleHUD {
     }
 
     private static void drawAbilityFrame(DrawContext context) {
+        drawParallelogram(context, 4, 4, ABILITY_PANEL_WIDTH, ABILITY_PANEL_HEIGHT - 2, 10, PANEL_SHADOW);
         drawParallelogram(context, 0, 0, ABILITY_PANEL_WIDTH, ABILITY_PANEL_HEIGHT, 10, GLASS_BACKGROUND);
+        drawParallelogram(context, 4, 3, ABILITY_PANEL_WIDTH - 10, ABILITY_PANEL_HEIGHT - 7, 7, 0x323F474F);
 
-        context.fill(8, 2, 72, 3, WHITE_SOFT);
-        context.fill(8, 3, 10, 15, WHITE_SOFT);
-        context.fill(72, 2, 90, 3, ACCENT_CYAN);
-        context.fill(204, 27, 216, 28, WHITE_FAINT);
-        context.fill(216, 19, 217, 28, WHITE_FAINT);
+        context.fill(9, 2, 115, 3, PANEL_STROKE);
+        context.fill(7, 3, 9, 16, PANEL_STROKE);
+        context.fill(154, 27, 205, 28, PANEL_STROKE_FAINT);
+        context.fill(214, 11, 216, 28, PANEL_STROKE_FAINT);
+        drawAbilityStatusIcon(context);
     }
 
     private static void drawAbilityTrack(DrawContext context, float fillPercent) {
-        drawParallelogram(
-            context,
-            ABILITY_BAR_X,
-            ABILITY_BAR_Y,
-            ABILITY_BAR_WIDTH,
-            ABILITY_BAR_HEIGHT,
-            ABILITY_BAR_SLANT,
-            WHITE_SOFT
-        );
-        drawParallelogram(
-            context,
-            ABILITY_BAR_X + 2,
-            ABILITY_BAR_Y + 1,
-            ABILITY_BAR_WIDTH - 4,
-            ABILITY_BAR_HEIGHT - 2,
-            ABILITY_BAR_SLANT - 2,
-            0x26000000
-        );
+        drawParallelogram(context, ABILITY_BAR_X - 2, ABILITY_BAR_Y - 2, ABILITY_BAR_WIDTH + 5, ABILITY_BAR_HEIGHT + 4, 7, 0x6A20262C);
 
-        int fillWidth = Math.round((ABILITY_BAR_WIDTH - 4) * fillPercent);
-        if (fillWidth > 0) {
+        int segmentWidth = (ABILITY_BAR_WIDTH - (ABILITY_SEGMENT_COUNT - 1) * ABILITY_SEGMENT_GAP) / ABILITY_SEGMENT_COUNT;
+        float filledSegments = fillPercent * ABILITY_SEGMENT_COUNT;
+        for (int i = 0; i < ABILITY_SEGMENT_COUNT; i++) {
+            int segmentX = ABILITY_BAR_X + i * (segmentWidth + ABILITY_SEGMENT_GAP);
+            float segmentFill = clamp(filledSegments - i, 0.0f, 1.0f);
+
             drawParallelogram(
                 context,
-                ABILITY_BAR_X + 2,
-                ABILITY_BAR_Y + 1,
-                fillWidth,
-                ABILITY_BAR_HEIGHT - 2,
-                Math.min(ABILITY_BAR_SLANT - 2, fillWidth),
-                ACCENT_CYAN
+                segmentX,
+                ABILITY_BAR_Y,
+                segmentWidth,
+                ABILITY_BAR_HEIGHT,
+                ABILITY_BAR_SLANT,
+                CELL_EMPTY
             );
-            drawAbilityPulse(context, fillWidth);
+
+            drawParallelogram(
+                context,
+                segmentX + 1,
+                ABILITY_BAR_Y + 1,
+                segmentWidth - 2,
+                ABILITY_BAR_HEIGHT - 2,
+                Math.max(1, ABILITY_BAR_SLANT - 2),
+                GLASS_BACKGROUND_DARK
+            );
+
+            int fillWidth = Math.round((segmentWidth - 2) * segmentFill);
+            if (fillWidth > 0) {
+                int fillColor = segmentFill < 1.0f ? ACCENT_CYAN : CELL_FILLED;
+                drawParallelogram(
+                    context,
+                    segmentX + 1,
+                    ABILITY_BAR_Y + 1,
+                    fillWidth,
+                    ABILITY_BAR_HEIGHT - 2,
+                    Math.min(Math.max(1, ABILITY_BAR_SLANT - 2), fillWidth),
+                    fillColor
+                );
+            }
         }
 
-        int segmentWidth = ABILITY_BAR_WIDTH / ABILITY_SEGMENT_COUNT;
-        for (int i = 1; i < ABILITY_SEGMENT_COUNT; i++) {
-            int segmentX = ABILITY_BAR_X + i * segmentWidth;
-            context.fill(segmentX, ABILITY_BAR_Y + 2, segmentX + 1, ABILITY_BAR_Y + ABILITY_BAR_HEIGHT - 2, 0x45FFFFFF);
-        }
+        drawAbilityScanLine(context, fillPercent);
     }
 
-    private static void drawAbilityPulse(DrawContext context, int fillWidth) {
-        int contentWidth = Math.max(1, fillWidth - 10);
-        int scanOffset = (int)((System.currentTimeMillis() / 15L) % (contentWidth + 16)) - 8;
-        int scanX = ABILITY_BAR_X + 5 + scanOffset;
-        int fillEnd = ABILITY_BAR_X + 2 + fillWidth;
+    private static void drawAbilityScanLine(DrawContext context, float fillPercent) {
+        int fillWidth = Math.round(ABILITY_BAR_WIDTH * fillPercent);
+        if (fillWidth <= 0) {
+            return;
+        }
+
+        int contentWidth = Math.max(1, fillWidth - 12);
+        int scanOffset = (int)((System.currentTimeMillis() / 18L) % (contentWidth + 18)) - 9;
+        int scanX = ABILITY_BAR_X + scanOffset;
+        int fillEnd = ABILITY_BAR_X + fillWidth;
 
         if (scanX < fillEnd) {
             int right = Math.min(scanX + 5, fillEnd);
-            context.fill(scanX, ABILITY_BAR_Y + 2, right, ABILITY_BAR_Y + ABILITY_BAR_HEIGHT - 2, 0x78FFFFFF);
+            context.fill(scanX, ABILITY_BAR_Y + 1, right, ABILITY_BAR_Y + ABILITY_BAR_HEIGHT - 1, 0x74FFFFFF);
         }
 
-        int capX = ABILITY_BAR_X + fillWidth - 1;
-        context.fill(capX, ABILITY_BAR_Y, capX + 2, ABILITY_BAR_Y + ABILITY_BAR_HEIGHT, ACCENT_LAVENDER);
+        int capX = ABILITY_BAR_X + fillWidth;
+        context.fill(capX, ABILITY_BAR_Y - 1, capX + 2, ABILITY_BAR_Y + ABILITY_BAR_HEIGHT + 1, ACCENT_LAVENDER);
     }
 
     private static void drawAbilityText(DrawContext context, MinecraftClient client, float current, float max) {
-        Text label = Text.literal("ABILITY");
-        Text value = Text.literal(String.format("%.0f / %.0f", current, max));
+        float fillPercent = clamp(max <= 0 ? 0 : current / max, 0.0f, 1.0f);
+        Text value = Text.literal(String.format("%.0f%%", fillPercent * 100.0f));
 
-        context.drawText(client.textRenderer, label, 13, 6, WHITE, true);
-        int valueX = ABILITY_PANEL_WIDTH - 14 - client.textRenderer.getWidth(value);
-        context.drawText(client.textRenderer, value, valueX + 1, 7, TEXT_SHADOW, false);
-        context.drawText(client.textRenderer, value, valueX, 6, ACCENT_BLUE, false);
+        int valueX = ABILITY_STATUS_X - 8 - client.textRenderer.getWidth(value);
+        drawAbilityPromptLabel(context, client, valueX - ABILITY_PROMPT_RIGHT_PADDING);
+
+        context.drawText(client.textRenderer, value, valueX + 1, 19, TEXT_SHADOW, false);
+        context.drawText(client.textRenderer, value, valueX, 18, ACCENT_BLUE, false);
+    }
+
+    private static void drawAbilityPromptLabel(DrawContext context, MinecraftClient client, int maxRightX) {
+        Text label = BattleHUDManager.getAbilityPromptLabel();
+        int maxTextWidth = maxRightX - ABILITY_PROMPT_X - ABILITY_PROMPT_TEXT_PADDING * 2;
+        if (label == null || maxTextWidth <= 0) {
+            return;
+        }
+
+        Text visibleLabel = trimTextToWidth(client, label, maxTextWidth);
+        int labelWidth = client.textRenderer.getWidth(visibleLabel);
+        if (labelWidth <= 0) {
+            return;
+        }
+
+        int labelRight = ABILITY_PROMPT_X + labelWidth + ABILITY_PROMPT_TEXT_PADDING * 2;
+
+        context.fill(ABILITY_PROMPT_X, ABILITY_PROMPT_Y, labelRight, ABILITY_PROMPT_Y + 10, 0x60474F57);
+        context.fill(ABILITY_PROMPT_X, ABILITY_PROMPT_Y, labelRight, ABILITY_PROMPT_Y + 1, PANEL_STROKE_FAINT);
+        context.drawText(
+            client.textRenderer,
+            visibleLabel,
+            ABILITY_PROMPT_X + ABILITY_PROMPT_TEXT_PADDING,
+            ABILITY_PROMPT_Y + 1,
+            WHITE,
+            true
+        );
+    }
+
+    private static Text trimTextToWidth(MinecraftClient client, Text text, int maxWidth) {
+        if (client.textRenderer.getWidth(text) <= maxWidth) {
+            return text;
+        }
+
+        int ellipsisWidth = client.textRenderer.getWidth("...");
+        if (maxWidth <= ellipsisWidth) {
+            return Text.literal("");
+        }
+
+        return Text.literal(client.textRenderer.trimToWidth(text.getString(), maxWidth - ellipsisWidth) + "...");
+    }
+
+    private static void drawAbilityStatusIcon(DrawContext context) {
+        int x = ABILITY_STATUS_X;
+        int y = ABILITY_STATUS_Y;
+        int right = x + ABILITY_STATUS_SIZE;
+        int bottom = y + ABILITY_STATUS_SIZE;
+
+        context.fill(x, y, right, bottom, 0x7A4B535B);
+        context.fill(x + 1, y + 1, right - 1, bottom - 1, 0x55303840);
+        context.fill(x, y, right, y + 1, PANEL_STROKE);
+        context.fill(x, bottom - 1, right, bottom, PANEL_STROKE_FAINT);
+        context.fill(x, y, x + 1, bottom, PANEL_STROKE_FAINT);
+        context.fill(right - 1, y, right, bottom, PANEL_STROKE);
+
+        int glyphX = x + 8;
+        int glyphY = y + 5;
+        context.fill(glyphX + 5, glyphY, glyphX + 10, glyphY + 4, WHITE);
+        context.fill(glyphX + 3, glyphY + 4, glyphX + 9, glyphY + 10, WHITE);
+        context.fill(glyphX + 7, glyphY + 9, glyphX + 12, glyphY + 14, WHITE);
+        context.fill(glyphX + 1, glyphY + 13, glyphX + 8, glyphY + 17, WHITE);
+        context.fill(glyphX + 10, glyphY + 2, glyphX + 13, glyphY + 6, PANEL_STROKE_FAINT);
     }
 
     private static void drawSettingsButton(DrawContext context, MinecraftClient client, Bounds bounds) {
@@ -279,6 +369,10 @@ public class RecalcBattleHUD {
             && bounds.contains(getScaledMouseX(client), getScaledMouseY(client));
         int textureU = hovered ? SETTINGS_BUTTON_SIZE : 0;
 
+        context.fill(bounds.x - 2, bounds.y - 2, bounds.right() + 2, bounds.bottom() + 2, PANEL_SHADOW);
+        context.fill(bounds.x - 1, bounds.y - 1, bounds.right() + 1, bounds.bottom() + 1, GLASS_BACKGROUND);
+        context.fill(bounds.x - 1, bounds.y - 1, bounds.right() + 1, bounds.y, hovered ? ACCENT_CYAN : PANEL_STROKE);
+        context.fill(bounds.right(), bounds.y - 1, bounds.right() + 1, bounds.bottom() + 1, PANEL_STROKE_FAINT);
         context.drawTexture(
             SETTINGS_BUTTON_TEXTURE,
             bounds.x,
@@ -298,13 +392,15 @@ public class RecalcBattleHUD {
         int logicalWidth = getPlayerPanelLogicalWidth(client, lines);
         int logicalHeight = getPlayerPanelLogicalHeight(lines);
 
+        context.fill(bounds.x + 3, bounds.y + 3, bounds.right() + 3, bounds.bottom() + 3, PANEL_SHADOW);
         context.fill(bounds.x, bounds.y, bounds.right(), bounds.bottom(), GLASS_BACKGROUND);
         drawTechCorners(context, bounds.x, bounds.y, logicalWidth, logicalHeight);
-        context.fill(bounds.right() - 34, bounds.y, bounds.right(), bounds.y + 1, ACCENT_CYAN);
+        context.fill(bounds.right() - 40, bounds.y, bounds.right(), bounds.y + 1, PANEL_STROKE);
+        context.fill(bounds.x + 1, bounds.y + 1, bounds.right() - 1, bounds.y + 2, 0x3FFFFFFF);
 
         int textY = bounds.y + PLAYER_PANEL_PADDING;
         for (int i = 0; i < lines.size(); i++) {
-            int color = i == 0 ? ACCENT_CYAN : WHITE;
+            int color = i == 0 ? WHITE : ACCENT_BLUE;
             context.drawText(client.textRenderer, lines.get(i), bounds.x + PLAYER_PANEL_PADDING, textY, color, true);
             textY += PLAYER_LINE_HEIGHT;
         }
@@ -321,14 +417,14 @@ public class RecalcBattleHUD {
             x,
             y,
             0xFFFFFF,
-            0xB9F3FA,
+            0xDCE5EA,
             pulse,
             true
         );
 
         int textWidth = client.textRenderer.getWidth(logo);
         context.fill(x, y + client.textRenderer.fontHeight + 2, x + textWidth, y + client.textRenderer.fontHeight + 3, WHITE_FAINT);
-        context.fill(x + textWidth - 14, y + client.textRenderer.fontHeight + 2, x + textWidth, y + client.textRenderer.fontHeight + 3, ACCENT_CYAN);
+        context.fill(x + textWidth - 14, y + client.textRenderer.fontHeight + 2, x + textWidth, y + client.textRenderer.fontHeight + 3, PANEL_STROKE);
     }
 
     private static List<Text> getAbilityDetails() {
@@ -457,14 +553,14 @@ public class RecalcBattleHUD {
 
     private static void drawTechCorners(DrawContext context, int x, int y, int width, int height) {
         int corner = 10;
-        context.fill(x, y, x + corner, y + 1, WHITE_SOFT);
-        context.fill(x, y, x + 1, y + corner, WHITE_SOFT);
-        context.fill(x + width - corner, y, x + width, y + 1, WHITE_SOFT);
-        context.fill(x + width - 1, y, x + width, y + corner, WHITE_SOFT);
-        context.fill(x, y + height - 1, x + corner, y + height, WHITE_SOFT);
-        context.fill(x, y + height - corner, x + 1, y + height, WHITE_SOFT);
-        context.fill(x + width - corner, y + height - 1, x + width, y + height, WHITE_SOFT);
-        context.fill(x + width - 1, y + height - corner, x + width, y + height, WHITE_SOFT);
+        context.fill(x, y, x + corner, y + 1, PANEL_STROKE);
+        context.fill(x, y, x + 1, y + corner, PANEL_STROKE);
+        context.fill(x + width - corner, y, x + width, y + 1, PANEL_STROKE);
+        context.fill(x + width - 1, y, x + width, y + corner, PANEL_STROKE);
+        context.fill(x, y + height - 1, x + corner, y + height, PANEL_STROKE_FAINT);
+        context.fill(x, y + height - corner, x + 1, y + height, PANEL_STROKE_FAINT);
+        context.fill(x + width - corner, y + height - 1, x + width, y + height, PANEL_STROKE_FAINT);
+        context.fill(x + width - 1, y + height - corner, x + width, y + height, PANEL_STROKE_FAINT);
     }
 
     private static float clamp(float value, float min, float max) {

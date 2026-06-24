@@ -1,5 +1,7 @@
 package com.rimeveil.recalc.client;
 
+import net.minecraft.text.Text;
+
 public class BattleHUDManager {
     private static final long HUD_OPEN_DURATION_MS = 360L;
     private static final long HUD_CLOSE_DURATION_MS = 240L;
@@ -12,6 +14,7 @@ public class BattleHUDManager {
 
     private static float abilityCurrent = 100.0f;
     private static float abilityMax = 100.0f;
+    private static Text abilityPromptLabel;
 
     public static void toggleHUD() {
         transitionStartProgress = getHudAnimationProgress();
@@ -63,6 +66,18 @@ public class BattleHUDManager {
         cursorVisible = visible;
     }
 
+    public static void setAbilityPromptLabel(Text label) {
+        abilityPromptLabel = label;
+    }
+
+    public static void clearAbilityPromptLabel() {
+        abilityPromptLabel = null;
+    }
+
+    public static Text getAbilityPromptLabel() {
+        return abilityPromptLabel;
+    }
+
     public static float getAbilityCurrent() {
         return abilityCurrent;
     }
@@ -94,6 +109,7 @@ public class BattleHUDManager {
         transitionStartProgress = 0.0f;
         transitionStartTime = 0L;
         transitionActive = false;
+        abilityPromptLabel = null;
     }
 
     private static float smoothStep(float value) {

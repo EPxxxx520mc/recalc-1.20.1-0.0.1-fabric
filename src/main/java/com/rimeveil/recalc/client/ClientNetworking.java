@@ -9,7 +9,8 @@ public class ClientNetworking {
     public static void register() {
         ClientPlayNetworking.registerGlobalReceiver(ModNetworking.SYNC_FRAME_STATE, (client, handler, buf, responseSender) -> {
             boolean hasFrame = buf.readBoolean();
-            LogUtil.debug("Client received frame state: {}", hasFrame);
+            boolean playAttachAnimation = buf.isReadable() && buf.readBoolean();
+            LogUtil.debug("Client received frame state: {} (attach animation: {})", hasFrame, playAttachAnimation);
 
             client.execute(() -> {
                 if (client.player == null) {
@@ -20,6 +21,10 @@ public class ClientNetworking {
                     PlayerFrameData.attachFrame(client.player);
                 } else {
                     PlayerFrameData.detachFrame(client.player);
+                }
+
+                if (hasFrame && playAttachAnimation) {
+                    AnimationManager.start(AnimationManager.ID_ATTACH);
                 }
             });
         });

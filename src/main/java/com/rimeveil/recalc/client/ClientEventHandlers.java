@@ -13,7 +13,6 @@ public class ClientEventHandlers {
     private static final long COOLDOWN_TIME = 250;
 
     private static boolean wasKeyDown;
-    private static boolean previousFrameAttached;
     private static long lastToggleTime;
 
     public static void register() {
@@ -27,18 +26,10 @@ public class ClientEventHandlers {
         }
 
         boolean frameAttached = PlayerFrameData.hasFrameAttached(client.player);
-        updateFrameAnimations(frameAttached);
         AnimationManager.updateAll();
 
         handleHudToggle(client, frameAttached);
         handleCursorHold(client);
-    }
-
-    private static void updateFrameAnimations(boolean frameAttached) {
-        if (frameAttached && !previousFrameAttached) {
-            AnimationManager.start(AnimationManager.ID_ATTACH);
-        }
-        previousFrameAttached = frameAttached;
     }
 
     private static void handleHudToggle(MinecraftClient client, boolean frameAttached) {
@@ -77,7 +68,7 @@ public class ClientEventHandlers {
 
     private static void resetInputState() {
         wasKeyDown = false;
-        previousFrameAttached = false;
         BattleHUDManager.reset();
+        AnimationManager.stopAll();
     }
 }
