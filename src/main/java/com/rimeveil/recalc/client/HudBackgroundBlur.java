@@ -52,9 +52,7 @@ public final class HudBackgroundBlur {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
 
-        for (int[] offset : BLUR_OFFSETS) {
-            drawSnapshot(context, snapshotFramebuffer, width, height, offset[0], offset[1], SAMPLE_ALPHA);
-        }
+        drawBlurSamples(context, snapshotFramebuffer, width, height);
 
         RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
@@ -97,34 +95,43 @@ public final class HudBackgroundBlur {
         GlStateManager._glBindFramebuffer(GlConst.GL_FRAMEBUFFER, source.fbo);
     }
 
-    private static void drawSnapshot(
-        DrawContext context,
-        Framebuffer framebuffer,
+    private static void drawBlurSamples(DrawContext context, Framebuffer framebuffer, int width, int height) {
+        RenderSystem.setShader(GameRenderer::getPositionColorTexProgram);
+        RenderSystem.setShaderTexture(0, framebuffer.getColorAttachment());
+
+        float textureMaxU = (float)framebuffer.viewportWidth / framebuffer.textureWidth;
+        float textureMaxV = (float)framebuffer.viewportHeight / framebuffer.textureHeight;
+        float colorAlpha = SAMPLE_ALPHA / 255.0f;
+        Matrix4f matrix = context.getMatrices().peek().getPositionMatrix();
+        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
+
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
+        for (int[] offset : BLUR_OFFSETS) {
+            addSnapshotQuad(bufferBuilder, matrix, width, height, offset[0], offset[1], textureMaxU, textureMaxV, colorAlpha);
+        }
+        BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
+    }
+
+    private static void addSnapshotQuad(
+        BufferBuilder bufferBuilder,
+        Matrix4f matrix,
         int width,
         int height,
         int offsetX,
         int offsetY,
-        int alpha
+        float textureMaxU,
+        float textureMaxV,
+        float colorAlpha
     ) {
-        float textureMaxU = (float)framebuffer.viewportWidth / framebuffer.textureWidth;
-        float textureMaxV = (float)framebuffer.viewportHeight / framebuffer.textureHeight;
-        float colorAlpha = alpha / 255.0f;
         int x1 = -EDGE_PADDING + offsetX;
         int y1 = -EDGE_PADDING + offsetY;
         int x2 = width + EDGE_PADDING + offsetX;
         int y2 = height + EDGE_PADDING + offsetY;
 
-        RenderSystem.setShader(GameRenderer::getPositionColorTexProgram);
-        RenderSystem.setShaderTexture(0, framebuffer.getColorAttachment());
-
-        Matrix4f matrix = context.getMatrices().peek().getPositionMatrix();
-        BufferBuilder bufferBuilder = Tessellator.getInstance().getBuffer();
-        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
         bufferBuilder.vertex(matrix, x1, y2, 0.0f).color(1.0f, 1.0f, 1.0f, colorAlpha).texture(0.0f, 0.0f).next();
         bufferBuilder.vertex(matrix, x2, y2, 0.0f).color(1.0f, 1.0f, 1.0f, colorAlpha).texture(textureMaxU, 0.0f).next();
         bufferBuilder.vertex(matrix, x2, y1, 0.0f).color(1.0f, 1.0f, 1.0f, colorAlpha).texture(textureMaxU, textureMaxV).next();
         bufferBuilder.vertex(matrix, x1, y1, 0.0f).color(1.0f, 1.0f, 1.0f, colorAlpha).texture(0.0f, textureMaxV).next();
-        BufferRenderer.drawWithGlobalProgram(bufferBuilder.end());
     }
 
     private static void drawFocusLines(DrawContext context, int width, int height) {

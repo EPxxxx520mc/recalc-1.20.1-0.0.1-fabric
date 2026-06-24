@@ -70,5 +70,6 @@ public class ClientEventHandlers {
         wasKeyDown = false;
         BattleHUDManager.reset();
         AnimationManager.stopAll();
+        PlayerFrameData.clearClientCache();
     }
 }

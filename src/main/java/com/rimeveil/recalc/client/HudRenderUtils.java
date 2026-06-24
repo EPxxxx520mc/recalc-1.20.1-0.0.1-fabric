@@ -20,6 +20,26 @@ public final class HudRenderUtils {
     private HudRenderUtils() {
     }
 
+    public static void drawParallelogram(
+        DrawContext context,
+        int x,
+        int y,
+        int width,
+        int height,
+        int slant,
+        int color
+    ) {
+        if (width <= 0 || height <= 0) {
+            return;
+        }
+
+        for (int row = 0; row < height; row++) {
+            float progress = height == 1 ? 0.0f : (float)row / (height - 1);
+            int offset = Math.round(slant * (1.0f - progress));
+            context.fill(x + offset, y + row, x + offset + width, y + row + 1, color);
+        }
+    }
+
     public static void drawGlowingText(
         DrawContext context,
         TextRenderer renderer,

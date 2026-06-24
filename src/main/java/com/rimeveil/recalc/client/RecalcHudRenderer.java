@@ -30,30 +30,21 @@ public class RecalcHudRenderer {
     }
 
     private static void renderAttachAnimation(DrawContext context) {
-        if (!AnimationManager.isActive(AnimationManager.ID_ATTACH)) {
-            return;
-        }
-
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client == null || client.player == null) {
-            return;
-        }
-
-        int screenWidth = context.getScaledWindowWidth();
-        int screenHeight = context.getScaledWindowHeight();
-        
-        float alpha = AnimationManager.getFadeInProgress(AnimationManager.ID_ATTACH, FADE_PERCENT) 
-                    * AnimationManager.getFadeOutProgress(AnimationManager.ID_ATTACH, FADE_PERCENT);
-        float progress = AnimationManager.getProgress(AnimationManager.ID_ATTACH);
-
-        int logoX = screenWidth - ATTACH_X_OFFSET;
-        int logoY = screenHeight - LOGO_Y_OFFSET;
-
-        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFFFFFF, 0xB9F3FA);
+        renderTimedAnimation(context, AnimationManager.ID_ATTACH, false, ATTACH_X_OFFSET, 0xB9F3FA);
     }
 
     private static void renderRemoveAnimation(DrawContext context) {
-        if (!AnimationManager.isActive(AnimationManager.ID_REMOVE)) {
+        renderTimedAnimation(context, AnimationManager.ID_REMOVE, true, REMOVE_X_OFFSET, 0xD8D2FA);
+    }
+
+    private static void renderTimedAnimation(
+        DrawContext context,
+        String animationId,
+        boolean reverseProgress,
+        int horizontalOffset,
+        int glowColor
+    ) {
+        if (!AnimationManager.isActive(animationId)) {
             return;
         }
 
@@ -64,15 +55,20 @@ public class RecalcHudRenderer {
 
         int screenWidth = context.getScaledWindowWidth();
         int screenHeight = context.getScaledWindowHeight();
-        
-        float alpha = AnimationManager.getFadeInProgress(AnimationManager.ID_REMOVE, FADE_PERCENT) 
-                    * AnimationManager.getFadeOutProgress(AnimationManager.ID_REMOVE, FADE_PERCENT);
-        float progress = AnimationManager.getReverseProgress(AnimationManager.ID_REMOVE);
 
-        int logoX = REMOVE_X_OFFSET;
+        float rawProgress = AnimationManager.getProgress(animationId);
+        float alpha = getFadeAlpha(rawProgress);
+        float progress = reverseProgress ? 1.0f - rawProgress : rawProgress;
+        int logoX = reverseProgress ? horizontalOffset : screenWidth - horizontalOffset;
         int logoY = screenHeight - LOGO_Y_OFFSET;
 
-        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFFFFFF, 0xD8D2FA);
+        renderAnimation(context, client, logoX, logoY, alpha, progress, 0xFFFFFF, glowColor);
+    }
+
+    private static float getFadeAlpha(float progress) {
+        float fadeIn = progress < FADE_PERCENT ? progress / FADE_PERCENT : 1.0f;
+        float fadeOut = progress > 1.0f - FADE_PERCENT ? (1.0f - progress) / FADE_PERCENT : 1.0f;
+        return Math.max(0.0f, Math.min(fadeIn * fadeOut, 1.0f));
     }
 
     private static void renderAnimation(DrawContext context, MinecraftClient client, 
@@ -109,8 +105,8 @@ public class RecalcHudRenderer {
 
         int glowAlpha = (int)(alpha * 34);
         int barGlowColor = HudRenderUtils.withAlpha(glowColor, glowAlpha);
-        drawParallelogram(context, barX - 2, barY - 2, BAR_WIDTH + 4, BAR_HEIGHT + 4, BAR_SLANT, barGlowColor);
-        drawParallelogram(
+        HudRenderUtils.drawParallelogram(context, barX - 2, barY - 2, BAR_WIDTH + 4, BAR_HEIGHT + 4, BAR_SLANT, barGlowColor);
+        HudRenderUtils.drawParallelogram(
             context,
             barX,
             barY,
@@ -119,7 +115,7 @@ public class RecalcHudRenderer {
             BAR_SLANT - 1,
             HudRenderUtils.withAlpha(0xFFFFFF, (int)(alpha * 170))
         );
-        drawParallelogram(
+        HudRenderUtils.drawParallelogram(
             context,
             barX + 2,
             barY + 1,
@@ -129,7 +125,7 @@ public class RecalcHudRenderer {
             HudRenderUtils.withAlpha(0x000000, (int)(alpha * 42))
         );
         int filledWidth = (int) (progress * BAR_WIDTH);
-        drawParallelogram(
+        HudRenderUtils.drawParallelogram(
             context,
             barX + 2,
             barY + 1,
@@ -138,17 +134,5 @@ public class RecalcHudRenderer {
             Math.min(BAR_SLANT - 3, Math.max(0, filledWidth - 4)),
             HudRenderUtils.withAlpha(glowColor, (int)(alpha * 230))
         );
-    }
-
-    private static void drawParallelogram(DrawContext context, int x, int y, int width, int height, int slant, int color) {
-        if (width <= 0 || height <= 0) {
-            return;
-        }
-
-        for (int row = 0; row < height; row++) {
-            float progress = height == 1 ? 0.0f : (float)row / (height - 1);
-            int offset = Math.round(slant * (1.0f - progress));
-            context.fill(x + offset, y + row, x + offset + width, y + row + 1, color);
-        }
     }
 }

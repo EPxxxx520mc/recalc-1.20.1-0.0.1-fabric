@@ -88,7 +88,7 @@ public class BattleHUDManager {
     }
 
     public static Text getAbilityPromptLabel() {
-        if (abilityPromptLabel == null && abilityType == AbilityType.NONE) {
+        if (abilityPromptLabel == null && !hasActiveAbility()) {
             return NO_ABILITY_PROMPT;
         }
         return abilityPromptLabel;
@@ -104,6 +104,10 @@ public class BattleHUDManager {
 
     public static AbilityType getAbilityType() {
         return abilityType;
+    }
+
+    public static boolean hasActiveAbility() {
+        return abilityType != AbilityType.NONE;
     }
 
     public static float getAbilityCurrent() {

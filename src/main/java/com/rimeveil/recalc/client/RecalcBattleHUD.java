@@ -75,19 +75,16 @@ public class RecalcBattleHUD {
     }
 
     public static void renderInteractionOverlay(DrawContext context, MinecraftClient client, int mouseX, int mouseY) {
-        int screenWidth = context.getScaledWindowWidth();
-        int screenHeight = context.getScaledWindowHeight();
-
         if (abilityBounds().contains(mouseX, mouseY)) {
             context.drawTooltip(client.textRenderer, getAbilityDetails(), mouseX, mouseY);
             return;
         }
 
+        int screenWidth = context.getScaledWindowWidth();
+        int screenHeight = context.getScaledWindowHeight();
         if (getPlayerInfoBounds(client, screenWidth, screenHeight).contains(mouseX, mouseY)) {
             context.drawTooltip(client.textRenderer, getPlayerDetails(client), mouseX, mouseY);
-            return;
         }
-
     }
 
     private static void render(DrawContext context, float tickDelta) {
@@ -124,17 +121,19 @@ public class RecalcBattleHUD {
         }
 
         Bounds bounds = abilityBounds();
+        BattleHUDManager.AbilityType abilityType = BattleHUDManager.getAbilityType();
+        boolean activeAbility = BattleHUDManager.hasActiveAbility();
         if (backgroundProgress > 0.0f) {
             int revealWidth = Math.max(1, Math.round(bounds.width * backgroundProgress));
             context.enableScissor(bounds.x, bounds.y, bounds.x + revealWidth, bounds.bottom());
-            drawAbilityFrame(context);
+            drawAbilityFrame(context, abilityType);
             context.disableScissor();
         }
 
         if (contentProgress > 0.0f) {
             int revealWidth = Math.max(1, Math.round(bounds.width * contentProgress));
             context.enableScissor(bounds.x, bounds.y, bounds.x + revealWidth, bounds.bottom());
-            drawAbilityContent(context, client);
+            drawAbilityContent(context, client, activeAbility);
             context.disableScissor();
         }
     }
@@ -182,18 +181,17 @@ public class RecalcBattleHUD {
         context.disableScissor();
     }
 
-    private static void drawAbilityFrame(DrawContext context) {
+    private static void drawAbilityFrame(DrawContext context, BattleHUDManager.AbilityType abilityType) {
         context.getMatrices().push();
         context.getMatrices().translate(ABILITY_X, ABILITY_Y, 0);
-        drawAbilityFrameElements(context);
+        drawAbilityFrameElements(context, abilityType);
         context.getMatrices().pop();
     }
 
-    private static void drawAbilityContent(DrawContext context, MinecraftClient client) {
+    private static void drawAbilityContent(DrawContext context, MinecraftClient client, boolean activeAbility) {
         float current = BattleHUDManager.getAbilityCurrent();
         float max = BattleHUDManager.getAbilityMax();
         float fillPercent = clamp(max <= 0 ? 0 : current / max, 0.0f, 1.0f);
-        boolean activeAbility = BattleHUDManager.getAbilityType() != BattleHUDManager.AbilityType.NONE;
 
         context.getMatrices().push();
         context.getMatrices().translate(ABILITY_X, ABILITY_Y, 0);
@@ -204,20 +202,20 @@ public class RecalcBattleHUD {
         context.getMatrices().pop();
     }
 
-    private static void drawAbilityFrameElements(DrawContext context) {
-        drawParallelogram(context, 4, 4, ABILITY_PANEL_WIDTH, ABILITY_PANEL_HEIGHT - 2, 10, PANEL_SHADOW);
-        drawParallelogram(context, 0, 0, ABILITY_PANEL_WIDTH, ABILITY_PANEL_HEIGHT, 10, GLASS_BACKGROUND);
-        drawParallelogram(context, 4, 3, ABILITY_PANEL_WIDTH - 10, ABILITY_PANEL_HEIGHT - 7, 7, 0x323F474F);
+    private static void drawAbilityFrameElements(DrawContext context, BattleHUDManager.AbilityType abilityType) {
+        HudRenderUtils.drawParallelogram(context, 4, 4, ABILITY_PANEL_WIDTH, ABILITY_PANEL_HEIGHT - 2, 10, PANEL_SHADOW);
+        HudRenderUtils.drawParallelogram(context, 0, 0, ABILITY_PANEL_WIDTH, ABILITY_PANEL_HEIGHT, 10, GLASS_BACKGROUND);
+        HudRenderUtils.drawParallelogram(context, 4, 3, ABILITY_PANEL_WIDTH - 10, ABILITY_PANEL_HEIGHT - 7, 7, 0x323F474F);
 
         context.fill(9, 2, 115, 3, PANEL_STROKE);
         context.fill(7, 3, 9, 16, PANEL_STROKE);
         context.fill(154, 27, 205, 28, PANEL_STROKE_FAINT);
         context.fill(214, 11, 216, 28, PANEL_STROKE_FAINT);
-        drawAbilityStatusIcon(context);
+        drawAbilityStatusIcon(context, abilityType);
     }
 
     private static void drawAbilityTrack(DrawContext context, float fillPercent) {
-        drawParallelogram(context, ABILITY_BAR_X - 2, ABILITY_BAR_Y - 2, ABILITY_BAR_WIDTH + 5, ABILITY_BAR_HEIGHT + 4, 7, 0x6A20262C);
+        HudRenderUtils.drawParallelogram(context, ABILITY_BAR_X - 2, ABILITY_BAR_Y - 2, ABILITY_BAR_WIDTH + 5, ABILITY_BAR_HEIGHT + 4, 7, 0x6A20262C);
 
         int segmentWidth = (ABILITY_BAR_WIDTH - (ABILITY_SEGMENT_COUNT - 1) * ABILITY_SEGMENT_GAP) / ABILITY_SEGMENT_COUNT;
         float filledSegments = fillPercent * ABILITY_SEGMENT_COUNT;
@@ -225,7 +223,7 @@ public class RecalcBattleHUD {
             int segmentX = ABILITY_BAR_X + i * (segmentWidth + ABILITY_SEGMENT_GAP);
             float segmentFill = clamp(filledSegments - i, 0.0f, 1.0f);
 
-            drawParallelogram(
+            HudRenderUtils.drawParallelogram(
                 context,
                 segmentX,
                 ABILITY_BAR_Y,
@@ -235,7 +233,7 @@ public class RecalcBattleHUD {
                 CELL_EMPTY
             );
 
-            drawParallelogram(
+            HudRenderUtils.drawParallelogram(
                 context,
                 segmentX + 1,
                 ABILITY_BAR_Y + 1,
@@ -248,7 +246,7 @@ public class RecalcBattleHUD {
             int fillWidth = Math.round((segmentWidth - 2) * segmentFill);
             if (fillWidth > 0) {
                 int fillColor = segmentFill < 1.0f ? ACCENT_CYAN : CELL_FILLED;
-                drawParallelogram(
+                HudRenderUtils.drawParallelogram(
                     context,
                     segmentX + 1,
                     ABILITY_BAR_Y + 1,
@@ -345,7 +343,7 @@ public class RecalcBattleHUD {
         return Text.literal(client.textRenderer.trimToWidth(text.getString(), maxWidth - ellipsisWidth) + "...");
     }
 
-    private static void drawAbilityStatusIcon(DrawContext context) {
+    private static void drawAbilityStatusIcon(DrawContext context, BattleHUDManager.AbilityType abilityType) {
         int x = ABILITY_STATUS_X;
         int y = ABILITY_STATUS_Y;
         int right = x + ABILITY_STATUS_SIZE;
@@ -358,7 +356,7 @@ public class RecalcBattleHUD {
         context.fill(x, y, x + 1, bottom, PANEL_STROKE_FAINT);
         context.fill(right - 1, y, right, bottom, PANEL_STROKE);
 
-        switch (BattleHUDManager.getAbilityType()) {
+        switch (abilityType) {
             case FIRE -> drawFireIcon(context, x, y);
             case LIGHTNING -> drawLightningIcon(context, x, y);
             case WIND -> drawWindIcon(context, x, y);
@@ -551,18 +549,6 @@ public class RecalcBattleHUD {
 
     private static int getPlayerPanelLogicalHeight(List<Text> lines) {
         return lines.size() * PLAYER_LINE_HEIGHT + PLAYER_PANEL_PADDING * 2;
-    }
-
-    private static void drawParallelogram(DrawContext context, int x, int y, int width, int height, int slant, int color) {
-        if (width <= 0 || height <= 0) {
-            return;
-        }
-
-        for (int row = 0; row < height; row++) {
-            float progress = height == 1 ? 0.0f : (float)row / (height - 1);
-            int offset = Math.round(slant * (1.0f - progress));
-            context.fill(x + offset, y + row, x + offset + width, y + row + 1, color);
-        }
     }
 
     private static void drawTechCorners(DrawContext context, int x, int y, int width, int height) {

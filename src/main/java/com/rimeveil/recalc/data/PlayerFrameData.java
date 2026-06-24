@@ -35,6 +35,10 @@ public class PlayerFrameData {
         setFrameAttached(player, false);
     }
 
+    public static void clearClientCache() {
+        CLIENT_FRAME_CACHE.clear();
+    }
+
     private static void setFrameAttached(PlayerEntity player, boolean attached) {
         if (player == null) {
             return;
