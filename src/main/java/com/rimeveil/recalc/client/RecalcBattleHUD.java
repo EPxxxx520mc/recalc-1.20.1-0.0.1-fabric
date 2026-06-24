@@ -167,12 +167,15 @@ public class RecalcBattleHUD {
         float current = BattleHUDManager.getAbilityCurrent();
         float max = BattleHUDManager.getAbilityMax();
         float fillPercent = clamp(max <= 0 ? 0 : current / max, 0.0f, 1.0f);
+        boolean activeAbility = BattleHUDManager.getAbilityType() != BattleHUDManager.AbilityType.NONE;
 
         context.getMatrices().push();
         context.getMatrices().translate(ABILITY_X, ABILITY_Y, 0);
         drawAbilityFrame(context);
-        drawAbilityTrack(context, fillPercent);
-        drawAbilityText(context, client, current, max);
+        if (activeAbility) {
+            drawAbilityTrack(context, fillPercent);
+        }
+        drawAbilityText(context, client, current, max, activeAbility);
         context.getMatrices().pop();
     }
 
@@ -255,7 +258,18 @@ public class RecalcBattleHUD {
         context.fill(capX, ABILITY_BAR_Y - 1, capX + 2, ABILITY_BAR_Y + ABILITY_BAR_HEIGHT + 1, ACCENT_LAVENDER);
     }
 
-    private static void drawAbilityText(DrawContext context, MinecraftClient client, float current, float max) {
+    private static void drawAbilityText(
+        DrawContext context,
+        MinecraftClient client,
+        float current,
+        float max,
+        boolean activeAbility
+    ) {
+        if (!activeAbility) {
+            drawAbilityPromptLabel(context, client, ABILITY_STATUS_X - ABILITY_PROMPT_RIGHT_PADDING);
+            return;
+        }
+
         float fillPercent = clamp(max <= 0 ? 0 : current / max, 0.0f, 1.0f);
         Text value = Text.literal(String.format("%.0f%%", fillPercent * 100.0f));
 
