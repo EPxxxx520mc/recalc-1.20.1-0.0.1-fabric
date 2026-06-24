@@ -1,5 +1,6 @@
 package com.rimeveil.recalc.ui;
 
+import com.rimeveil.recalc.client.HudBackgroundBlur;
 import com.rimeveil.recalc.client.RecalcBattleHUD;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -30,5 +31,11 @@ public class BattleHudInteractionScreen extends Screen {
     @Override
     public boolean shouldPause() {
         return false;
+    }
+
+    @Override
+    public void removed() {
+        HudBackgroundBlur.release();
+        super.removed();
     }
 }

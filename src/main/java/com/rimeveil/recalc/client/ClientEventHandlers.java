@@ -60,7 +60,7 @@ public class ClientEventHandlers {
 
     private static void handleCursorHold(MinecraftClient client) {
         boolean leftAltDown = GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_ALT) == GLFW.GLFW_PRESS;
-        boolean shouldInteract = BattleHUDManager.isHUDVisible() && leftAltDown;
+        boolean shouldInteract = BattleHUDManager.isHUDInteractive() && leftAltDown;
 
         BattleHUDManager.setCursorVisible(shouldInteract);
 

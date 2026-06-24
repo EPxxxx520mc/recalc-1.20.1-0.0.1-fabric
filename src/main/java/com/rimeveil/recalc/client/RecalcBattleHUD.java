@@ -31,14 +31,13 @@ public class RecalcBattleHUD {
 
     private static final int ABILITY_X = 20;
     private static final int ABILITY_Y = 20;
-    private static final float ABILITY_UI_SCALE = 0.78F;
-    private static final int ABILITY_PANEL_WIDTH = 270;
-    private static final int ABILITY_PANEL_HEIGHT = 34;
-    private static final int ABILITY_BAR_X = 12;
-    private static final int ABILITY_BAR_Y = 18;
-    private static final int ABILITY_BAR_WIDTH = 238;
-    private static final int ABILITY_BAR_HEIGHT = 9;
-    private static final int ABILITY_BAR_SLANT = 8;
+    private static final int ABILITY_PANEL_WIDTH = 218;
+    private static final int ABILITY_PANEL_HEIGHT = 30;
+    private static final int ABILITY_BAR_X = 10;
+    private static final int ABILITY_BAR_Y = 17;
+    private static final int ABILITY_BAR_WIDTH = 190;
+    private static final int ABILITY_BAR_HEIGHT = 7;
+    private static final int ABILITY_BAR_SLANT = 6;
     private static final int ABILITY_SEGMENT_COUNT = 10;
 
     private static final int SETTINGS_BUTTON_SIZE = 18;
@@ -47,10 +46,10 @@ public class RecalcBattleHUD {
     private static final int SETTINGS_TEXTURE_HEIGHT = SETTINGS_BUTTON_SIZE;
 
     private static final int PLAYER_PANEL_MARGIN = 10;
-    private static final int PLAYER_PANEL_PADDING = 6;
-    private static final int PLAYER_LINE_HEIGHT = 11;
-    private static final float PLAYER_UI_SCALE = 0.82F;
+    private static final int PLAYER_PANEL_PADDING = 4;
+    private static final int PLAYER_LINE_HEIGHT = 10;
     private static final int LOGO_MARGIN = 20;
+    private static final int LOGO_HEIGHT = 14;
 
     public static void register() {
         HudRenderCallback.EVENT.register(RecalcBattleHUD::render);
@@ -84,7 +83,7 @@ public class RecalcBattleHUD {
     }
 
     private static void render(DrawContext context, float tickDelta) {
-        if (!BattleHUDManager.isHUDVisible()) {
+        if (!BattleHUDManager.shouldRenderHUD()) {
             return;
         }
 
@@ -95,19 +94,95 @@ public class RecalcBattleHUD {
 
         int screenWidth = context.getScaledWindowWidth();
         int screenHeight = context.getScaledWindowHeight();
+        float progress = BattleHUDManager.getHudAnimationProgress();
 
-        drawScaledAbilityBar(context, client);
-        drawSettingsButton(context, client, getSettingsBounds(screenWidth));
-        drawPlayerInfo(context, client, screenWidth, screenHeight);
-        drawRecalcLogo(context, client, LOGO_MARGIN, screenHeight - 30);
+        if (BattleHUDManager.isCursorVisible()) {
+            HudBackgroundBlur.render(context, client);
+        }
+
+        drawAbilityBarAnimated(context, client, stagedProgress(progress, 0.0f, 0.58f));
+        drawPlayerInfoAnimated(context, client, screenWidth, screenHeight, stagedProgress(progress, 0.16f, 0.78f));
+        drawSettingsButtonAnimated(context, client, getSettingsBounds(screenWidth), stagedProgress(progress, 0.42f, 0.82f));
+        drawRecalcLogoAnimated(context, client, LOGO_MARGIN, screenHeight - 30, stagedProgress(progress, 0.56f, 1.0f));
     }
 
-    private static void drawScaledAbilityBar(DrawContext context, MinecraftClient client) {
-        context.getMatrices().push();
-        context.getMatrices().translate(ABILITY_X, ABILITY_Y, 0);
-        context.getMatrices().scale(ABILITY_UI_SCALE, ABILITY_UI_SCALE, 1.0F);
+    private static void drawAbilityBarAnimated(DrawContext context, MinecraftClient client, float progress) {
+        if (progress <= 0.0f) {
+            return;
+        }
+
+        Bounds bounds = abilityBounds();
+        int revealWidth = Math.max(1, Math.round(bounds.width * progress));
+        context.enableScissor(bounds.x, bounds.y, bounds.x + revealWidth, bounds.bottom());
         drawAbilityBar(context, client);
-        context.getMatrices().pop();
+        context.disableScissor();
+    }
+
+    private static void drawPlayerInfoAnimated(
+        DrawContext context,
+        MinecraftClient client,
+        int screenWidth,
+        int screenHeight,
+        float progress
+    ) {
+        if (progress <= 0.0f) {
+            return;
+        }
+
+        Bounds bounds = getPlayerInfoBounds(client, screenWidth, screenHeight);
+        int revealWidth = Math.max(1, Math.round(bounds.width * progress));
+        int revealHeight = Math.max(1, Math.round(bounds.height * progress));
+        context.enableScissor(
+            bounds.right() - revealWidth,
+            bounds.bottom() - revealHeight,
+            bounds.right(),
+            bounds.bottom()
+        );
+        drawPlayerInfo(context, client, screenWidth, screenHeight);
+        context.disableScissor();
+    }
+
+    private static void drawSettingsButtonAnimated(
+        DrawContext context,
+        MinecraftClient client,
+        Bounds bounds,
+        float progress
+    ) {
+        if (progress <= 0.0f) {
+            return;
+        }
+
+        int revealWidth = Math.max(1, Math.round(bounds.width * progress));
+        int revealHeight = Math.max(1, Math.round(bounds.height * progress));
+        int centerX = bounds.x + bounds.width / 2;
+        int centerY = bounds.y + bounds.height / 2;
+        context.enableScissor(
+            centerX - revealWidth / 2,
+            centerY - revealHeight / 2,
+            centerX + (revealWidth + 1) / 2,
+            centerY + (revealHeight + 1) / 2
+        );
+        drawSettingsButton(context, client, bounds);
+        context.disableScissor();
+    }
+
+    private static void drawRecalcLogoAnimated(
+        DrawContext context,
+        MinecraftClient client,
+        int x,
+        int y,
+        float progress
+    ) {
+        if (progress <= 0.0f) {
+            return;
+        }
+
+        Text logo = Text.literal("Recalc").setStyle(Style.EMPTY.withFont(RECALC_FONT));
+        int width = client.textRenderer.getWidth(logo) + 6;
+        int revealWidth = Math.max(1, Math.round(width * progress));
+        context.enableScissor(x - 3, y - 3, x - 3 + revealWidth, y + LOGO_HEIGHT);
+        drawRecalcLogo(context, client, x, y);
+        context.disableScissor();
     }
 
     private static void drawAbilityBar(DrawContext context, MinecraftClient client) {
@@ -115,19 +190,22 @@ public class RecalcBattleHUD {
         float max = BattleHUDManager.getAbilityMax();
         float fillPercent = clamp(max <= 0 ? 0 : current / max, 0.0f, 1.0f);
 
+        context.getMatrices().push();
+        context.getMatrices().translate(ABILITY_X, ABILITY_Y, 0);
         drawAbilityFrame(context);
         drawAbilityTrack(context, fillPercent);
         drawAbilityText(context, client, current, max);
+        context.getMatrices().pop();
     }
 
     private static void drawAbilityFrame(DrawContext context) {
         drawParallelogram(context, 0, 0, ABILITY_PANEL_WIDTH, ABILITY_PANEL_HEIGHT, 10, GLASS_BACKGROUND);
 
-        context.fill(10, 2, 92, 3, WHITE_SOFT);
+        context.fill(8, 2, 72, 3, WHITE_SOFT);
         context.fill(8, 3, 10, 15, WHITE_SOFT);
-        context.fill(92, 2, 112, 3, ACCENT_CYAN);
-        context.fill(255, 31, 268, 32, WHITE_FAINT);
-        context.fill(268, 21, 269, 32, WHITE_FAINT);
+        context.fill(72, 2, 90, 3, ACCENT_CYAN);
+        context.fill(204, 27, 216, 28, WHITE_FAINT);
+        context.fill(216, 19, 217, 28, WHITE_FAINT);
     }
 
     private static void drawAbilityTrack(DrawContext context, float fillPercent) {
@@ -220,21 +298,16 @@ public class RecalcBattleHUD {
         int logicalWidth = getPlayerPanelLogicalWidth(client, lines);
         int logicalHeight = getPlayerPanelLogicalHeight(lines);
 
-        context.getMatrices().push();
-        context.getMatrices().translate(bounds.x, bounds.y, 0);
-        context.getMatrices().scale(PLAYER_UI_SCALE, PLAYER_UI_SCALE, 1.0F);
+        context.fill(bounds.x, bounds.y, bounds.right(), bounds.bottom(), GLASS_BACKGROUND);
+        drawTechCorners(context, bounds.x, bounds.y, logicalWidth, logicalHeight);
+        context.fill(bounds.right() - 34, bounds.y, bounds.right(), bounds.y + 1, ACCENT_CYAN);
 
-        context.fill(0, 0, logicalWidth, logicalHeight, GLASS_BACKGROUND);
-        drawTechCorners(context, 0, 0, logicalWidth, logicalHeight);
-        context.fill(logicalWidth - 34, 0, logicalWidth, 1, ACCENT_CYAN);
-
-        int textY = PLAYER_PANEL_PADDING;
+        int textY = bounds.y + PLAYER_PANEL_PADDING;
         for (int i = 0; i < lines.size(); i++) {
             int color = i == 0 ? ACCENT_CYAN : WHITE;
-            context.drawText(client.textRenderer, lines.get(i), PLAYER_PANEL_PADDING, textY, color, true);
+            context.drawText(client.textRenderer, lines.get(i), bounds.x + PLAYER_PANEL_PADDING, textY, color, true);
             textY += PLAYER_LINE_HEIGHT;
         }
-        context.getMatrices().pop();
     }
 
     private static void drawRecalcLogo(DrawContext context, MinecraftClient client, int x, int y) {
@@ -322,8 +395,8 @@ public class RecalcBattleHUD {
 
     private static Bounds getPlayerInfoBounds(MinecraftClient client, int screenWidth, int screenHeight) {
         List<Text> lines = getPlayerSummary(client);
-        int width = Math.round(getPlayerPanelLogicalWidth(client, lines) * PLAYER_UI_SCALE);
-        int height = Math.round(getPlayerPanelLogicalHeight(lines) * PLAYER_UI_SCALE);
+        int width = getPlayerPanelLogicalWidth(client, lines);
+        int height = getPlayerPanelLogicalHeight(lines);
         return new Bounds(
             screenWidth - PLAYER_PANEL_MARGIN - width,
             screenHeight - PLAYER_PANEL_MARGIN - height,
@@ -336,8 +409,8 @@ public class RecalcBattleHUD {
         return new Bounds(
             ABILITY_X,
             ABILITY_Y,
-            Math.round(ABILITY_PANEL_WIDTH * ABILITY_UI_SCALE),
-            Math.round(ABILITY_PANEL_HEIGHT * ABILITY_UI_SCALE)
+            ABILITY_PANEL_WIDTH + 10,
+            ABILITY_PANEL_HEIGHT
         );
     }
 
@@ -396,6 +469,18 @@ public class RecalcBattleHUD {
 
     private static float clamp(float value, float min, float max) {
         return Math.max(min, Math.min(value, max));
+    }
+
+    private static float stagedProgress(float progress, float start, float end) {
+        if (progress <= start) {
+            return 0.0f;
+        }
+        if (progress >= end) {
+            return 1.0f;
+        }
+
+        float normalized = (progress - start) / (end - start);
+        return normalized * normalized * (3.0f - 2.0f * normalized);
     }
 
     private record Bounds(int x, int y, int width, int height) {
