@@ -17,11 +17,15 @@ import org.joml.Matrix4f;
 
 public final class HudBackgroundBlur {
     private static final int[][] BLUR_OFFSETS = {
-        {-3, 0}, {3, 0}, {0, -3}, {0, 3},
-        {-2, -2}, {2, -2}, {-2, 2}, {2, 2}
+        {-2, 0}, {2, 0}, {0, -2}, {0, 2},
+        {-3, -3}, {3, -3}, {-3, 3}, {3, 3},
+        {-6, 0}, {6, 0}, {0, -6}, {0, 6},
+        {-5, -5}, {5, -5}, {-5, 5}, {5, 5},
+        {-8, -2}, {8, -2}, {-8, 2}, {8, 2},
+        {-2, -8}, {2, -8}, {-2, 8}, {2, 8}
     };
-    private static final int SAMPLE_ALPHA = 24;
-    private static final int EDGE_PADDING = 4;
+    private static final int SAMPLE_ALPHA = 16;
+    private static final int EDGE_PADDING = 10;
 
     private static SimpleFramebuffer snapshotFramebuffer;
 
@@ -55,8 +59,9 @@ public final class HudBackgroundBlur {
         RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
 
-        context.fillGradient(0, 0, width, height, 0x16060A10, 0x24111622);
-        context.fill(0, 0, width, height, 0x08DDF8FF);
+        context.fillGradient(0, 0, width, height, 0x7204070B, 0x8A0A0F17);
+        context.fill(0, 0, width, height, 0x26000000);
+        context.fill(0, 0, width, height, 0x0EDDF8FF);
         drawFocusLines(context, width, height);
     }
 
@@ -124,8 +129,8 @@ public final class HudBackgroundBlur {
 
     private static void drawFocusLines(DrawContext context, int width, int height) {
         int centerY = height / 2;
-        context.fill(0, centerY - 28, width, centerY - 27, 0x12FFFFFF);
-        context.fill(0, centerY + 28, width, centerY + 29, 0x10B9F3FA);
+        context.fill(0, centerY - 28, width, centerY - 27, 0x16FFFFFF);
+        context.fill(0, centerY + 28, width, centerY + 29, 0x14B9F3FA);
     }
 
     public static void release() {

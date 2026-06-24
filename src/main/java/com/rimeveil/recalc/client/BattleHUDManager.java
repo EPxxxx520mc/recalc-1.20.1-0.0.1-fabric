@@ -12,8 +12,8 @@ public class BattleHUDManager {
         VECTOR
     }
 
-    private static final long HUD_OPEN_DURATION_MS = 360L;
-    private static final long HUD_CLOSE_DURATION_MS = 240L;
+    private static final long HUD_OPEN_DURATION_MS = 700L;
+    private static final long HUD_CLOSE_DURATION_MS = 700L;
     private static final Text NO_ABILITY_PROMPT = Text.literal(
         "\u672a\u68c0\u6d4b\u5230\u53ef\u7528\u80fd\u529b\uff0c\u8bf7\u4f7f\u7528\u80fd\u529b\u5f00\u53d1\u673a\u6fc0\u6d3b"
     );

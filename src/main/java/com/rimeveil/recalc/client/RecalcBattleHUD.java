@@ -61,6 +61,14 @@ public class RecalcBattleHUD {
     private static final int PLAYER_LINE_HEIGHT = 10;
     private static final int LOGO_MARGIN = 20;
     private static final int LOGO_HEIGHT = 14;
+    private static final float ABILITY_BACKGROUND_OPEN_START = 0.0f;
+    private static final float ABILITY_BACKGROUND_OPEN_END = 0.50f;
+    private static final float ABILITY_CONTENT_OPEN_START = 0.18f;
+    private static final float ABILITY_CONTENT_OPEN_END = 0.74f;
+    private static final float ABILITY_BACKGROUND_CLOSE_START = 0.16f;
+    private static final float ABILITY_BACKGROUND_CLOSE_END = 0.68f;
+    private static final float ABILITY_CONTENT_CLOSE_START = 0.0f;
+    private static final float ABILITY_CONTENT_CLOSE_END = 0.52f;
 
     public static void register() {
         HudRenderCallback.EVENT.register(RecalcBattleHUD::render);
@@ -101,23 +109,34 @@ public class RecalcBattleHUD {
             HudBackgroundBlur.render(context, client);
         }
 
-        drawAbilityBarAnimated(context, client, stagedProgress(progress, 0.0f, 0.58f));
+        drawAbilityBarAnimated(context, client, progress);
         if (interactionVisible) {
             drawPlayerInfoAnimated(context, client, screenWidth, screenHeight, 1.0f);
             drawRecalcLogoAnimated(context, client, LOGO_MARGIN, screenHeight - 30, 1.0f);
         }
     }
 
-    private static void drawAbilityBarAnimated(DrawContext context, MinecraftClient client, float progress) {
-        if (progress <= 0.0f) {
+    private static void drawAbilityBarAnimated(DrawContext context, MinecraftClient client, float hudProgress) {
+        float backgroundProgress = getAbilityBackgroundProgress(hudProgress);
+        float contentProgress = getAbilityContentProgress(hudProgress);
+        if (backgroundProgress <= 0.0f && contentProgress <= 0.0f) {
             return;
         }
 
         Bounds bounds = abilityBounds();
-        int revealWidth = Math.max(1, Math.round(bounds.width * progress));
-        context.enableScissor(bounds.x, bounds.y, bounds.x + revealWidth, bounds.bottom());
-        drawAbilityBar(context, client);
-        context.disableScissor();
+        if (backgroundProgress > 0.0f) {
+            int revealWidth = Math.max(1, Math.round(bounds.width * backgroundProgress));
+            context.enableScissor(bounds.x, bounds.y, bounds.x + revealWidth, bounds.bottom());
+            drawAbilityFrame(context);
+            context.disableScissor();
+        }
+
+        if (contentProgress > 0.0f) {
+            int revealWidth = Math.max(1, Math.round(bounds.width * contentProgress));
+            context.enableScissor(bounds.x, bounds.y, bounds.x + revealWidth, bounds.bottom());
+            drawAbilityContent(context, client);
+            context.disableScissor();
+        }
     }
 
     private static void drawPlayerInfoAnimated(
@@ -163,7 +182,14 @@ public class RecalcBattleHUD {
         context.disableScissor();
     }
 
-    private static void drawAbilityBar(DrawContext context, MinecraftClient client) {
+    private static void drawAbilityFrame(DrawContext context) {
+        context.getMatrices().push();
+        context.getMatrices().translate(ABILITY_X, ABILITY_Y, 0);
+        drawAbilityFrameElements(context);
+        context.getMatrices().pop();
+    }
+
+    private static void drawAbilityContent(DrawContext context, MinecraftClient client) {
         float current = BattleHUDManager.getAbilityCurrent();
         float max = BattleHUDManager.getAbilityMax();
         float fillPercent = clamp(max <= 0 ? 0 : current / max, 0.0f, 1.0f);
@@ -171,7 +197,6 @@ public class RecalcBattleHUD {
 
         context.getMatrices().push();
         context.getMatrices().translate(ABILITY_X, ABILITY_Y, 0);
-        drawAbilityFrame(context);
         if (activeAbility) {
             drawAbilityTrack(context, fillPercent);
         }
@@ -179,7 +204,7 @@ public class RecalcBattleHUD {
         context.getMatrices().pop();
     }
 
-    private static void drawAbilityFrame(DrawContext context) {
+    private static void drawAbilityFrameElements(DrawContext context) {
         drawParallelogram(context, 4, 4, ABILITY_PANEL_WIDTH, ABILITY_PANEL_HEIGHT - 2, 10, PANEL_SHADOW);
         drawParallelogram(context, 0, 0, ABILITY_PANEL_WIDTH, ABILITY_PANEL_HEIGHT, 10, GLASS_BACKGROUND);
         drawParallelogram(context, 4, 3, ABILITY_PANEL_WIDTH - 10, ABILITY_PANEL_HEIGHT - 7, 7, 0x323F474F);
@@ -554,6 +579,20 @@ public class RecalcBattleHUD {
 
     private static float clamp(float value, float min, float max) {
         return Math.max(min, Math.min(value, max));
+    }
+
+    private static float getAbilityBackgroundProgress(float hudProgress) {
+        if (BattleHUDManager.isHUDVisible()) {
+            return stagedProgress(hudProgress, ABILITY_BACKGROUND_OPEN_START, ABILITY_BACKGROUND_OPEN_END);
+        }
+        return stagedProgress(hudProgress, ABILITY_BACKGROUND_CLOSE_START, ABILITY_BACKGROUND_CLOSE_END);
+    }
+
+    private static float getAbilityContentProgress(float hudProgress) {
+        if (BattleHUDManager.isHUDVisible()) {
+            return stagedProgress(hudProgress, ABILITY_CONTENT_OPEN_START, ABILITY_CONTENT_OPEN_END);
+        }
+        return stagedProgress(hudProgress, ABILITY_CONTENT_CLOSE_START, ABILITY_CONTENT_CLOSE_END);
     }
 
     private static float stagedProgress(float progress, float start, float end) {
