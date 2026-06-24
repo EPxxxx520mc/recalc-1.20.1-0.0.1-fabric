@@ -19,16 +19,6 @@ public class BattleHudInteractionScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button == 0
-            && this.client != null
-            && RecalcBattleHUD.handleInteractionClick(this.client, (int)mouseX, (int)mouseY)) {
-            return true;
-        }
-        return super.mouseClicked(mouseX, mouseY, button);
-    }
-
-    @Override
     public boolean shouldPause() {
         return false;
     }

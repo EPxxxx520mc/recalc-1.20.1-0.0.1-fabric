@@ -3,6 +3,15 @@ package com.rimeveil.recalc.client;
 import net.minecraft.text.Text;
 
 public class BattleHUDManager {
+    public enum AbilityType {
+        NONE,
+        FIRE,
+        LIGHTNING,
+        WIND,
+        TELEPORT,
+        VECTOR
+    }
+
     private static final long HUD_OPEN_DURATION_MS = 360L;
     private static final long HUD_CLOSE_DURATION_MS = 240L;
 
@@ -15,6 +24,7 @@ public class BattleHUDManager {
     private static float abilityCurrent = 100.0f;
     private static float abilityMax = 100.0f;
     private static Text abilityPromptLabel;
+    private static AbilityType abilityType = AbilityType.NONE;
 
     public static void toggleHUD() {
         transitionStartProgress = getHudAnimationProgress();
@@ -78,6 +88,18 @@ public class BattleHUDManager {
         return abilityPromptLabel;
     }
 
+    public static void setAbilityType(AbilityType type) {
+        abilityType = type == null ? AbilityType.NONE : type;
+    }
+
+    public static void clearAbilityType() {
+        abilityType = AbilityType.NONE;
+    }
+
+    public static AbilityType getAbilityType() {
+        return abilityType;
+    }
+
     public static float getAbilityCurrent() {
         return abilityCurrent;
     }
@@ -110,6 +132,7 @@ public class BattleHUDManager {
         transitionStartTime = 0L;
         transitionActive = false;
         abilityPromptLabel = null;
+        abilityType = AbilityType.NONE;
     }
 
     private static float smoothStep(float value) {

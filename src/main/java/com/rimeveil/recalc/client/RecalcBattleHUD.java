@@ -1,7 +1,6 @@
 package com.rimeveil.recalc.client;
 
 import com.rimeveil.recalc.Recalc;
-import com.rimeveil.recalc.ui.RecalcSettingsScreen;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -18,10 +17,8 @@ import java.util.List;
 
 public class RecalcBattleHUD {
     private static final Identifier RECALC_FONT = Recalc.id("recalc_font");
-    private static final Identifier SETTINGS_BUTTON_TEXTURE = Recalc.id("textures/ui/settings_button.png");
 
     private static final int WHITE = 0xFFFFFFFF;
-    private static final int WHITE_SOFT = 0xB8FFFFFF;
     private static final int WHITE_FAINT = 0x30FFFFFF;
     private static final int GLASS_BACKGROUND = 0x553A424A;
     private static final int GLASS_BACKGROUND_DARK = 0x7A22282E;
@@ -33,6 +30,11 @@ public class RecalcBattleHUD {
     private static final int ACCENT_CYAN = 0xFFC7F6FA;
     private static final int ACCENT_BLUE = 0xFFDCE5EA;
     private static final int ACCENT_LAVENDER = 0xFFE7E3F5;
+    private static final int ABILITY_FIRE = 0xFFFFB06A;
+    private static final int ABILITY_LIGHTNING = 0xFFF7F0A0;
+    private static final int ABILITY_WIND = 0xFFC7F6FA;
+    private static final int ABILITY_TELEPORT = 0xFFD9D0FF;
+    private static final int ABILITY_VECTOR = 0xFFE7E3F5;
     private static final int TEXT_SHADOW = 0x80000000;
 
     private static final int ABILITY_X = 20;
@@ -53,11 +55,6 @@ public class RecalcBattleHUD {
     private static final int ABILITY_PROMPT_Y = 18;
     private static final int ABILITY_PROMPT_RIGHT_PADDING = 8;
     private static final int ABILITY_PROMPT_TEXT_PADDING = 4;
-
-    private static final int SETTINGS_BUTTON_SIZE = 18;
-    private static final int SETTINGS_BUTTON_MARGIN = 14;
-    private static final int SETTINGS_TEXTURE_WIDTH = SETTINGS_BUTTON_SIZE * 2;
-    private static final int SETTINGS_TEXTURE_HEIGHT = SETTINGS_BUTTON_SIZE;
 
     private static final int PLAYER_PANEL_MARGIN = 10;
     private static final int PLAYER_PANEL_PADDING = 4;
@@ -83,17 +80,6 @@ public class RecalcBattleHUD {
             return;
         }
 
-        if (getSettingsBounds(screenWidth).contains(mouseX, mouseY)) {
-            context.drawTooltip(client.textRenderer, List.of(Text.translatable("hud.recalc.settings")), mouseX, mouseY);
-        }
-    }
-
-    public static boolean handleInteractionClick(MinecraftClient client, int mouseX, int mouseY) {
-        if (getSettingsBounds(client.getWindow().getScaledWidth()).contains(mouseX, mouseY)) {
-            client.setScreen(new RecalcSettingsScreen());
-            return true;
-        }
-        return false;
     }
 
     private static void render(DrawContext context, float tickDelta) {
@@ -109,15 +95,17 @@ public class RecalcBattleHUD {
         int screenWidth = context.getScaledWindowWidth();
         int screenHeight = context.getScaledWindowHeight();
         float progress = BattleHUDManager.getHudAnimationProgress();
+        boolean interactionVisible = BattleHUDManager.isCursorVisible();
 
-        if (BattleHUDManager.isCursorVisible()) {
+        if (interactionVisible) {
             HudBackgroundBlur.render(context, client);
         }
 
         drawAbilityBarAnimated(context, client, stagedProgress(progress, 0.0f, 0.58f));
-        drawPlayerInfoAnimated(context, client, screenWidth, screenHeight, stagedProgress(progress, 0.16f, 0.78f));
-        drawSettingsButtonAnimated(context, client, getSettingsBounds(screenWidth), stagedProgress(progress, 0.42f, 0.82f));
-        drawRecalcLogoAnimated(context, client, LOGO_MARGIN, screenHeight - 30, stagedProgress(progress, 0.56f, 1.0f));
+        if (interactionVisible) {
+            drawPlayerInfoAnimated(context, client, screenWidth, screenHeight, 1.0f);
+            drawRecalcLogoAnimated(context, client, LOGO_MARGIN, screenHeight - 30, 1.0f);
+        }
     }
 
     private static void drawAbilityBarAnimated(DrawContext context, MinecraftClient client, float progress) {
@@ -153,30 +141,6 @@ public class RecalcBattleHUD {
             bounds.bottom()
         );
         drawPlayerInfo(context, client, screenWidth, screenHeight);
-        context.disableScissor();
-    }
-
-    private static void drawSettingsButtonAnimated(
-        DrawContext context,
-        MinecraftClient client,
-        Bounds bounds,
-        float progress
-    ) {
-        if (progress <= 0.0f) {
-            return;
-        }
-
-        int revealWidth = Math.max(1, Math.round(bounds.width * progress));
-        int revealHeight = Math.max(1, Math.round(bounds.height * progress));
-        int centerX = bounds.x + bounds.width / 2;
-        int centerY = bounds.y + bounds.height / 2;
-        context.enableScissor(
-            centerX - revealWidth / 2,
-            centerY - revealHeight / 2,
-            centerX + (revealWidth + 1) / 2,
-            centerY + (revealHeight + 1) / 2
-        );
-        drawSettingsButton(context, client, bounds);
         context.disableScissor();
     }
 
@@ -355,35 +319,63 @@ public class RecalcBattleHUD {
         context.fill(x, y, x + 1, bottom, PANEL_STROKE_FAINT);
         context.fill(right - 1, y, right, bottom, PANEL_STROKE);
 
+        switch (BattleHUDManager.getAbilityType()) {
+            case FIRE -> drawFireIcon(context, x, y);
+            case LIGHTNING -> drawLightningIcon(context, x, y);
+            case WIND -> drawWindIcon(context, x, y);
+            case TELEPORT -> drawTeleportIcon(context, x, y);
+            case VECTOR -> drawVectorIcon(context, x, y);
+            case NONE -> {
+            }
+        }
+    }
+
+    private static void drawFireIcon(DrawContext context, int x, int y) {
         int glyphX = x + 8;
         int glyphY = y + 5;
-        context.fill(glyphX + 5, glyphY, glyphX + 10, glyphY + 4, WHITE);
-        context.fill(glyphX + 3, glyphY + 4, glyphX + 9, glyphY + 10, WHITE);
-        context.fill(glyphX + 7, glyphY + 9, glyphX + 12, glyphY + 14, WHITE);
+        context.fill(glyphX + 5, glyphY, glyphX + 10, glyphY + 4, ABILITY_FIRE);
+        context.fill(glyphX + 3, glyphY + 4, glyphX + 9, glyphY + 10, ABILITY_FIRE);
+        context.fill(glyphX + 7, glyphY + 9, glyphX + 12, glyphY + 14, ABILITY_FIRE);
         context.fill(glyphX + 1, glyphY + 13, glyphX + 8, glyphY + 17, WHITE);
         context.fill(glyphX + 10, glyphY + 2, glyphX + 13, glyphY + 6, PANEL_STROKE_FAINT);
     }
 
-    private static void drawSettingsButton(DrawContext context, MinecraftClient client, Bounds bounds) {
-        boolean hovered = BattleHUDManager.isCursorVisible()
-            && bounds.contains(getScaledMouseX(client), getScaledMouseY(client));
-        int textureU = hovered ? SETTINGS_BUTTON_SIZE : 0;
+    private static void drawLightningIcon(DrawContext context, int x, int y) {
+        int glyphX = x + 7;
+        int glyphY = y + 4;
+        context.fill(glyphX + 6, glyphY, glyphX + 13, glyphY + 3, ABILITY_LIGHTNING);
+        context.fill(glyphX + 4, glyphY + 3, glyphX + 10, glyphY + 8, ABILITY_LIGHTNING);
+        context.fill(glyphX + 8, glyphY + 8, glyphX + 14, glyphY + 11, WHITE);
+        context.fill(glyphX + 3, glyphY + 11, glyphX + 9, glyphY + 16, WHITE);
+        context.fill(glyphX + 1, glyphY + 16, glyphX + 5, glyphY + 19, PANEL_STROKE_FAINT);
+    }
 
-        context.fill(bounds.x - 2, bounds.y - 2, bounds.right() + 2, bounds.bottom() + 2, PANEL_SHADOW);
-        context.fill(bounds.x - 1, bounds.y - 1, bounds.right() + 1, bounds.bottom() + 1, GLASS_BACKGROUND);
-        context.fill(bounds.x - 1, bounds.y - 1, bounds.right() + 1, bounds.y, hovered ? ACCENT_CYAN : PANEL_STROKE);
-        context.fill(bounds.right(), bounds.y - 1, bounds.right() + 1, bounds.bottom() + 1, PANEL_STROKE_FAINT);
-        context.drawTexture(
-            SETTINGS_BUTTON_TEXTURE,
-            bounds.x,
-            bounds.y,
-            textureU,
-            0,
-            SETTINGS_BUTTON_SIZE,
-            SETTINGS_BUTTON_SIZE,
-            SETTINGS_TEXTURE_WIDTH,
-            SETTINGS_TEXTURE_HEIGHT
-        );
+    private static void drawWindIcon(DrawContext context, int x, int y) {
+        int glyphX = x + 5;
+        int glyphY = y + 7;
+        context.fill(glyphX, glyphY, glyphX + 13, glyphY + 2, ABILITY_WIND);
+        context.fill(glyphX + 5, glyphY + 4, glyphX + 17, glyphY + 6, WHITE);
+        context.fill(glyphX + 2, glyphY + 8, glyphX + 15, glyphY + 10, ABILITY_WIND);
+        context.fill(glyphX + 13, glyphY + 1, glyphX + 16, glyphY + 4, PANEL_STROKE_FAINT);
+        context.fill(glyphX + 15, glyphY + 5, glyphX + 18, glyphY + 8, PANEL_STROKE_FAINT);
+    }
+
+    private static void drawTeleportIcon(DrawContext context, int x, int y) {
+        int glyphX = x + 6;
+        int glyphY = y + 6;
+        context.fill(glyphX, glyphY, glyphX + 5, glyphY + 5, ABILITY_TELEPORT);
+        context.fill(glyphX + 11, glyphY + 11, glyphX + 16, glyphY + 16, WHITE);
+        context.fill(glyphX + 6, glyphY + 6, glyphX + 11, glyphY + 8, PANEL_STROKE_FAINT);
+        context.fill(glyphX + 8, glyphY + 8, glyphX + 10, glyphY + 13, PANEL_STROKE_FAINT);
+    }
+
+    private static void drawVectorIcon(DrawContext context, int x, int y) {
+        int glyphX = x + 5;
+        int glyphY = y + 5;
+        context.fill(glyphX + 1, glyphY + 1, glyphX + 5, glyphY + 5, ABILITY_VECTOR);
+        context.fill(glyphX + 12, glyphY + 12, glyphX + 16, glyphY + 16, WHITE);
+        context.fill(glyphX + 5, glyphY + 5, glyphX + 13, glyphY + 7, ABILITY_VECTOR);
+        context.fill(glyphX + 11, glyphY + 7, glyphX + 13, glyphY + 13, ABILITY_VECTOR);
     }
 
     private static void drawPlayerInfo(DrawContext context, MinecraftClient client, int screenWidth, int screenHeight) {
@@ -520,23 +512,6 @@ public class RecalcBattleHUD {
 
     private static int getPlayerPanelLogicalHeight(List<Text> lines) {
         return lines.size() * PLAYER_LINE_HEIGHT + PLAYER_PANEL_PADDING * 2;
-    }
-
-    private static Bounds getSettingsBounds(int screenWidth) {
-        return new Bounds(
-            screenWidth - SETTINGS_BUTTON_MARGIN - SETTINGS_BUTTON_SIZE,
-            SETTINGS_BUTTON_MARGIN,
-            SETTINGS_BUTTON_SIZE,
-            SETTINGS_BUTTON_SIZE
-        );
-    }
-
-    private static int getScaledMouseX(MinecraftClient client) {
-        return (int)(client.mouse.getX() * client.getWindow().getScaledWidth() / client.getWindow().getWidth());
-    }
-
-    private static int getScaledMouseY(MinecraftClient client) {
-        return (int)(client.mouse.getY() * client.getWindow().getScaledHeight() / client.getWindow().getHeight());
     }
 
     private static void drawParallelogram(DrawContext context, int x, int y, int width, int height, int slant, int color) {
